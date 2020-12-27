@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fhhagenberg.sqe.ElevatorControlController">
+   <children>
+      <BorderPane prefHeight="600.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <left>
+            <BorderPane minHeight="600.0" minWidth="160.0" prefHeight="600.0" prefWidth="160.0" BorderPane.alignment="CENTER">
+               <top>
+                  <ToggleButton id="automaticModeToggleButton" fx:id="automaticModeToggleButton" focusTraversable="false" maxHeight="145.0" maxWidth="150.0" minHeight="145.0" minWidth="150.0" mnemonicParsing="false" onAction="#handleAutomaticModeChange" prefHeight="145.0" prefWidth="150.0" text="Automatic Mode" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </BorderPane.margin>
+                  </ToggleButton>
+               </top>
+               <bottom>
+                  <ListView id="floorsListView" fx:id="floorsListView" editable="true" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1500.0" prefWidth="160.0" BorderPane.alignment="CENTER" />
+               </bottom>
+            </BorderPane>
+         </left>
+         <center>
+            <ListView id="elevatorsListView" fx:id="elevatorsListView" editable="true" focusTraversable="false" orientation="HORIZONTAL" BorderPane.alignment="CENTER" />
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>

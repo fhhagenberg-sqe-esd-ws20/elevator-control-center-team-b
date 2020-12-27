@@ -1,5 +1,7 @@
 package at.fhhagenberg.sqe;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.testfx.api.FxAssert;
@@ -12,8 +14,8 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 @ExtendWith(ApplicationExtension.class)
-public class AppTest {
-    private Button button;
+public class ElevatorControlTest {
+    private ElevatorControlController controller;
 
     /**
      * Will be called with {@code @Before} semantics, i. e. before each test method.
@@ -22,8 +24,10 @@ public class AppTest {
      */
     @Start
     public void start(Stage stage) {
-        var app = new App();
+        var app = new ElevatorControl();
         app.start(stage);
+        // with controller floors and elevators can be accessed
+        controller = app.GetController();
     }
 
     /**
@@ -31,7 +35,7 @@ public class AppTest {
      */
     @Test
     public void testButtonWithText(FxRobot robot) {
-        FxAssert.verifyThat(".button", LabeledMatchers.hasText("Click me!"));
+        FxAssert.verifyThat("#automaticModeToggleButton", LabeledMatchers.hasText("Automatic Mode"));
     }
 
     /**
@@ -39,10 +43,8 @@ public class AppTest {
      */
     @Test
     public void testButtonClick(FxRobot robot) {
-        // when:
-        robot.clickOn(".button");
-
-        // or (lookup by css class):
-        FxAssert.verifyThat(".button", LabeledMatchers.hasText("Clicked!"));
+        robot.clickOn("#automaticModeToggleButton");
+        FxAssert.verifyThat("#automaticModeToggleButton", LabeledMatchers.hasText("Automatic Mode"));
+        assertTrue(controller.GetAutomaticModeActive());
     }
 }

@@ -17,6 +17,11 @@
             <artifactId>javafx-controls</artifactId>
             <version>13</version>
         </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>13</version>
+        </dependency>
 
         <!-- testing with TestFx/Junit 5-->
         <dependency>
@@ -64,7 +69,7 @@
                 <version>0.0.3</version>
                 <configuration>
                     <launcher>launcher</launcher>
-                    <mainClass>at.fhhagenberg.sqe.App</mainClass>
+                    <mainClass>at.fhhagenberg.sqe.ElevatorControl</mainClass>
                 </configuration>
             </plugin>
             <plugin>

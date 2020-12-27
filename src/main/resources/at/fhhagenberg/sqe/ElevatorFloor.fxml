@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="40.0" minWidth="115.0" prefHeight="40.0" prefWidth="115.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fhhagenberg.sqe.ElevatorFloorController">
+   <children>
+      <ImageView id="elevatorImageView" fx:id="elevatorImageView" fitHeight="40.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@PikPng.com_elevator-png_1621451.png" />
+         </image>
+         <HBox.margin>
+            <Insets left="10.0" right="10.0" />
+         </HBox.margin>
+      </ImageView>
+      <ImageView id="stopImageView" fx:id="stopImageView" fitHeight="33.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@kisspng-computer-icons-symbol-clip-art-hexagonal-vector-5b0709f8e7acf3.783342341527187960949.png" />
+         </image>
+         <HBox.margin>
+            <Insets left="10.0" right="10.0" top="4.0" />
+         </HBox.margin>
+      </ImageView>
+   </children>
+</HBox>
