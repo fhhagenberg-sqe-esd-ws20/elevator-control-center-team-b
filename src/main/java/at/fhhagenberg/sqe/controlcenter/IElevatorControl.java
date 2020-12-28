@@ -23,6 +23,11 @@ public interface IElevatorControl {
 	}
 	
 	/*
+	 * Return the number of floors. 
+	 */
+	public int getFloorNum() throws ControlCenterException;
+	
+	/*
 	 * Returns the door status of the elevator.
 	 */
 	public DoorStatus getCurrentDoorStatus() throws ControlCenterException;

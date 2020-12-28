@@ -26,4 +26,12 @@ public class ControlCenterException extends Exception {
 	public ControlCenterException(String message, Exception innerException) {
 		super(message,innerException);
 	}
+	
+	/*
+	 * Create a new instance of ElevatorException with an inner exception
+	 * @param innerException: exception to forward
+	 */
+	public ControlCenterException(Exception innerException) {
+		super(innerException);
+	}
 }

@@ -156,4 +156,19 @@ public class ElevatorControlTests {
 	    });
 	}
 	
+	@Test
+	public void CurrentFloorChangesWithSecondCallOnGetCurrentFloor()
+	{
+		var elevator = new ElevatorControlMock(2);
+		elevator.setTarget(1);
+		assertEquals(0,elevator.getCurrentFloor());
+		assertEquals(1,elevator.getCurrentFloor());
+	}
+	
+	@Test
+	public void DoesReturnCorrectNumberOfFloors() {
+		var elevator = new ElevatorControlMock(2);
+		assertEquals(2, elevator.getFloorNum());
+	}
+	
 }

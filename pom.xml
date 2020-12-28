@@ -22,6 +22,11 @@
             <artifactId>javafx-fxml</artifactId>
             <version>13</version>
         </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>3.5.13</version>
+        </dependency>
 
         <!-- testing with TestFx/Junit 5-->
         <dependency>

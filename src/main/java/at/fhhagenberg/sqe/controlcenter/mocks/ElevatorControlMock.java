@@ -50,11 +50,6 @@ public class ElevatorControlMock implements IElevatorControl {
 	}
 
 	@Override
-	public boolean isFloorButtonPressed(int floor) {
-		return false;
-	}
-
-	@Override
 	public int getCurrentFloor() {
 		var ret = mCurrentFloor;
 		if(mCurrentFloor != mTarget) {
@@ -113,6 +108,16 @@ public class ElevatorControlMock implements IElevatorControl {
 	@Override
 	public void setDirection(Direction dir) {
 		mDirection = dir;
+	}
+
+	@Override
+	public boolean isFloorButtonPressed(int floor) {
+		return false;
+	}
+
+	@Override
+	public int getFloorNum() {
+		return mFloors;
 	}
 
 }
