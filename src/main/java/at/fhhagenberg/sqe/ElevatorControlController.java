@@ -58,6 +58,8 @@ public class ElevatorControlController {
     private Timer timer;    
     private ElevatorScheduler elevatorScheduler;
     
+    private final int timerInterval_ms = 100;
+    
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() throws ControlCenterException {
         assert elevatorsListView != null : "fx:id=\"elevatorsListView\" was not injected: check your FXML file 'ElevatorControl.fxml'.";
@@ -74,7 +76,7 @@ public class ElevatorControlController {
         
         // schedule run-task of the model
         elevatorScheduler.addAsyncModel(buildingModel);
-        timer.scheduleAtFixedRate(elevatorScheduler, 0, 10);
+        timer.scheduleAtFixedRate(elevatorScheduler, 0, timerInterval_ms);
         
         // get floor models + elevator models
         int numberOfFloors = buildingModel.getFloorNum();

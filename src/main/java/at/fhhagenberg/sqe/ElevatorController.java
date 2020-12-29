@@ -110,7 +110,15 @@ public class ElevatorController {
 					}
 				}
 				else if(evt.getPropertyName() == "ServicedFloors") {
-					// TODO
+					List<Integer> activeFloors = mElevatorModel.getServicedFloors();
+					// reset all floors previously
+					for(ElevatorFloorController floor : floorControllerList) {
+						floor.SetFloorActive(false);
+					}
+					// get new list + update
+					for(int i : activeFloors) {
+						floorControllerList.get(i).SetFloorActive(true);
+					}
 				}
 				else if(evt.getPropertyName() == "CurrentFloor") {
 					int currentFloor = mElevatorModel.getCurrentFloor();
@@ -125,7 +133,7 @@ public class ElevatorController {
 					SetVelocity((int)evt.getNewValue());
 				}
 				else if(evt.getPropertyName() == "Acceleration") {
-					// TODO
+					// not needed
 				}
 				else if(evt.getPropertyName() == "Weight") {
 					SetPayload((int)evt.getNewValue());
