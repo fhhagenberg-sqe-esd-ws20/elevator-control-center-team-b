@@ -1,5 +1,6 @@
 package at.fhhagenberg.sqe;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -33,18 +34,21 @@ public class ElevatorControlTest {
     /**
      * @param robot - Will be injected by the test runner.
      */
-    @Test
-    public void testButtonWithText(FxRobot robot) {
-        FxAssert.verifyThat("#automaticModeToggleButton", LabeledMatchers.hasText("Automatic Mode"));
-    }
+    //@Test
+    //public void testButtonWithText(FxRobot robot) {
+    //    FxAssert.verifyThat("#messageTextArea", LabeledMatchers.hasText(""));
+    //}
 
     /**
      * @param robot - Will be injected by the test runner.
      */
     @Test
     public void testButtonClick(FxRobot robot) {
-        robot.clickOn("#automaticModeToggleButton");
-        FxAssert.verifyThat("#automaticModeToggleButton", LabeledMatchers.hasText("Automatic Mode"));
-        assertTrue(controller.GetAutomaticModeActive());
+        robot.clickOn("#automaticModeCheckBox");
+        robot.clickOn("#floorButtonsListView");
+        assertEquals(5, controller.GetElevator(0).GetDestination());
+        
+        //FxAssert.verifyThat("#automaticModeToggleButton", LabeledMatchers.hasText("Automatic Mode"));
+        //assertTrue(controller.GetAutomaticModeActive());
     }
 }
