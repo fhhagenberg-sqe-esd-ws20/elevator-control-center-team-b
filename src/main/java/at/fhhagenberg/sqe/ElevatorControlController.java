@@ -139,11 +139,13 @@ public class ElevatorControlController {
     	messageTextArea.setText(messageTextArea.getText() + message + "\n");
     }
     
+    // floors from 0 to n
     public FloorController GetFloor(int number) {
-    	return floorControllerList.get(number);
+    	return floorControllerList.get(numberFloors - 1 - number);
     }
     
+    // elevators from 1 to n
     public ElevatorController GetElevator(int number) {
-    	return elevatorControllerList.get(number);
+    	return elevatorControllerList.get(number - 1);
     }
 }

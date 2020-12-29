@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 
 /**
  * Sample Skeleton for 'ElevatorFloor.fxml' Controller Class
@@ -22,6 +23,9 @@ public class ElevatorFloorController {
 
     @FXML // fx:id="elevatorImageView"
     private ImageView elevatorImageView; // Value injected by FXMLLoader
+    
+    @FXML // fx:id="elevatorFloorHBox"
+    private HBox elevatorFloorHBox; // Value injected by FXMLLoader
     
     @FXML // fx:id="elevatorFloorAnchorPane"
     private AnchorPane elevatorFloorAnchorPane; // Value injected by FXMLLoader
@@ -48,6 +52,14 @@ public class ElevatorFloorController {
     		stopImageView.setOpacity(1);
     	} else {
     		stopImageView.setOpacity(0.25);
+    	}
+    }
+    
+    public void SetFloorActive(boolean active) {
+    	if (active) {
+    		elevatorFloorHBox.setOpacity(1);
+    	} else {
+    		elevatorFloorHBox.setOpacity(0.25);
     	}
     }
 }

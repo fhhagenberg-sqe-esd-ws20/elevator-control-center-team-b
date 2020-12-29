@@ -143,11 +143,11 @@ public class ElevatorController {
     }
     
     public void SetPayload(int payload) {
-    	payloadLabel.setText(Integer.toString(payload) + " kg");
+    	payloadLabel.setText(Integer.toString(payload) + " lbs");
     }
     
     public void SetVelocity(int velocity) {
-    	velocityLabel.setText(Integer.toString(velocity) + " m/s");
+    	velocityLabel.setText(Integer.toString(velocity) + " ft/s");
     }
     
     public void SetDoorStatus(DoorStatus status) {
@@ -185,6 +185,7 @@ public class ElevatorController {
     			ElevatorFloorController controller = fxmlLoader.getController();
     			controller.SetElevatorActive(false);
     			controller.SetStopActive(false);
+    			controller.SetFloorActive(true);
     			floorControllerList.add(controller);
     			floorButtonsListView.getItems().add(0, listItem);
     		}

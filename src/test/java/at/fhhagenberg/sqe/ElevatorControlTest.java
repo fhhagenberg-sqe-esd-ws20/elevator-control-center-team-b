@@ -45,8 +45,8 @@ public class ElevatorControlTest {
     @Test
     public void testButtonClick(FxRobot robot) {
         robot.clickOn("#automaticModeCheckBox");
-        robot.clickOn("#floorButtonsListView");
-        assertEquals(5, controller.GetElevator(0).GetDestination());
+        robot.clickOn("#elevatorFloorHBox");
+        assertEquals(4, controller.GetElevator(1).GetDestination());
         
         //FxAssert.verifyThat("#automaticModeToggleButton", LabeledMatchers.hasText("Automatic Mode"));
         //assertTrue(controller.GetAutomaticModeActive());
