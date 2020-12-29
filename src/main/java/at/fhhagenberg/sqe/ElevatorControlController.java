@@ -13,6 +13,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import at.fhhagenberg.sqe.controlcenter.ControlCenterException;
+import at.fhhagenberg.sqe.controlcenter.IElevatorControl.Direction;
+import at.fhhagenberg.sqe.controlcenter.IElevatorControl.DoorStatus;
 import at.fhhagenberg.sqe.controlcenter.mocks.BuildingMock;
 import at.fhhagenberg.sqe.model.BuildingModel;
 import javafx.fxml.FXML;
@@ -55,21 +57,13 @@ public class ElevatorControlController {
     
     private Timer timer;    
     private ElevatorScheduler elevatorScheduler;
-
-    
-    @FXML
-    void handleAutomaticModeChange(ActionEvent event) {
-    	automaticModeActive = automaticModeToggleButton.isSelected();
-    }
     
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() throws ControlCenterException {
         assert elevatorsListView != null : "fx:id=\"elevatorsListView\" was not injected: check your FXML file 'ElevatorControl.fxml'.";
         assert messageTextArea != null : "fx:id=\"messageTextArea\" was not injected: check your FXML file 'ElevatorControl.fxml'.";
         assert floorsListView != null : "fx:id=\"floorsListView\" was not injected: check your FXML file 'ElevatorControl.fxml'.";
-        assert automaticModeToggleButton != null : "fx:id=\"modeToggleButton\" was not injected: check your FXML file 'ElevatorControl.fxml'.";
-        
-        automaticModeActive = false;
+
         numberFloors = 5;
         numberElevators = 2;
         
@@ -125,9 +119,9 @@ public class ElevatorControlController {
             	// initial settings
             	controller.SetPayload(0);
             	controller.SetVelocity(0);
-            	controller.SetDoorStatus(false);
+            	controller.SetDoorStatus(DoorStatus.Closed);
             	controller.SetDestination(0);
-            	controller.SetDirection(false);
+            	controller.SetDirection(Direction.Uncommited);
             	controller.SetNumberFloors(numberFloors);
             	// attach model
             	controller.SetElevatorModel(buildingModel.getElevator(i-1));
