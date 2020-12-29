@@ -23,12 +23,18 @@
             <Label id="doorStatusLabel" fx:id="doorStatusLabel" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label text="Destination:" GridPane.rowIndex="4" />
             <Label id="destinationLabel" fx:id="destinationLabel" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label text="Direction:" GridPane.rowIndex="5" />
+            <Label id="directionLabel" fx:id="directionLabel" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <CheckBox id="automaticModeCheckBox" fx:id="automaticModeCheckBox" focusTraversable="false" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Label text="Automatic Mode:" GridPane.rowIndex="6" />
          </children>
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="109.0" minWidth="10.0" prefWidth="97.0" />
             <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="85.0" minWidth="10.0" prefWidth="51.0" />
          </columnConstraints>
          <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />

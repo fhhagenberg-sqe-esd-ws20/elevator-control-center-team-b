@@ -28,21 +28,11 @@ public class ElevatorFloorController {
 
     @FXML // fx:id="stopImageView"
     private ImageView stopImageView; // Value injected by FXMLLoader
-
-    private boolean isDestination;
-    
-    @FXML
-    void handleDestinationSetting(MouseEvent event) {
-    	SetStopActive(true);
-    	isDestination = true;
-    }
     
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert elevatorImageView != null : "fx:id=\"elevatorImageView\" was not injected: check your FXML file 'ElevatorFloor.fxml'.";
         assert stopImageView != null : "fx:id=\"stopImageView\" was not injected: check your FXML file 'ElevatorFloor.fxml'.";
-        
-        isDestination = false;
     }
     
     public void SetElevatorActive(boolean active) {
@@ -59,9 +49,5 @@ public class ElevatorFloorController {
     	} else {
     		stopImageView.setOpacity(0.25);
     	}
-    }
-    
-    public boolean GetIsDestination() {
-    	return isDestination;
     }
 }

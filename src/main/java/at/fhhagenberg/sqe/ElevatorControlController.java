@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.Pane;
 
@@ -27,14 +28,12 @@ public class ElevatorControlController {
     @FXML // fx:id="elevatorsListView"
     private ListView<Pane> elevatorsListView; // Value injected by FXMLLoader
 
+    @FXML // fx:id="messageTextArea"
+    private TextArea messageTextArea; // Value injected by FXMLLoader
+
     @FXML // fx:id="floorsListView"
     private ListView<Pane> floorsListView; // Value injected by FXMLLoader
 
-    @FXML // fx:id="automaticModeToggleButton"
-    private ToggleButton automaticModeToggleButton; // Value injected by FXMLLoader
-
-    private boolean automaticModeActive;
-    
     private ObservableList<FloorController> floorControllerList;
     
     private ObservableList<ElevatorController> elevatorControllerList;
@@ -43,18 +42,12 @@ public class ElevatorControlController {
     
     private int numberElevators;
     
-    @FXML
-    void handleAutomaticModeChange(ActionEvent event) {
-    	automaticModeActive = automaticModeToggleButton.isSelected();
-    }
-    
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert elevatorsListView != null : "fx:id=\"elevatorsListView\" was not injected: check your FXML file 'ElevatorControl.fxml'.";
+        assert messageTextArea != null : "fx:id=\"messageTextArea\" was not injected: check your FXML file 'ElevatorControl.fxml'.";
         assert floorsListView != null : "fx:id=\"floorsListView\" was not injected: check your FXML file 'ElevatorControl.fxml'.";
-        assert automaticModeToggleButton != null : "fx:id=\"modeToggleButton\" was not injected: check your FXML file 'ElevatorControl.fxml'.";
-        
-        automaticModeActive = false;
+
         numberFloors = 0;
         numberElevators = 0;
     }
@@ -91,6 +84,7 @@ public class ElevatorControlController {
             	controller.SetVelocity(0);
             	controller.SetDoorStatus(false);
             	controller.SetDestination(0);
+            	controller.SetDirection(false);
             	controller.SetNumberFloors(numberFloors);
             	elevatorControllerList.add(controller);
             	elevatorsListView.getItems().add(listItem);
@@ -102,8 +96,8 @@ public class ElevatorControlController {
     	numberElevators = number;
     }
     
-    public boolean GetAutomaticModeActive() {
-    	return automaticModeActive;
+    public void SetMessage(String message) {
+    	messageTextArea.setText(messageTextArea.getText() + message + "\n");
     }
     
     public FloorController GetFloor(int number) {

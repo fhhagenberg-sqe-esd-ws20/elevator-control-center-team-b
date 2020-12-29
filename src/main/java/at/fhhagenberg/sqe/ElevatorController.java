@@ -8,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Pane;
@@ -35,6 +36,12 @@ public class ElevatorController {
     @FXML // fx:id="doorStatusLabel"
     private Label doorStatusLabel; // Value injected by FXMLLoader
 
+    @FXML // fx:id="directionLabel"
+    private Label directionLabel; // Value injected by FXMLLoader
+
+    @FXML // fx:id="automaticModeCheckBox"
+    private CheckBox automaticModeCheckBox; // Value injected by FXMLLoader
+
     @FXML // fx:id="velocityLabel"
     private Label velocityLabel; // Value injected by FXMLLoader
 
@@ -51,8 +58,12 @@ public class ElevatorController {
         assert payloadLabel != null : "fx:id=\"payloadLabel\" was not injected: check your FXML file 'Elevator.fxml'.";
         assert floorButtonsListView != null : "fx:id=\"floorButtonsListView\" was not injected: check your FXML file 'Elevator.fxml'.";
         assert doorStatusLabel != null : "fx:id=\"doorStatusLabel\" was not injected: check your FXML file 'Elevator.fxml'.";
+        assert directionLabel != null : "fx:id=\"directionLabel\" was not injected: check your FXML file 'Elevator.fxml'.";
+        assert automaticModeCheckBox != null : "fx:id=\"automaticModeCheckBox\" was not injected: check your FXML file 'Elevator.fxml'.";
         assert velocityLabel != null : "fx:id=\"velocityLabel\" was not injected: check your FXML file 'Elevator.fxml'.";
         assert elevatorNumberLabel != null : "fx:id=\"elevatorNumberLabel\" was not injected: check your FXML file 'Elevator.fxml'.";
+    
+        numberFloors = 0;
     }
     
     public void SetElevatorNumber(int number) {
@@ -79,6 +90,14 @@ public class ElevatorController {
     	destinationLabel.setText(Integer.toString(floor));
     }
     
+    public void SetDirection(boolean up) {
+    	if (up) {
+    		directionLabel.setText("up");
+    	} else {
+    		directionLabel.setText("down");
+    	}
+    }
+    
     public void SetNumberFloors(int number) {
     	try {
     		floorControllerList = FXCollections.observableArrayList();
@@ -96,6 +115,14 @@ public class ElevatorController {
         }
     	
     	numberFloors = number;
+    }
+    
+    public boolean GetAutomaticModeActive() {
+    	return automaticModeCheckBox.isSelected();
+    }
+    
+    public int GetDestination() {
+    	return numberFloors - 1 - floorButtonsListView.getSelectionModel().getSelectedIndex();
     }
     
     public ElevatorFloorController GetFloor(int number) {
