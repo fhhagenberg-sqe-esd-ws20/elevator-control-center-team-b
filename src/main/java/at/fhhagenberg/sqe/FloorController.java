@@ -1,7 +1,11 @@
 package at.fhhagenberg.sqe;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import at.fhhagenberg.sqe.model.FloorModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -25,12 +29,34 @@ public class FloorController {
 
     @FXML // fx:id="downArrowImageView"
     private ImageView downArrowImageView; // Value injected by FXMLLoader
+    
+    private FloorModel mFloorModel;
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert upArrowImageView != null : "fx:id=\"upArrowImageView\" was not injected: check your FXML file 'Floor.fxml'.";
         assert floorNumberLabel != null : "fx:id=\"floorNumberLabel\" was not injected: check your FXML file 'Floor.fxml'.";
         assert downArrowImageView != null : "fx:id=\"downArrowImageView\" was not injected: check your FXML file 'Floor.fxml'.";
+    }
+    
+    public void SetModel(FloorModel floorModel) {
+    	mFloorModel = floorModel;
+    	
+    	mFloorModel.addListener(new PropertyChangeListener() {
+			
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				if(evt.getPropertyName() == "Id") {
+					SetFloorNumber((int)evt.getNewValue());
+				}
+				else if(evt.getPropertyName() == "ButtonUp") {
+					SetUpArrowActive((boolean)evt.getNewValue());
+				}
+				else if(evt.getPropertyName() == "ButtonDown") {
+					SetDownArrowActive((boolean)evt.getNewValue());
+				}
+			}
+    	});
     }
     
     public void SetFloorNumber(int number) {

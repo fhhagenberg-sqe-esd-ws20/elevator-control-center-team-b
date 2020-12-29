@@ -1,9 +1,13 @@
 package at.fhhagenberg.sqe;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import at.fhhagenberg.sqe.controlcenter.IElevatorControl;
+import at.fhhagenberg.sqe.model.ElevatorModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -44,6 +48,10 @@ public class ElevatorController {
     private ObservableList<ElevatorFloorController> floorControllerList;
     
     private int numberFloors;
+    
+    private ElevatorModel mElevatorModel;
+    
+    private int elevatorNumber;
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -53,9 +61,56 @@ public class ElevatorController {
         assert doorStatusLabel != null : "fx:id=\"doorStatusLabel\" was not injected: check your FXML file 'Elevator.fxml'.";
         assert velocityLabel != null : "fx:id=\"velocityLabel\" was not injected: check your FXML file 'Elevator.fxml'.";
         assert elevatorNumberLabel != null : "fx:id=\"elevatorNumberLabel\" was not injected: check your FXML file 'Elevator.fxml'.";
+    
+    
+        // bei Init oder Set Funktion das Elevator Model mit hinzufügen
+        // + Listener implementieren
+        // ID über setter bzw. übers. model
+    }
+    
+    public void SetElevatorModel(ElevatorModel elevatorModel)
+    {
+    	mElevatorModel = elevatorModel;
+    	
+    	mElevatorModel.addListener(new PropertyChangeListener() {
+			
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				if(evt.getPropertyName() == "FloorNum") {
+					//int value = (int)evt.getNewValue(); // cast to suspected type and adapt view
+				}
+				else if(evt.getPropertyName() == "Direction") {
+					
+				}
+				else if(evt.getPropertyName() == "DoorStatus") {
+				}
+				else if(evt.getPropertyName() == "PressedFloorButtons") {
+					
+				}
+				else if(evt.getPropertyName() == "ServicedFloors") {
+					
+				}
+				else if(evt.getPropertyName() == "CurrentFloor") {
+					
+				}
+				else if(evt.getPropertyName() == "Speed") {
+					SetVelocity((int)evt.getNewValue());
+				}
+				else if(evt.getPropertyName() == "Acceleration") {
+				}
+				else if(evt.getPropertyName() == "Weight") {
+					SetPayload((int)evt.getNewValue());
+				}
+				else if(evt.getPropertyName() == "Target") {
+					SetDestination((int)evt.getNewValue());					
+				}
+			}
+		});
+    	
     }
     
     public void SetElevatorNumber(int number) {
+    	elevatorNumber = number;
     	elevatorNumberLabel.setText(Integer.toString(number));
     }
     
