@@ -198,7 +198,7 @@ public class ElevatorController {
     			floorButtonsListView.getItems().add(0, listItem);
     		}
     	} catch (IOException ex) {
-        	
+    		ex.printStackTrace();
         }
     	
     	numberFloors = number;

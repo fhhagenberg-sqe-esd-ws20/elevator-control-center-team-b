@@ -103,7 +103,7 @@ public class ElevatorControlController {
     			floorsListView.getItems().add(0, listItem);
     		}
     	} catch (IOException ex) {
-        	
+    		ex.printStackTrace();
         }
     	
     	numberFloors = number;
@@ -116,9 +116,8 @@ public class ElevatorControlController {
             	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Elevator.fxml"));
             	Pane listItem = fxmlLoader.load();
             	ElevatorController controller = fxmlLoader.getController();
-            	
-            	controller.SetElevatorNumber(i);
             	// initial settings
+            	controller.SetElevatorNumber(i);
             	controller.SetPayload(0);
             	controller.SetVelocity(0);
             	controller.SetDoorStatus(DoorStatus.Closed);
@@ -131,7 +130,7 @@ public class ElevatorControlController {
             	elevatorsListView.getItems().add(listItem);
             }
     	} catch (IOException ex) {
-    	
+    		ex.printStackTrace();
     	}
     	
     	numberElevators = number;

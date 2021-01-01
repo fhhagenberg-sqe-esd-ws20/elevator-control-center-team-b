@@ -25,7 +25,7 @@
             <Label id="destinationLabel" fx:id="destinationLabel" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <Label text="Direction:" GridPane.rowIndex="5" />
             <Label id="directionLabel" fx:id="directionLabel" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <CheckBox id="automaticModeCheckBox" fx:id="automaticModeCheckBox" focusTraversable="false" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <CheckBox id="automaticModeCheckBox" fx:id="automaticModeCheckBox" focusTraversable="false" mnemonicParsing="false" selected="true" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <Label text="Automatic Mode:" GridPane.rowIndex="6" />
          </children>
          <columnConstraints>
