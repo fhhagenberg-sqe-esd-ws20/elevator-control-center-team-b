@@ -21,7 +21,7 @@ public class ElevatorModelTest {
 		var elevatorMock = Mockito.mock(IElevatorControl.class, Mockito.CALLS_REAL_METHODS);
 		
 		var cut = new ElevatorModel(elevatorMock);
-		
+		Mockito.reset(elevatorMock);
 		cut.run();
 		
 		Mockito.verify(elevatorMock).getAcceleration();
@@ -234,7 +234,7 @@ public class ElevatorModelTest {
 	@Test
 	public void RunTriggersEventIfFloorNumChanges() throws ControlCenterException {
 		var elevatorMock = Mockito.mock(IElevatorControl.class, Mockito.CALLS_REAL_METHODS);
-		Mockito.when(elevatorMock.getFloorNum()).thenReturn(2);
+		Mockito.when(elevatorMock.getFloorNum()).thenReturn(2).thenReturn(3);
 		
 		var cut = new ElevatorModel(elevatorMock);
 		
@@ -247,7 +247,7 @@ public class ElevatorModelTest {
 		
 		Mockito.verify(listenerMock).propertyChange(Mockito.argThat((PropertyChangeEvent evt) -> {
 			
-			return evt.getSource() == cut && evt.getPropertyName().equals("FloorNum") && evt.getNewValue().equals(2);
+			return evt.getSource() == cut && evt.getPropertyName().equals("FloorNum") && evt.getNewValue().equals(3);
 		}));
 		
 	}

@@ -127,7 +127,6 @@ public class ElevatorControlController {
             	controller.SetNumberFloors(numberFloors);
             	// attach model
             	controller.SetElevatorModel(buildingModel.getElevator(i-1));
-            	elevatorScheduler.addElevatorController(controller);
             	elevatorControllerList.add(controller);
             	elevatorsListView.getItems().add(listItem);
             }

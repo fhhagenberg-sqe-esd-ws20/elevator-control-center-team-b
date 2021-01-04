@@ -15,6 +15,8 @@ import at.fhhagenberg.sqe.model.ElevatorModel;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.CheckBox;
@@ -147,6 +149,10 @@ public class ElevatorController {
 				}
 			}
 		});
+    	
+    	// set initial value
+    	SetDestination(0);
+    	floorControllerList.get(0).SetElevatorActive(true);
     }
     
     public void SetElevatorNumber(int number) {
@@ -180,7 +186,6 @@ public class ElevatorController {
     }
     
     public void SetDirection(Direction dir) {
-    	System.out.println("set direction has been called.");
     	if (dir == Direction.Up) {
     		Platform.runLater(() -> directionLabel.setText("up"));
     	} else if (dir == Direction.Down) {
@@ -199,6 +204,21 @@ public class ElevatorController {
 	    			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ElevatorFloor.fxml"));
 	    			Pane listItem = fxmlLoader.load();
 	    			ElevatorFloorController controller = fxmlLoader.getController();
+	    			controller.AddMouseClickEventHandler(new EventHandler() {
+						@Override
+						public void handle(Event event) {
+							try {
+					    		if(currentTarget != GetDestination() && !automaticModeCheckBox.isSelected())
+					    		{
+					    			mElevatorModel.setTarget(GetDestination());
+					    			currentTarget = GetDestination();
+					    		}
+							} catch (ControlCenterException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+	    			});
 	    			controller.SetElevatorActive(false);
 	    			controller.SetStopActive(false);
 	    			controller.SetFloorActive(true);
@@ -208,8 +228,7 @@ public class ElevatorController {
     		}
     	} catch (IOException ex) {
     		ex.printStackTrace();
-        }
-    	
+        } 
     	numberFloors = number;
     }
     
@@ -227,18 +246,5 @@ public class ElevatorController {
     
     public ElevatorFloorController GetFloor(int number) {
     	return floorControllerList.get(number);
-    }
-    
-    public void run() {
-    	try {
-    		if(currentTarget != GetDestination())
-    		{
-    			mElevatorModel.setTarget(GetDestination());
-    			currentTarget = GetDestination();
-    		}
-		} catch (ControlCenterException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
     }
 }

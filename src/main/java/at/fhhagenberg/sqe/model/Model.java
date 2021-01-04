@@ -18,6 +18,7 @@ public abstract class Model {
 	}
 	
 	protected void setProperty(String name, Object newValue) {
+		if(newValue == null) return;
 		Object oldValue = null;
 		if(mPropertyValues.containsKey(name)) {
 			oldValue = mPropertyValues.get(name);
