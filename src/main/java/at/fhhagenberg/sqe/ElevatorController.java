@@ -7,10 +7,12 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import at.fhhagenberg.sqe.controlcenter.ControlCenterException;
 import at.fhhagenberg.sqe.controlcenter.IElevatorControl;
 import at.fhhagenberg.sqe.controlcenter.IElevatorControl.Direction;
 import at.fhhagenberg.sqe.controlcenter.IElevatorControl.DoorStatus;
 import at.fhhagenberg.sqe.model.ElevatorModel;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -57,11 +59,13 @@ public class ElevatorController {
     
     private ObservableList<ElevatorFloorController> floorControllerList;
     
-    private int numberFloors;
+    private int numberFloors = 0;
     
     private ElevatorModel mElevatorModel;
     
     private int elevatorNumber;
+    
+    private int currentTarget = -1;
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -130,13 +134,13 @@ public class ElevatorController {
 					floorControllerList.get(currentFloor).SetElevatorActive(true);
 				}
 				else if(evt.getPropertyName() == "Speed") {
-					SetVelocity((int)evt.getNewValue());
+					SetVelocity((double)evt.getNewValue());
 				}
 				else if(evt.getPropertyName() == "Acceleration") {
 					// not needed
 				}
 				else if(evt.getPropertyName() == "Weight") {
-					SetPayload((int)evt.getNewValue());
+					SetPayload((double)evt.getNewValue());
 				}
 				else if(evt.getPropertyName() == "Target") {
 					SetDestination((int)evt.getNewValue());					
@@ -147,55 +151,60 @@ public class ElevatorController {
     
     public void SetElevatorNumber(int number) {
     	elevatorNumber = number;
-    	elevatorNumberLabel.setText(Integer.toString(number));
+    	Platform.runLater(() -> elevatorNumberLabel.setText(Integer.toString(number)));
     }
     
-    public void SetPayload(int payload) {
-    	payloadLabel.setText(Integer.toString(payload) + " lbs");
+    public void SetPayload(double payload) {
+    	Platform.runLater(() -> payloadLabel.setText(String.format("%.1f",  payload) + " lbs"));
     }
     
-    public void SetVelocity(int velocity) {
-    	velocityLabel.setText(Integer.toString(velocity) + " ft/s");
+    public void SetVelocity(double velocity) {
+    	Platform.runLater(() -> velocityLabel.setText(String.format("%.1f",  velocity) + " ft/s"));
     }
     
     public void SetDoorStatus(DoorStatus status) {
     	if (status == DoorStatus.Open) {
-    		doorStatusLabel.setText("open");
+    		Platform.runLater(() -> doorStatusLabel.setText("open"));
     	} else if(status == DoorStatus.Opening) {
-    		doorStatusLabel.setText("opening");
+    		Platform.runLater(() -> doorStatusLabel.setText("opening"));
     	} else if(status == DoorStatus.Closing) {
-    		doorStatusLabel.setText("closing");
+    		Platform.runLater(() -> doorStatusLabel.setText("closing"));
     	} else {
-    		doorStatusLabel.setText("closed");
+    		Platform.runLater(() -> doorStatusLabel.setText("closed"));
     	}
     }
     
     public void SetDestination(int floor) {
-    	destinationLabel.setText(Integer.toString(floor));
+    	//System.out.println("set destination has been called: " + floor);
+    	Platform.runLater(() -> destinationLabel.setText(Integer.toString(floor+1)));
     }
     
     public void SetDirection(Direction dir) {
+    	System.out.println("set direction has been called.");
     	if (dir == Direction.Up) {
-    		directionLabel.setText("up");
+    		Platform.runLater(() -> directionLabel.setText("up"));
     	} else if (dir == Direction.Down) {
-    		directionLabel.setText("down");
+    		Platform.runLater(() -> directionLabel.setText("down"));
     	} else {
-    		directionLabel.setText("--");
+    		Platform.runLater(() -> directionLabel.setText("--"));
     	}
     }
     
     public void SetNumberFloors(int number) {
     	try {
-    		floorControllerList = FXCollections.observableArrayList();
-    		for (int i = 0; i < number; i++) {
-    			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ElevatorFloor.fxml"));
-    			Pane listItem = fxmlLoader.load();
-    			ElevatorFloorController controller = fxmlLoader.getController();
-    			controller.SetElevatorActive(false);
-    			controller.SetStopActive(false);
-    			controller.SetFloorActive(true);
-    			floorControllerList.add(controller);
-    			floorButtonsListView.getItems().add(0, listItem);
+    		if(numberFloors != number)
+    		{
+	    		floorControllerList = FXCollections.observableArrayList();
+	    		for (int i = 0; i < number; i++) {
+	    			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ElevatorFloor.fxml"));
+	    			Pane listItem = fxmlLoader.load();
+	    			ElevatorFloorController controller = fxmlLoader.getController();
+	    			controller.SetElevatorActive(false);
+	    			controller.SetStopActive(false);
+	    			controller.SetFloorActive(true);
+	    			floorControllerList.add(controller);
+	    			floorButtonsListView.getItems().add(0, listItem);
+	    		}
     		}
     	} catch (IOException ex) {
     		ex.printStackTrace();
@@ -209,10 +218,27 @@ public class ElevatorController {
     }
     
     public int GetDestination() {
+    	// if no floor has been selected, the index will be -1
+    	if(floorButtonsListView.getSelectionModel().getSelectedIndex() == -1)
+    		return numberFloors -1;
+    	
     	return numberFloors - 1 - floorButtonsListView.getSelectionModel().getSelectedIndex();
     }
     
     public ElevatorFloorController GetFloor(int number) {
     	return floorControllerList.get(number);
+    }
+    
+    public void run() {
+    	try {
+    		if(currentTarget != GetDestination())
+    		{
+    			mElevatorModel.setTarget(GetDestination());
+    			currentTarget = GetDestination();
+    		}
+		} catch (ControlCenterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 }

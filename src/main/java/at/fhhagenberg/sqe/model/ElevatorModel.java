@@ -11,11 +11,15 @@ public class ElevatorModel extends AsyncModel implements IElevatorControl{
 	
 	private IElevatorControl mElevator;
 	
-	
 	public ElevatorModel(IElevatorControl elevator) {
 		mElevator = elevator;
 		// set initial values of properties
-		setProperty("FloorNum", 0);
+		try {
+			setProperty("FloorNum", mElevator.getFloorNum());
+		} catch (ControlCenterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		setProperty("Direction", IElevatorControl.Direction.Uncommited);
 		setProperty("DoorStatus", IElevatorControl.DoorStatus.Closed);
 		setProperty("PressedFloorButtons", new ArrayList<Integer>());
@@ -91,6 +95,7 @@ public class ElevatorModel extends AsyncModel implements IElevatorControl{
 	@Override
 	public void setTarget(int target) throws ControlCenterException {
 		var floorNums = getFloorNum();
+		//System.out.println("The number of the target is " + target);
 		var currentTarget = getTarget();
 		if(target >= floorNums) {
 			throw new ControlCenterException(new IllegalArgumentException("Elevator does not serve floor " + target));
@@ -168,7 +173,6 @@ public class ElevatorModel extends AsyncModel implements IElevatorControl{
 			setProperty("Acceleration", acceleration);
 			setProperty("Weight", weight);
 			setProperty("Target", target);
-			
 		} catch (ControlCenterException e) {
 			
 			// todo add error trace/log

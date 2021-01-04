@@ -76,7 +76,7 @@ public class ElevatorControlController {
         
         // schedule run-task of the model
         elevatorScheduler.addAsyncModel(buildingModel);
-        timer.scheduleAtFixedRate(elevatorScheduler, 0, timerInterval_ms);
+        
         
         // get floor models + elevator models
         int numberOfFloors = buildingModel.getFloorNum();
@@ -84,6 +84,7 @@ public class ElevatorControlController {
 
         int numberOfElevators = buildingModel.getElevatorNum();
         SetNumberElevators(numberOfElevators);
+        timer.scheduleAtFixedRate(elevatorScheduler, 0, timerInterval_ms);
     }
     
     public void SetNumberFloors(int number) {
@@ -126,6 +127,7 @@ public class ElevatorControlController {
             	controller.SetNumberFloors(numberFloors);
             	// attach model
             	controller.SetElevatorModel(buildingModel.getElevator(i-1));
+            	elevatorScheduler.addElevatorController(controller);
             	elevatorControllerList.add(controller);
             	elevatorsListView.getItems().add(listItem);
             }
@@ -148,5 +150,10 @@ public class ElevatorControlController {
     // elevators from 1 to n
     public ElevatorController GetElevator(int number) {
     	return elevatorControllerList.get(number - 1);
+    }
+    
+    // cancel the timer so all created threads will stop at termination
+    public void stop() {
+    	timer.cancel();
     }
 }
