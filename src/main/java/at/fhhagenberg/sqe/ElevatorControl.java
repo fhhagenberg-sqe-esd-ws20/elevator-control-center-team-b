@@ -18,13 +18,6 @@ public class ElevatorControl extends Application {
         try {
         	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ElevatorControl.fxml"));
         	Parent root = fxmlLoader.load();
-			controller = fxmlLoader.getController();
-//			controller.SetNumberFloors(10);
-//			controller.SetNumberElevators(5);
-//			controller.GetElevator(0).GetFloor(5).SetElevatorActive(true);
-//			controller.GetElevator(0).GetFloor(3).SetStopActive(true);
-//			controller.GetFloor(7).SetUpArrowActive(true);
-			
 			var scene = new Scene(root);
 			stage.setTitle("Elevator Control");
 			stage.setScene(scene);
@@ -32,10 +25,6 @@ public class ElevatorControl extends Application {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-    }
-
-    public ElevatorControlController GetController() {
-    	return controller;
     }
     
     public static void main(String[] args) {

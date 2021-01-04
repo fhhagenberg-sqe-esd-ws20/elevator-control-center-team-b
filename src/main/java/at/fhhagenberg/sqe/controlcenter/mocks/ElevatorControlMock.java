@@ -52,8 +52,11 @@ public class ElevatorControlMock implements IElevatorControl {
 	@Override
 	public int getCurrentFloor() {
 		var ret = mCurrentFloor;
-		if(mCurrentFloor != mTarget) {
-			mCurrentFloor = mTarget;
+		if(mCurrentFloor < mTarget) {
+			mCurrentFloor++;
+		}
+		else if(mCurrentFloor > mTarget) {
+			mCurrentFloor--;
 		}
 		return ret;
 	}

@@ -27,28 +27,26 @@ public class ElevatorControlTest {
     public void start(Stage stage) {
         var app = new ElevatorControl();
         app.start(stage);
-        // with controller floors and elevators can be accessed
-        controller = app.GetController();
     }
 
     /**
      * @param robot - Will be injected by the test runner.
      */
-    //@Test
-    //public void testButtonWithText(FxRobot robot) {
-    //    FxAssert.verifyThat("#messageTextArea", LabeledMatchers.hasText(""));
-    //}
+    @Test
+    public void testAutomaticMode(FxRobot robot) {
+        robot.clickOn("#elevatorFloorHBox");
+        FxAssert.verifyThat("#destinationLabel", LabeledMatchers.hasText("0"));
+        FxAssert.verifyThat("#directionLabel", LabeledMatchers.hasText("--"));
+    }
 
     /**
      * @param robot - Will be injected by the test runner.
      */
     @Test
-    public void testButtonClick(FxRobot robot) {
+    public void testManualMode(FxRobot robot) {
         robot.clickOn("#automaticModeCheckBox");
         robot.clickOn("#elevatorFloorHBox");
-        assertEquals(4, controller.GetElevator(1).GetDestination());
-        
-        //FxAssert.verifyThat("#automaticModeToggleButton", LabeledMatchers.hasText("Automatic Mode"));
-        //assertTrue(controller.GetAutomaticModeActive());
+        FxAssert.verifyThat("#destinationLabel", LabeledMatchers.hasText("4"));
+        FxAssert.verifyThat("#directionLabel", LabeledMatchers.hasText("--"));
     }
 }

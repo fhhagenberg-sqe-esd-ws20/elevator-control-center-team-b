@@ -65,8 +65,6 @@ public class ElevatorController {
     
     private ElevatorModel mElevatorModel;
     
-    private int elevatorNumber;
-    
     private int currentTarget = -1;
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
@@ -79,11 +77,6 @@ public class ElevatorController {
         assert automaticModeCheckBox != null : "fx:id=\"automaticModeCheckBox\" was not injected: check your FXML file 'Elevator.fxml'.";
         assert velocityLabel != null : "fx:id=\"velocityLabel\" was not injected: check your FXML file 'Elevator.fxml'.";
         assert elevatorNumberLabel != null : "fx:id=\"elevatorNumberLabel\" was not injected: check your FXML file 'Elevator.fxml'.";
-    
-    
-        // bei Init oder Set Funktion das Elevator Model mit hinzufügen
-        // + Listener implementieren
-        // ID über setter bzw. übers. model
     }
     
     public void SetElevatorModel(ElevatorModel elevatorModel)
@@ -134,6 +127,20 @@ public class ElevatorController {
 					}
 					// set only current floor
 					floorControllerList.get(currentFloor).SetElevatorActive(true);
+					try {
+						if (currentFloor < currentTarget) {
+							mElevatorModel.setDirection(Direction.Up);
+						} 
+						else if (currentFloor > currentTarget) {
+							mElevatorModel.setDirection(Direction.Down);
+						}
+						else {
+							mElevatorModel.setDirection(Direction.Uncommited);
+						}
+					}
+	    			catch (ControlCenterException e) {
+						e.printStackTrace();
+					}
 				}
 				else if(evt.getPropertyName() == "Speed") {
 					SetVelocity((double)evt.getNewValue());
@@ -156,7 +163,6 @@ public class ElevatorController {
     }
     
     public void SetElevatorNumber(int number) {
-    	elevatorNumber = number;
     	Platform.runLater(() -> elevatorNumberLabel.setText(Integer.toString(number)));
     }
     
@@ -181,8 +187,7 @@ public class ElevatorController {
     }
     
     public void SetDestination(int floor) {
-    	//System.out.println("set destination has been called: " + floor);
-    	Platform.runLater(() -> destinationLabel.setText(Integer.toString(floor+1)));
+    	Platform.runLater(() -> destinationLabel.setText(Integer.toString(floor)));
     }
     
     public void SetDirection(Direction dir) {
@@ -208,13 +213,12 @@ public class ElevatorController {
 						@Override
 						public void handle(Event event) {
 							try {
-					    		if(currentTarget != GetDestination() && !automaticModeCheckBox.isSelected())
+					    		if(currentTarget != GetDestination() && !GetAutomaticModeActive())
 					    		{
 					    			mElevatorModel.setTarget(GetDestination());
 					    			currentTarget = GetDestination();
 					    		}
 							} catch (ControlCenterException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 						}
@@ -238,10 +242,11 @@ public class ElevatorController {
     
     public int GetDestination() {
     	// if no floor has been selected, the index will be -1
-    	if(floorButtonsListView.getSelectionModel().getSelectedIndex() == -1)
-    		return numberFloors -1;
+    	int selectedIndex = floorButtonsListView.getSelectionModel().getSelectedIndex();
+    	if(selectedIndex == -1)
+    		selectedIndex = 0;
     	
-    	return numberFloors - 1 - floorButtonsListView.getSelectionModel().getSelectedIndex();
+    	return numberFloors - 1 - selectedIndex;
     }
     
     public ElevatorFloorController GetFloor(int number) {
