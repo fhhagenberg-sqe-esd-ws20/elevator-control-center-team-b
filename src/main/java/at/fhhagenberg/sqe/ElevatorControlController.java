@@ -17,6 +17,7 @@ import at.fhhagenberg.sqe.controlcenter.IElevatorControl.Direction;
 import at.fhhagenberg.sqe.controlcenter.IElevatorControl.DoorStatus;
 import at.fhhagenberg.sqe.controlcenter.mocks.BuildingMock;
 import at.fhhagenberg.sqe.model.BuildingModel;
+import at.fhhagenberg.sqe.model.ElevatorModel;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListView;
@@ -53,7 +54,7 @@ public class ElevatorControlController {
     
     private int numberElevators;
     
-    private BuildingModel buildingModel;
+    private BuildingModel mBuildingModel;
     
     private Timer timer;    
     private ElevatorScheduler elevatorScheduler;
@@ -65,76 +66,78 @@ public class ElevatorControlController {
         assert elevatorsListView != null : "fx:id=\"elevatorsListView\" was not injected: check your FXML file 'ElevatorControl.fxml'.";
         assert messageTextArea != null : "fx:id=\"messageTextArea\" was not injected: check your FXML file 'ElevatorControl.fxml'.";
         assert floorsListView != null : "fx:id=\"floorsListView\" was not injected: check your FXML file 'ElevatorControl.fxml'.";
-
-        numberFloors = 5;
-        numberElevators = 2;
-        
-        timer = new Timer();
+    }
+    
+    public void SetBuildingModel(BuildingModel buildingModel) {
+    	if (timer != null) {
+    		stop();
+    	}
+    	timer = new Timer();
         elevatorScheduler = new ElevatorScheduler();
-        
-        buildingModel = new BuildingModel(new BuildingMock(numberFloors, numberElevators, 2.0));
+        mBuildingModel = buildingModel;
         
         // schedule run-task of the model
-        elevatorScheduler.addAsyncModel(buildingModel);
-        
-        
-        // get floor models + elevator models
-        int numberOfFloors = buildingModel.getFloorNum();
-        SetNumberFloors(numberOfFloors);
+        elevatorScheduler.addAsyncModel(mBuildingModel);
 
-        int numberOfElevators = buildingModel.getElevatorNum();
-        SetNumberElevators(numberOfElevators);
+        // get floor models + elevator models
+        SetNumberFloors(mBuildingModel.getFloorNum());
+        SetNumberElevators(mBuildingModel.getElevatorNum());
+        
         timer.scheduleAtFixedRate(elevatorScheduler, 0, timerInterval_ms);
     }
     
     public void SetNumberFloors(int number) {
-    	try {
-    		floorControllerList = FXCollections.observableArrayList();
-    		for (int i = 0; i < number; i++) {
-    			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Floor.fxml"));
-    			Pane listItem = fxmlLoader.load();
-    			FloorController controller = fxmlLoader.getController();
-    			// initial settings
-    			controller.SetUpArrowActive(false);
-    			controller.SetDownArrowActive(false);
-    			controller.SetFloorNumber(i);
-    			// attach model
-    			controller.SetModel(buildingModel.getFloor(i));
-    			floorControllerList.add(controller);
-    			floorsListView.getItems().add(0, listItem);
+    	if(numberFloors != number) {
+    		try {
+    			floorControllerList = FXCollections.observableArrayList();
+    			floorsListView.getItems().clear();
+    			for (int i = 0; i < number; i++) {
+    				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Floor.fxml"));
+    				Pane listItem = fxmlLoader.load();
+    				FloorController controller = fxmlLoader.getController();
+    				// initial settings
+    				controller.SetUpArrowActive(false);
+    				controller.SetDownArrowActive(false);
+    				controller.SetFloorNumber(i);
+    				// attach model
+    				controller.SetModel(mBuildingModel.getFloor(i));
+    				floorControllerList.add(controller);
+    				floorsListView.getItems().add(0, listItem);
+    			}
+    		} catch (IOException ex) {
+    			ex.printStackTrace();
     		}
-    	} catch (IOException ex) {
-    		ex.printStackTrace();
-        }
-    	
-    	numberFloors = number;
+    		numberFloors = number;
+    	}
     }
     
     public void SetNumberElevators(int number) {
-    	try {
-            elevatorControllerList = FXCollections.observableArrayList();
-            for (int i = 1; i <= number; i++) {
-            	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Elevator.fxml"));
-            	Pane listItem = fxmlLoader.load();
-            	ElevatorController controller = fxmlLoader.getController();
-            	// initial settings
-            	controller.SetElevatorNumber(i);
-            	controller.SetPayload(0);
-            	controller.SetVelocity(0);
-            	controller.SetDoorStatus(DoorStatus.Closed);
-            	controller.SetDestination(0);
-            	controller.SetDirection(Direction.Uncommited);
-            	controller.SetNumberFloors(numberFloors);
-            	// attach model
-            	controller.SetElevatorModel(buildingModel.getElevator(i-1));
-            	elevatorControllerList.add(controller);
-            	elevatorsListView.getItems().add(listItem);
-            }
-    	} catch (IOException ex) {
-    		ex.printStackTrace();
+    	if(numberElevators != number) {
+    		try {
+    			elevatorControllerList = FXCollections.observableArrayList();
+    			elevatorsListView.getItems().clear();
+    			for (int i = 1; i <= number; i++) {
+    				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Elevator.fxml"));
+    				Pane listItem = fxmlLoader.load();
+    				ElevatorController controller = fxmlLoader.getController();
+    				// initial settings
+    				controller.SetElevatorNumber(i);
+    				controller.SetPayload(0);
+    				controller.SetVelocity(0);
+    				controller.SetDoorStatus(DoorStatus.Closed);
+    				controller.SetDestination(0);
+    				controller.SetDirection(Direction.Uncommited);
+    				controller.SetNumberFloors(numberFloors);
+    				// attach model
+    				controller.SetElevatorModel(mBuildingModel.getElevator(i-1));
+    				elevatorControllerList.add(controller);
+    				elevatorsListView.getItems().add(listItem);
+    			}
+    		} catch (IOException ex) {
+    			ex.printStackTrace();
+    		}
+    		numberElevators = number;
     	}
-    	
-    	numberElevators = number;
     }
     
     public void SetMessage(String message) {

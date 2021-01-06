@@ -11,6 +11,9 @@ import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 import org.testfx.matcher.control.LabeledMatchers;
 
+import at.fhhagenberg.sqe.controlcenter.ControlCenterException;
+import at.fhhagenberg.sqe.controlcenter.mocks.BuildingMock;
+import at.fhhagenberg.sqe.model.BuildingModel;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
@@ -27,6 +30,12 @@ public class ElevatorControlTest {
     public void start(Stage stage) {
         var app = new ElevatorControl();
         app.start(stage);
+        controller = app.GetController();
+        try {
+			controller.SetBuildingModel(new BuildingModel(new BuildingMock(5, 4, 2.0)));
+		} catch (ControlCenterException e) {
+			e.printStackTrace();
+		}  
     }
 
     /**

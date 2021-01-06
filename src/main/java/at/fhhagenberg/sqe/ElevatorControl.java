@@ -1,5 +1,7 @@
 package at.fhhagenberg.sqe;
 
+import at.fhhagenberg.sqe.controlcenter.mocks.BuildingMock;
+import at.fhhagenberg.sqe.model.BuildingModel;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,6 +20,8 @@ public class ElevatorControl extends Application {
         try {
         	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ElevatorControl.fxml"));
         	Parent root = fxmlLoader.load();
+        	controller = fxmlLoader.getController();
+        	controller.SetBuildingModel(new BuildingModel(new BuildingMock(5, 2, 2.0)));       
 			var scene = new Scene(root);
 			stage.setTitle("Elevator Control");
 			stage.setScene(scene);
@@ -27,12 +31,16 @@ public class ElevatorControl extends Application {
 		}
     }
     
-    public static void main(String[] args) {
-        launch();
-    }
-    
     @Override
     public void stop(){
         controller.stop();
+    }
+    
+    public ElevatorControlController GetController() {
+    	return controller;
+    }
+    
+    public static void main(String[] args) {
+        launch();
     }
 }

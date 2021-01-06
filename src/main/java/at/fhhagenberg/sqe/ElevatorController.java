@@ -201,39 +201,40 @@ public class ElevatorController {
     }
     
     public void SetNumberFloors(int number) {
-    	try {
-    		if(numberFloors != number)
-    		{
-	    		floorControllerList = FXCollections.observableArrayList();
-	    		for (int i = 0; i < number; i++) {
-	    			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ElevatorFloor.fxml"));
-	    			Pane listItem = fxmlLoader.load();
-	    			ElevatorFloorController controller = fxmlLoader.getController();
-	    			controller.AddMouseClickEventHandler(new EventHandler() {
-						@Override
-						public void handle(Event event) {
-							try {
-					    		if(currentTarget != GetDestination() && !GetAutomaticModeActive())
-					    		{
-					    			mElevatorModel.setTarget(GetDestination());
-					    			currentTarget = GetDestination();
-					    		}
-							} catch (ControlCenterException e) {
-								e.printStackTrace();
-							}
-						}
-	    			});
-	    			controller.SetElevatorActive(false);
-	    			controller.SetStopActive(false);
-	    			controller.SetFloorActive(true);
-	    			floorControllerList.add(controller);
-	    			floorButtonsListView.getItems().add(0, listItem);
-	    		}
-    		}
-    	} catch (IOException ex) {
-    		ex.printStackTrace();
-        } 
-    	numberFloors = number;
+    	if(numberFloors != number)
+    	{
+    		try {
+    			floorControllerList = FXCollections.observableArrayList();
+    			floorButtonsListView.getItems().clear();
+    			for (int i = 0; i < number; i++) {
+    				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ElevatorFloor.fxml"));
+    				Pane listItem = fxmlLoader.load();
+    				ElevatorFloorController controller = fxmlLoader.getController();
+    				controller.AddMouseClickEventHandler(new EventHandler() {
+    					@Override
+    					public void handle(Event event) {
+    						try {
+    							if(currentTarget != GetDestination() && !GetAutomaticModeActive())
+    							{
+    								mElevatorModel.setTarget(GetDestination());
+    								currentTarget = GetDestination();
+    							}
+    						} catch (ControlCenterException e) {
+    							e.printStackTrace();
+    						}
+    					}
+    				});
+    				controller.SetElevatorActive(false);
+    				controller.SetStopActive(false);
+    				controller.SetFloorActive(true);
+    				floorControllerList.add(controller);
+    				floorButtonsListView.getItems().add(0, listItem);
+    			}
+    		} catch (IOException ex) {
+    			ex.printStackTrace();
+    		} 
+    		numberFloors = number;
+    	}
     }
     
     public boolean GetAutomaticModeActive() {
@@ -249,7 +250,8 @@ public class ElevatorController {
     	return numberFloors - 1 - selectedIndex;
     }
     
+    // floors from 0 to n
     public ElevatorFloorController GetFloor(int number) {
-    	return floorControllerList.get(number);
+    	return floorControllerList.get(numberFloors - 1 - number);
     }
 }
