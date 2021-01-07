@@ -3,6 +3,8 @@ package at.fhhagenberg.sqe;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Locale;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.testfx.api.FxAssert;
@@ -28,6 +30,8 @@ public class ElevatorControlGuiTest {
      */
     @Start
     public void start(Stage stage) {
+    	Locale locale = new Locale("en_GB");
+    	Locale.setDefault(locale);
         var app = new ElevatorControl();
         app.start(stage);
         controller = app.GetController();
@@ -52,7 +56,7 @@ public class ElevatorControlGuiTest {
      */
     @Test
     public void testPayload(FxRobot robot) {
-        FxAssert.verifyThat("#payloadLabel", LabeledMatchers.hasText("123,5 lbs"));
+        FxAssert.verifyThat("#payloadLabel", LabeledMatchers.hasText("123.5 lbs"));
     }
 
     /**
@@ -60,7 +64,7 @@ public class ElevatorControlGuiTest {
      */
     @Test
     public void testVelocity(FxRobot robot) {
-        FxAssert.verifyThat("#velocityLabel", LabeledMatchers.hasText("0,0 ft/s"));
+        FxAssert.verifyThat("#velocityLabel", LabeledMatchers.hasText("0.0 ft/s"));
     }
     
     /**
@@ -102,5 +106,26 @@ public class ElevatorControlGuiTest {
     @Test
     public void testElevatorFloorNumber(FxRobot robot) {
         FxAssert.verifyThat("#floorButtonsListView", ListViewMatchers.hasItems(5));
+    }
+    
+    /**
+     * @param robot - Will be injected by the test runner.
+     */
+    @Test
+    public void testAutomaticMode(FxRobot robot) {
+        robot.clickOn("#elevatorFloorHBox");
+        FxAssert.verifyThat("#destinationLabel", LabeledMatchers.hasText("0"));
+        FxAssert.verifyThat("#directionLabel", LabeledMatchers.hasText("--"));
+    }
+
+    /**
+     * @param robot - Will be injected by the test runner.
+     */
+    @Test
+    public void testManualMode(FxRobot robot) {
+        robot.clickOn("#automaticModeCheckBox");
+        robot.clickOn("#elevatorFloorHBox");
+        FxAssert.verifyThat("#destinationLabel", LabeledMatchers.hasText("4"));
+        FxAssert.verifyThat("#directionLabel", LabeledMatchers.hasText("--"));
     }
 }

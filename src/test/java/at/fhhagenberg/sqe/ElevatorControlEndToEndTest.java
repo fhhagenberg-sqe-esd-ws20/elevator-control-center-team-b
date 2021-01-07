@@ -3,6 +3,8 @@ package at.fhhagenberg.sqe;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Locale;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.testfx.api.FxAssert;
@@ -27,6 +29,8 @@ public class ElevatorControlEndToEndTest {
      */
     @Start
     public void start(Stage stage) {
+    	Locale locale = new Locale("en_GB");
+    	Locale.setDefault(locale);
         var app = new ElevatorControl();
         app.start(stage);
         controller = app.GetController();
@@ -57,4 +61,8 @@ public class ElevatorControlEndToEndTest {
         FxAssert.verifyThat("#destinationLabel", LabeledMatchers.hasText("4"));
         FxAssert.verifyThat("#directionLabel", LabeledMatchers.hasText("--"));
     }
+    
+    
+    // 1. Aenderung in GUI, Check im Model (Mock) oder evtl im IElevator (Mock)
+    // 2. Aenderung in Model, Check im GUI
 }
