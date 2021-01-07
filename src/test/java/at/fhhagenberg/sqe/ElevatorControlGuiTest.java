@@ -26,15 +26,15 @@ import javafx.stage.Stage;
 public class ElevatorControlGuiTest {
     private ElevatorControlController controller;
 
-//    /**
-//     * Will be called before start method.
-//     */
-//    @Init
-//    public void init() throws Exception {
-//    	Locale locale = new Locale("en_GB");
-//    	Locale.setDefault(locale);
-//    	FxToolkit.registerStage(() -> new Stage());
-//    }
+    /**
+     * Will be called before start method.
+     */
+    @Init
+    public void init() throws Exception {
+    	Locale locale = new Locale("en_GB");
+    	Locale.setDefault(locale);
+    	FxToolkit.registerStage(() -> new Stage());
+    }
     
     /**
      * Will be called with {@code @Before} semantics, i. e. before each test method.
@@ -53,13 +53,13 @@ public class ElevatorControlGuiTest {
 		}  
     }
     
-//    /**
-//     * Will be called after each test.
-//     */
-//    @Stop
-//    public void stop() throws Exception {
-//    	FxToolkit.hideStage();
-//    }
+    /**
+     * Will be called after each test.
+     */
+    @Stop
+    public void stop() throws Exception {
+    	FxToolkit.hideStage();
+    }
     
     /**
      * @param robot - Will be injected by the test runner.
@@ -83,8 +83,6 @@ public class ElevatorControlGuiTest {
         FxAssert.verifyThat("#floorsListView", ListViewMatchers.hasItems(5));
         
         FxAssert.verifyThat("#floorButtonsListView", ListViewMatchers.hasItems(5));
-        
-        
     }
     
     /**
