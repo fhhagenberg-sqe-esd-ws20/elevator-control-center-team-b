@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<BorderPane minHeight="600.0" minWidth="150.0" prefHeight="600.0" prefWidth="150.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fhhagenberg.sqe.ElevatorController">
+<BorderPane minHeight="555.0" minWidth="150.0" prefHeight="555.0" prefWidth="150.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fhhagenberg.sqe.ElevatorController">
    <bottom>
       <ListView id="floorButtonsListView" fx:id="floorButtonsListView" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1500.0" prefWidth="150.0" BorderPane.alignment="CENTER" />
    </bottom>

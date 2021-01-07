@@ -14,11 +14,10 @@ import org.testfx.matcher.control.LabeledMatchers;
 import at.fhhagenberg.sqe.controlcenter.ControlCenterException;
 import at.fhhagenberg.sqe.controlcenter.mocks.BuildingMock;
 import at.fhhagenberg.sqe.model.BuildingModel;
-import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 @ExtendWith(ApplicationExtension.class)
-public class ElevatorControlTest {
+public class ElevatorControlEndToEndTest {
     private ElevatorControlController controller;
 
     /**

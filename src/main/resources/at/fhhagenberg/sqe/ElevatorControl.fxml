@@ -12,7 +12,11 @@
          <left>
             <BorderPane minHeight="600.0" minWidth="160.0" prefHeight="600.0" prefWidth="160.0" BorderPane.alignment="CENTER">
                <bottom>
-                  <ListView id="floorsListView" fx:id="floorsListView" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1500.0" prefWidth="160.0" BorderPane.alignment="CENTER" />
+                  <ListView id="floorsListView" fx:id="floorsListView" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1500.0" prefWidth="160.0" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets bottom="5.0" />
+                     </BorderPane.margin>
+                  </ListView>
                </bottom>
                <top>
                   <TextArea id="messageTextArea" fx:id="messageTextArea" editable="false" focusTraversable="false" maxHeight="145.0" maxWidth="150.0" minHeight="145.0" minWidth="150.0" prefHeight="145.0" prefWidth="150.0" BorderPane.alignment="CENTER">
