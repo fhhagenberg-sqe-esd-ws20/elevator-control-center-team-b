@@ -131,7 +131,7 @@ public class ElevatorControlGuiTest {
      * @param robot - Will be injected by the test runner.
      */
     @Test
-    public void testAutomaticMode(FxRobot robot) {
+    public void testAutomaticModeEndToEnd(FxRobot robot) {
         robot.clickOn("#elevatorFloorHBox");
         FxAssert.verifyThat("#destinationLabel", LabeledMatchers.hasText("0"));
         FxAssert.verifyThat("#directionLabel", LabeledMatchers.hasText("--"));
@@ -141,7 +141,7 @@ public class ElevatorControlGuiTest {
      * @param robot - Will be injected by the test runner.
      */
     @Test
-    public void testManualMode(FxRobot robot) {
+    public void testManualModeEndToEnd(FxRobot robot) {
         robot.clickOn("#automaticModeCheckBox");
         robot.clickOn("#elevatorFloorHBox");
         FxAssert.verifyThat("#destinationLabel", LabeledMatchers.hasText("4"));
