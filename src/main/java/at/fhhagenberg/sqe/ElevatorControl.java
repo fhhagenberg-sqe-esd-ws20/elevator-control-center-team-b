@@ -1,5 +1,7 @@
 package at.fhhagenberg.sqe;
 
+import java.util.Locale;
+
 import at.fhhagenberg.sqe.controlcenter.mocks.BuildingMock;
 import at.fhhagenberg.sqe.model.BuildingModel;
 import javafx.application.Application;

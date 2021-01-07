@@ -1,8 +1,5 @@
 package at.fhhagenberg.sqe;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.util.Locale;
 
 import org.junit.jupiter.api.Test;
@@ -12,6 +9,7 @@ import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 import org.testfx.matcher.control.LabeledMatchers;
+import org.testfx.matcher.control.ListViewMatchers;
 
 import at.fhhagenberg.sqe.controlcenter.ControlCenterException;
 import at.fhhagenberg.sqe.controlcenter.mocks.BuildingMock;
@@ -21,7 +19,7 @@ import javafx.stage.Stage;
 @ExtendWith(ApplicationExtension.class)
 public class ElevatorControlEndToEndTest {
     private ElevatorControlController controller;
-
+    
     /**
      * Will be called with {@code @Before} semantics, i. e. before each test method.
      *
@@ -40,7 +38,7 @@ public class ElevatorControlEndToEndTest {
 			e.printStackTrace();
 		}  
     }
-
+    
     /**
      * @param robot - Will be injected by the test runner.
      */
@@ -61,8 +59,4 @@ public class ElevatorControlEndToEndTest {
         FxAssert.verifyThat("#destinationLabel", LabeledMatchers.hasText("4"));
         FxAssert.verifyThat("#directionLabel", LabeledMatchers.hasText("--"));
     }
-    
-    
-    // 1. Aenderung in GUI, Check im Model (Mock) oder evtl im IElevator (Mock)
-    // 2. Aenderung in Model, Check im GUI
 }
