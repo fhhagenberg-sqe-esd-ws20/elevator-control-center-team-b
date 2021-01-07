@@ -17,7 +17,7 @@ import at.fhhagenberg.sqe.model.BuildingModel;
 import javafx.stage.Stage;
 
 @ExtendWith(ApplicationExtension.class)
-public class ElevatorControlGuiTest {
+public class ElevatorControlEndToEndTest {
     private ElevatorControlController controller;
     
     /**
@@ -37,30 +37,6 @@ public class ElevatorControlGuiTest {
 		} catch (ControlCenterException e) {
 			e.printStackTrace();
 		}  
-    }
-    
-    /**
-     * @param robot - Will be injected by the test runner.
-     */
-    @Test
-    public void testDefaultValues(FxRobot robot) {
-        FxAssert.verifyThat("#elevatorNumberLabel", LabeledMatchers.hasText("1"));
-        FxAssert.verifyThat("#elevatorsListView", ListViewMatchers.hasItems(4));
-        
-        FxAssert.verifyThat("#payloadLabel", LabeledMatchers.hasText("123.5 lbs"));
-        
-        FxAssert.verifyThat("#velocityLabel", LabeledMatchers.hasText("0.0 ft/s"));
-        
-        FxAssert.verifyThat("#doorStatusLabel", LabeledMatchers.hasText("closed"));
-        
-        FxAssert.verifyThat("#destinationLabel", LabeledMatchers.hasText("0"));
-        
-        FxAssert.verifyThat("#directionLabel", LabeledMatchers.hasText("--"));
-        
-        FxAssert.verifyThat("#floorNumberLabel", LabeledMatchers.hasText("4"));
-        FxAssert.verifyThat("#floorsListView", ListViewMatchers.hasItems(5));
-        
-        FxAssert.verifyThat("#floorButtonsListView", ListViewMatchers.hasItems(5));
     }
     
     /**
