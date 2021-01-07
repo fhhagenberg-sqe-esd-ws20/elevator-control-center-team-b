@@ -1,5 +1,7 @@
 package at.fhhagenberg.sqe;
 
+import java.util.Locale;
+
 import at.fhhagenberg.sqe.controlcenter.mocks.BuildingMock;
 import at.fhhagenberg.sqe.model.BuildingModel;
 import javafx.application.Application;
@@ -18,6 +20,8 @@ public class ElevatorControl extends Application {
     @Override
     public void start(Stage stage) {
         try {
+        	Locale locale = new Locale("en_GB");
+        	Locale.setDefault(locale);
         	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ElevatorControl.fxml"));
         	Parent root = fxmlLoader.load();
         	controller = fxmlLoader.getController();
