@@ -20,8 +20,6 @@ public class ElevatorControl extends Application {
     @Override
     public void start(Stage stage) {
         try {
-        	Locale locale = new Locale("en_GB");
-        	Locale.setDefault(locale);
         	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ElevatorControl.fxml"));
         	Parent root = fxmlLoader.load();
         	controller = fxmlLoader.getController();
