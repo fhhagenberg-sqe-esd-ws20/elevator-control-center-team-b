@@ -31,6 +31,8 @@ public class ElevatorControlGuiTest {
      */
     @Init
     public void init() throws Exception {
+    	Locale locale = new Locale("en_GB");
+    	Locale.setDefault(locale);
     	FxToolkit.registerStage(() -> new Stage());
     }
     
@@ -41,8 +43,6 @@ public class ElevatorControlGuiTest {
      */
     @Start
     public void start(Stage stage) {
-    	Locale locale = new Locale("en_GB");
-    	Locale.setDefault(locale);
         var app = new ElevatorControl();
         app.start(stage);
         controller = app.GetController();
