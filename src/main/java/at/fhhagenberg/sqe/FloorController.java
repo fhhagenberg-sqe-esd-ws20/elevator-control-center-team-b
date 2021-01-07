@@ -16,19 +16,19 @@ import javafx.scene.image.ImageView;
 public class FloorController {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
-    private ResourceBundle resources;
+    protected ResourceBundle resources;
 
     @FXML // URL location of the FXML file that was given to the FXMLLoader
-    private URL location;
+    protected URL location;
 
     @FXML // fx:id="upArrowImageView"
-    private ImageView upArrowImageView; // Value injected by FXMLLoader
+    protected ImageView upArrowImageView; // Value injected by FXMLLoader
 
     @FXML // fx:id="floorNumberLabel"
-    private Label floorNumberLabel; // Value injected by FXMLLoader
+    protected Label floorNumberLabel; // Value injected by FXMLLoader
 
     @FXML // fx:id="downArrowImageView"
-    private ImageView downArrowImageView; // Value injected by FXMLLoader
+    protected ImageView downArrowImageView; // Value injected by FXMLLoader
     
     private FloorModel mFloorModel;
 

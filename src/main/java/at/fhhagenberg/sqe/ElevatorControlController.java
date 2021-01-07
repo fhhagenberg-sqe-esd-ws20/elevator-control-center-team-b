@@ -32,19 +32,19 @@ import javafx.scene.layout.Pane;
 public class ElevatorControlController {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
-    private ResourceBundle resources;
+    protected ResourceBundle resources;
 
     @FXML // URL location of the FXML file that was given to the FXMLLoader
-    private URL location;
+    protected URL location;
 
     @FXML // fx:id="elevatorsListView"
-    private ListView<Pane> elevatorsListView; // Value injected by FXMLLoader
+    protected ListView<Pane> elevatorsListView; // Value injected by FXMLLoader
 
     @FXML // fx:id="messageTextArea"
-    private TextArea messageTextArea; // Value injected by FXMLLoader
+    protected TextArea messageTextArea; // Value injected by FXMLLoader
 
     @FXML // fx:id="floorsListView"
-    private ListView<Pane> floorsListView; // Value injected by FXMLLoader
+    protected ListView<Pane> floorsListView; // Value injected by FXMLLoader
 
     private ObservableList<FloorController> floorControllerList;
     
@@ -62,7 +62,7 @@ public class ElevatorControlController {
     private final int timerInterval_ms = 100;
     
     @FXML // This method is called by the FXMLLoader when initialization is complete
-    void initialize() throws ControlCenterException {
+    void initialize() {
         assert elevatorsListView != null : "fx:id=\"elevatorsListView\" was not injected: check your FXML file 'ElevatorControl.fxml'.";
         assert messageTextArea != null : "fx:id=\"messageTextArea\" was not injected: check your FXML file 'ElevatorControl.fxml'.";
         assert floorsListView != null : "fx:id=\"floorsListView\" was not injected: check your FXML file 'ElevatorControl.fxml'.";
@@ -146,7 +146,7 @@ public class ElevatorControlController {
     
     // floors from 0 to n
     public FloorController GetFloor(int number) {
-    	return floorControllerList.get(numberFloors - 1 - number);
+    	return floorControllerList.get(number);
     }
     
     // elevators from 1 to n

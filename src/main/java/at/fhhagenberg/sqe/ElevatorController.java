@@ -30,34 +30,34 @@ import javafx.scene.layout.Pane;
 public class ElevatorController {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
-    private ResourceBundle resources;
+    protected ResourceBundle resources;
 
     @FXML // URL location of the FXML file that was given to the FXMLLoader
-    private URL location;
+    protected URL location;
 
     @FXML // fx:id="destinationLabel"
-    private Label destinationLabel; // Value injected by FXMLLoader
+    protected Label destinationLabel; // Value injected by FXMLLoader
 
     @FXML // fx:id="payloadLabel"
-    private Label payloadLabel; // Value injected by FXMLLoader
+    protected Label payloadLabel; // Value injected by FXMLLoader
 
     @FXML // fx:id="floorButtonsListView"
-    private ListView<Pane> floorButtonsListView; // Value injected by FXMLLoader
+    protected ListView<Pane> floorButtonsListView; // Value injected by FXMLLoader
 
     @FXML // fx:id="doorStatusLabel"
-    private Label doorStatusLabel; // Value injected by FXMLLoader
+    protected Label doorStatusLabel; // Value injected by FXMLLoader
 
     @FXML // fx:id="directionLabel"
-    private Label directionLabel; // Value injected by FXMLLoader
+    protected Label directionLabel; // Value injected by FXMLLoader
 
     @FXML // fx:id="automaticModeCheckBox"
-    private CheckBox automaticModeCheckBox; // Value injected by FXMLLoader
+    protected CheckBox automaticModeCheckBox; // Value injected by FXMLLoader
 
     @FXML // fx:id="velocityLabel"
-    private Label velocityLabel; // Value injected by FXMLLoader
+    protected Label velocityLabel; // Value injected by FXMLLoader
 
     @FXML // fx:id="elevatorNumberLabel"
-    private Label elevatorNumberLabel; // Value injected by FXMLLoader
+    protected Label elevatorNumberLabel; // Value injected by FXMLLoader
     
     private ObservableList<ElevatorFloorController> floorControllerList;
     
@@ -252,6 +252,6 @@ public class ElevatorController {
     
     // floors from 0 to n
     public ElevatorFloorController GetFloor(int number) {
-    	return floorControllerList.get(numberFloors - 1 - number);
+    	return floorControllerList.get(number);
     }
 }

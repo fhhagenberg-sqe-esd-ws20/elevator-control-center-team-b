@@ -17,22 +17,22 @@ import javafx.scene.layout.HBox;
 public class ElevatorFloorController {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
-    private ResourceBundle resources;
+    protected ResourceBundle resources;
 
     @FXML // URL location of the FXML file that was given to the FXMLLoader
-    private URL location;
+    protected URL location;
 
     @FXML // fx:id="elevatorImageView"
-    private ImageView elevatorImageView; // Value injected by FXMLLoader
+    protected ImageView elevatorImageView; // Value injected by FXMLLoader
     
     @FXML // fx:id="elevatorFloorHBox"
-    private HBox elevatorFloorHBox; // Value injected by FXMLLoader
+    protected HBox elevatorFloorHBox; // Value injected by FXMLLoader
     
     @FXML // fx:id="elevatorFloorAnchorPane"
-    private AnchorPane elevatorFloorAnchorPane; // Value injected by FXMLLoader
+    protected AnchorPane elevatorFloorAnchorPane; // Value injected by FXMLLoader
 
     @FXML // fx:id="stopImageView"
-    private ImageView stopImageView; // Value injected by FXMLLoader
+    protected ImageView stopImageView; // Value injected by FXMLLoader
     
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
