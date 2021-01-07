@@ -9,8 +9,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.testfx.api.FxAssert;
 import org.testfx.api.FxRobot;
+import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit5.ApplicationExtension;
+import org.testfx.framework.junit5.Init;
 import org.testfx.framework.junit5.Start;
+import org.testfx.framework.junit5.Stop;
 import org.testfx.matcher.control.LabeledMatchers;
 import org.testfx.matcher.control.ListViewMatchers;
 
@@ -24,12 +27,22 @@ public class ElevatorControlGuiTest {
     private ElevatorControlController controller;
 
     /**
+     * Will be called before start method.
+     */
+    @Init
+    public void init() throws Exception {
+    	FxToolkit.registerStage(() -> new Stage());
+    }
+    
+    /**
      * Will be called with {@code @Before} semantics, i. e. before each test method.
      *
      * @param stage - Will be injected by the test runner.
      */
     @Start
     public void start(Stage stage) {
+    	Locale locale = new Locale("en_GB");
+    	Locale.setDefault(locale);
         var app = new ElevatorControl();
         app.start(stage);
         controller = app.GetController();
@@ -38,6 +51,14 @@ public class ElevatorControlGuiTest {
 		} catch (ControlCenterException e) {
 			e.printStackTrace();
 		}  
+    }
+    
+    /**
+     * Will be called after each test.
+     */
+    @Stop
+    public void stop() throws Exception {
+    	FxToolkit.hideStage();
     }
     
     /**
