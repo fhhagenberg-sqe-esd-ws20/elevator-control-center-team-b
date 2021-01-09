@@ -25,6 +25,9 @@ public class ElevatorFloorControllerTest extends ElevatorFloorController {
 		}
 	}
 	
+	/**
+	 * Init FXML variables.
+	 */
 	@BeforeEach
 	protected void setUp() throws Exception {
 		controller = new ElevatorFloorController();

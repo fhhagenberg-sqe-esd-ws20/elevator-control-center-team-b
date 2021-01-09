@@ -48,7 +48,7 @@ public class BuildingModelTest {
 		
 		cut.run();
 		
-		Mockito.verify(floorMock, Mockito.times(3)).getFloorId();
+		Mockito.verify(floorMock, Mockito.times(3)).isButtonUpPressed();
 		Mockito.verify(elevatorMock, Mockito.times(2)).getAcceleration();
 	}
 	

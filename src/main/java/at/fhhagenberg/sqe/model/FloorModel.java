@@ -9,23 +9,28 @@ public class FloorModel extends AsyncModel implements IFloor {
 	
 	public FloorModel(IFloor floor) {
 		mFloor = floor;
-		setProperty("Id", 0);
+		try {
+			setProperty("Id", mFloor.getFloorId());
+		} catch (ControlCenterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		setProperty("ButtonUp", false);
 		setProperty("ButtonDown", false);
 	}
 
 	@Override
-	public int getFloorId() throws ControlCenterException {
+	public int getFloorId() {
 		return (int) getProperty("Id");
 	}
 
 	@Override
-	public boolean isButtonUpPressed() throws ControlCenterException {
+	public boolean isButtonUpPressed() {
 		return (boolean)getProperty("ButtonUp");
 	}
 
 	@Override
-	public boolean isButtonDownPressed() throws ControlCenterException {
+	public boolean isButtonDownPressed() {
 		return (boolean)getProperty("ButtonDown");
 	}
 	

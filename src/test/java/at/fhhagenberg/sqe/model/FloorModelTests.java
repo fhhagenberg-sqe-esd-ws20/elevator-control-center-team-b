@@ -20,7 +20,7 @@ public class FloorModelTests {
 		var floorMock = Mockito.mock(IFloor.class);
 		
 		var cut = new FloorModel(floorMock);
-		
+		Mockito.reset(floorMock);
 		cut.run();
 		
 		Mockito.verify(floorMock).getFloorId();
@@ -34,14 +34,14 @@ public class FloorModelTests {
 		var listenerMock = Mockito.mock(PropertyChangeListener.class);
 		
 		var floorMock = Mockito.mock(IFloor.class);
-		Mockito.when(floorMock.getFloorId()).thenReturn(1);
+		Mockito.when(floorMock.getFloorId()).thenReturn(1).thenReturn(2);
 		
 		var cut = new FloorModel(floorMock);
 		cut.addListener(listenerMock);
 		cut.run();
 		
 		Mockito.verify(listenerMock).propertyChange(Mockito.argThat((PropertyChangeEvent evt) -> {
-			return evt.getSource() == cut && evt.getPropertyName() == "Id" && evt.getNewValue().equals(1);
+			return evt.getSource() == cut && evt.getPropertyName() == "Id" && evt.getNewValue().equals(2);
 		}));
 	}
 	

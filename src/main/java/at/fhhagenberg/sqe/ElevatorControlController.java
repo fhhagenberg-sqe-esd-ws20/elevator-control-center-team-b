@@ -87,7 +87,7 @@ public class ElevatorControlController {
     }
     
     public void SetNumberFloors(int number) {
-    	if(numberFloors != number) {
+    	if(number > 0 && numberFloors != number) {
     		try {
     			floorControllerList = FXCollections.observableArrayList();
     			floorsListView.getItems().clear();
@@ -100,7 +100,7 @@ public class ElevatorControlController {
     				controller.SetDownArrowActive(false);
     				controller.SetFloorNumber(i);
     				// attach model
-    				controller.SetModel(mBuildingModel.getFloor(i));
+    				controller.SetFloorModel(mBuildingModel.getFloor(i));
     				floorControllerList.add(controller);
     				floorsListView.getItems().add(0, listItem);
     			}
@@ -112,7 +112,7 @@ public class ElevatorControlController {
     }
     
     public void SetNumberElevators(int number) {
-    	if(numberElevators != number) {
+    	if(number > 0 && numberElevators != number) {
     		try {
     			elevatorControllerList = FXCollections.observableArrayList();
     			elevatorsListView.getItems().clear();
@@ -149,9 +149,9 @@ public class ElevatorControlController {
     	return floorControllerList.get(number);
     }
     
-    // elevators from 1 to n
+    // elevators from 0 to n
     public ElevatorController GetElevator(int number) {
-    	return elevatorControllerList.get(number - 1);
+    	return elevatorControllerList.get(number);
     }
     
     // cancel the timer so all created threads will stop at termination

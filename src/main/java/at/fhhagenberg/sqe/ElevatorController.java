@@ -82,129 +82,126 @@ public class ElevatorController {
     public void SetElevatorModel(ElevatorModel elevatorModel)
     {
     	mElevatorModel = elevatorModel;
-    	
+    	SetNumberFloors(mElevatorModel.getFloorNum());
     	mElevatorModel.addListener(new PropertyChangeListener() {
-			
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
-				if(evt.getPropertyName() == "FloorNum") {
-					// maximum number of floors
-					SetNumberFloors((int)evt.getNewValue());
-				}
-				else if(evt.getPropertyName() == "Direction") {
-					SetDirection((Direction)evt.getNewValue());
-				}
-				else if(evt.getPropertyName() == "DoorStatus") {
-					SetDoorStatus((DoorStatus)evt.getNewValue());
-				}
-				else if(evt.getPropertyName() == "PressedFloorButtons") {
-					List<Integer> pressedButtons = mElevatorModel.getPressedFloorButtons();
-					// reset all floors previously
-					for(ElevatorFloorController floor : floorControllerList) {
-						floor.SetStopActive(false);
+				Platform.runLater(() -> {
+					if(evt.getPropertyName() == "FloorNum") {
+						// maximum number of floors
+						SetNumberFloors((int)evt.getNewValue());
 					}
-					// get new list + update
-					for(int i : pressedButtons) {
-						floorControllerList.get(i).SetStopActive(true);
+					else if(evt.getPropertyName() == "Direction") {
+						SetDirection((Direction)evt.getNewValue());
 					}
-				}
-				else if(evt.getPropertyName() == "ServicedFloors") {
-					List<Integer> activeFloors = mElevatorModel.getServicedFloors();
-					// reset all floors previously
-					for(ElevatorFloorController floor : floorControllerList) {
-						floor.SetFloorActive(false);
+					else if(evt.getPropertyName() == "DoorStatus") {
+						SetDoorStatus((DoorStatus)evt.getNewValue());
 					}
-					// get new list + update
-					for(int i : activeFloors) {
-						floorControllerList.get(i).SetFloorActive(true);
-					}
-				}
-				else if(evt.getPropertyName() == "CurrentFloor") {
-					int currentFloor = mElevatorModel.getCurrentFloor();
-					// reset all floors
-					for(ElevatorFloorController floor : floorControllerList) {
-						floor.SetElevatorActive(false);
-					}
-					// set only current floor
-					floorControllerList.get(currentFloor).SetElevatorActive(true);
-					try {
-						if (currentFloor < currentTarget) {
-							mElevatorModel.setDirection(Direction.Up);
-						} 
-						else if (currentFloor > currentTarget) {
-							mElevatorModel.setDirection(Direction.Down);
+					else if(evt.getPropertyName() == "PressedFloorButtons") {
+						List<Integer> pressedButtons = mElevatorModel.getPressedFloorButtons();
+						// reset all floors previously
+						for(ElevatorFloorController floor : floorControllerList) {
+							floor.SetStopActive(false);
 						}
-						else {
-							mElevatorModel.setDirection(Direction.Uncommited);
+						// get new list + update
+						for(int i : pressedButtons) {
+							floorControllerList.get(i).SetStopActive(true);
 						}
 					}
-	    			catch (ControlCenterException e) {
-						e.printStackTrace();
+					else if(evt.getPropertyName() == "ServicedFloors") {
+						List<Integer> activeFloors = mElevatorModel.getServicedFloors();
+						// reset all floors previously
+						for(ElevatorFloorController floor : floorControllerList) {
+							floor.SetFloorActive(false);
+						}
+						// get new list + update
+						for(int i : activeFloors) {
+							floorControllerList.get(i).SetFloorActive(true);
+						}
 					}
-				}
-				else if(evt.getPropertyName() == "Speed") {
-					SetVelocity((double)evt.getNewValue());
-				}
-				else if(evt.getPropertyName() == "Acceleration") {
-					// not needed
-				}
-				else if(evt.getPropertyName() == "Weight") {
-					SetPayload((double)evt.getNewValue());
-				}
-				else if(evt.getPropertyName() == "Target") {
-					SetDestination((int)evt.getNewValue());					
-				}
+					else if(evt.getPropertyName() == "CurrentFloor") {
+						int currentFloor = mElevatorModel.getCurrentFloor();
+						// reset all floors
+						for(ElevatorFloorController floor : floorControllerList) {
+							floor.SetElevatorActive(false);
+						}
+						// set only current floor
+						floorControllerList.get(currentFloor).SetElevatorActive(true);
+						try {
+							if (currentFloor < currentTarget) {
+								mElevatorModel.setDirection(Direction.Up);
+							} 
+							else if (currentFloor > currentTarget) {
+								mElevatorModel.setDirection(Direction.Down);
+							}
+							else {
+								mElevatorModel.setDirection(Direction.Uncommited);
+							}
+						}
+		    			catch (ControlCenterException e) {
+							e.printStackTrace();
+						}
+					}
+					else if(evt.getPropertyName() == "Speed") {
+						SetVelocity((double)evt.getNewValue());
+					}
+					else if(evt.getPropertyName() == "Acceleration") {
+						// not needed
+					}
+					else if(evt.getPropertyName() == "Weight") {
+						SetPayload((double)evt.getNewValue());
+					}
+					else if(evt.getPropertyName() == "Target") {
+						SetDestination((int)evt.getNewValue());					
+					}
+				});
 			}
 		});
-    	
-    	// set initial value
-    	SetDestination(0);
-    	floorControllerList.get(0).SetElevatorActive(true);
     }
     
     public void SetElevatorNumber(int number) {
-    	Platform.runLater(() -> elevatorNumberLabel.setText(Integer.toString(number)));
+    	elevatorNumberLabel.setText(Integer.toString(number));
     }
     
     public void SetPayload(double payload) {
-    	Platform.runLater(() -> payloadLabel.setText(String.format("%.1f",  payload) + " lbs"));
+    	payloadLabel.setText(String.format("%.1f",  payload) + " lbs");
     }
     
     public void SetVelocity(double velocity) {
-    	Platform.runLater(() -> velocityLabel.setText(String.format("%.1f",  velocity) + " ft/s"));
+    	velocityLabel.setText(String.format("%.1f",  velocity) + " ft/s");
     }
     
     public void SetDoorStatus(DoorStatus status) {
     	if (status == DoorStatus.Open) {
-    		Platform.runLater(() -> doorStatusLabel.setText("open"));
+    		doorStatusLabel.setText("open");
     	} else if(status == DoorStatus.Opening) {
-    		Platform.runLater(() -> doorStatusLabel.setText("opening"));
+    		doorStatusLabel.setText("opening");
     	} else if(status == DoorStatus.Closing) {
-    		Platform.runLater(() -> doorStatusLabel.setText("closing"));
+    		doorStatusLabel.setText("closing");
     	} else {
-    		Platform.runLater(() -> doorStatusLabel.setText("closed"));
+    		doorStatusLabel.setText("closed");
     	}
     }
     
     public void SetDestination(int floor) {
-    	Platform.runLater(() -> destinationLabel.setText(Integer.toString(floor)));
+    	destinationLabel.setText(Integer.toString(floor));
     }
     
     public void SetDirection(Direction dir) {
     	if (dir == Direction.Up) {
-    		Platform.runLater(() -> directionLabel.setText("up"));
+    		directionLabel.setText("up");
     	} else if (dir == Direction.Down) {
-    		Platform.runLater(() -> directionLabel.setText("down"));
+    		directionLabel.setText("down");
     	} else {
-    		Platform.runLater(() -> directionLabel.setText("--"));
+    		directionLabel.setText("--");
     	}
     }
     
     public void SetNumberFloors(int number) {
-    	if(numberFloors != number)
+    	if(number > 0 && numberFloors != number)
     	{
     		try {
-    			floorControllerList = FXCollections.observableArrayList();
+    			floorControllerList = FXCollections.observableArrayList();;
     			floorButtonsListView.getItems().clear();
     			for (int i = 0; i < number; i++) {
     				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ElevatorFloor.fxml"));
@@ -230,6 +227,7 @@ public class ElevatorController {
     				floorControllerList.add(controller);
     				floorButtonsListView.getItems().add(0, listItem);
     			}
+    			floorControllerList.get(0).SetElevatorActive(true);
     		} catch (IOException ex) {
     			ex.printStackTrace();
     		} 
@@ -243,11 +241,12 @@ public class ElevatorController {
     
     public int GetDestination() {
     	// if no floor has been selected, the index will be -1
+    	int ret = -1;
     	int selectedIndex = floorButtonsListView.getSelectionModel().getSelectedIndex();
-    	if(selectedIndex == -1)
-    		selectedIndex = 0;
+    	if(selectedIndex > -1)
+    		ret = numberFloors - 1 - selectedIndex;
     	
-    	return numberFloors - 1 - selectedIndex;
+    	return ret;
     }
     
     // floors from 0 to n

@@ -4,6 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import at.fhhagenberg.sqe.controlcenter.mocks.FloorMock;
+import at.fhhagenberg.sqe.model.FloorModel;
+
 import org.junit.jupiter.api.BeforeEach;
 
 import javafx.scene.image.ImageView;
@@ -25,12 +29,21 @@ public class FloorControllerTest extends FloorController {
 		}
 	}
 	
+	/**
+	 * Init FXML variables.
+	 */
 	@BeforeEach
 	protected void setUp() throws Exception {
 		controller = new FloorController();
 		controller.floorNumberLabel = new Label();
 		controller.upArrowImageView = new ImageView();
 		controller.downArrowImageView = new ImageView();
+	}
+	
+	@Test
+	public void testSetFloorModel() {
+		controller.SetFloorModel(new FloorModel(new FloorMock(1)));
+		assertEquals("1", controller.floorNumberLabel.getText());
 	}
 	
 	@Test
