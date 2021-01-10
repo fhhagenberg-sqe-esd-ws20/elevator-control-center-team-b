@@ -1,5 +1,6 @@
 package at.fhhagenberg.sqe;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,8 +12,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 import at.fhhagenberg.sqe.controlcenter.ControlCenterException;
+import at.fhhagenberg.sqe.controlcenter.IBuilding;
 import at.fhhagenberg.sqe.controlcenter.IElevatorControl.Direction;
 import at.fhhagenberg.sqe.controlcenter.IElevatorControl.DoorStatus;
 import at.fhhagenberg.sqe.controlcenter.mocks.BuildingMock;
@@ -55,26 +61,91 @@ public class ElevatorControlController {
     private int numberElevators;
     
     private BuildingModel mBuildingModel;
+    private ElevatorExceptionHandler mHandler;
+    private ScheduledFuture<?> mHandlerFuture;
     
-    private Timer timer;    
+    ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
+     
     private ElevatorScheduler elevatorScheduler;
+    private ScheduledFuture<?> mSchedulerFuture;
     
-    private final int timerInterval_ms = 100;
+    private final int timerInterval_ms = 1000;
     
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert elevatorsListView != null : "fx:id=\"elevatorsListView\" was not injected: check your FXML file 'ElevatorControl.fxml'.";
         assert messageTextArea != null : "fx:id=\"messageTextArea\" was not injected: check your FXML file 'ElevatorControl.fxml'.";
         assert floorsListView != null : "fx:id=\"floorsListView\" was not injected: check your FXML file 'ElevatorControl.fxml'.";
+        elevatorScheduler = new ElevatorScheduler();
+    }
+    
+    public void setError(String str) {
+    	// TODO: add error to gui
+    	System.out.println(str);
+    }
+    
+    public void updateModel(IBuilding building) throws ControlCenterException {
+    	if(mBuildingModel == null) {
+    		var model = new BuildingModel(building);
+    		mHandlerFuture.cancel(false);
+    		Platform.runLater(() -> SetBuildingModel(model));
+    	}
+    	else {
+    		mBuildingModel.updateBuilding(building);
+    		mHandlerFuture.cancel(false);
+    		mSchedulerFuture = scheduledExecutorService.scheduleAtFixedRate(()->elevatorScheduler.run(),timerInterval_ms,timerInterval_ms,TimeUnit.MILLISECONDS);
+    	}
+    	
+    	
+    	
+    }
+    
+    private boolean isInErrorMode() {
+    	if(mSchedulerFuture == null || mSchedulerFuture.isCancelled()) {
+    		return true;
+    	}
+    	return false;
+    }
+    
+    private void setErrorMode() {
+    	// TODO: set gui in error mode
+    	System.out.println("Set into error Mode");
+    	if(mSchedulerFuture != null) {
+    		mSchedulerFuture.cancel(false);
+    	}
+    	mHandlerFuture = scheduledExecutorService.scheduleAtFixedRate(()->mHandler.run(),timerInterval_ms,timerInterval_ms,TimeUnit.MILLISECONDS);
+    }
+    
+    public void SetExceptionHandler(ElevatorExceptionHandler handler) {
+    	mHandler = handler;
     }
     
     public void SetBuildingModel(BuildingModel buildingModel) {
-    	if (timer != null) {
-    		stop();
+    	var me = this;
+    	if(buildingModel == null) {
+    		setErrorMode();
+    		return;
     	}
-    	timer = new Timer();
-        elevatorScheduler = new ElevatorScheduler();
+    	System.out.println("Set first buildingModel!");
+
         mBuildingModel = buildingModel;
+        mBuildingModel.addListener(new PropertyChangeListener() {
+
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				if(evt.getPropertyName() == "Exception") {
+					if(evt.getNewValue().getClass() == ControlCenterException.class) {
+						if(!me.isInErrorMode()) {
+							me.setErrorMode();
+						}
+					}
+					else {
+						System.out.print("Unhandled Exception occured: ");
+						System.out.println(evt.getNewValue().toString());
+					}
+				}
+			}
+        });
         
         // schedule run-task of the model
         elevatorScheduler.addAsyncModel(mBuildingModel);
@@ -82,8 +153,8 @@ public class ElevatorControlController {
         // get floor models + elevator models
         SetNumberFloors(mBuildingModel.getFloorNum());
         SetNumberElevators(mBuildingModel.getElevatorNum());
-        
-        timer.scheduleAtFixedRate(elevatorScheduler, 0, timerInterval_ms);
+
+        mSchedulerFuture = scheduledExecutorService.scheduleAtFixedRate(()->elevatorScheduler.run(),timerInterval_ms,timerInterval_ms,TimeUnit.MILLISECONDS);
     }
     
     public void SetNumberFloors(int number) {
@@ -156,6 +227,12 @@ public class ElevatorControlController {
     
     // cancel the timer so all created threads will stop at termination
     public void stop() {
-    	timer.cancel();
+    	if(mSchedulerFuture != null) {
+    		mSchedulerFuture.cancel(false);
+    	}
+    	if(mHandlerFuture != null) {
+    		mHandlerFuture.cancel(false);
+    	}
+    	scheduledExecutorService.shutdown();
     }
 }

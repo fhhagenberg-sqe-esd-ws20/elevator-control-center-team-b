@@ -1,7 +1,13 @@
 package at.fhhagenberg.sqe.model;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+
 import at.fhhagenberg.sqe.controlcenter.ControlCenterException;
 import at.fhhagenberg.sqe.controlcenter.IBuilding;
+import at.fhhagenberg.sqe.controlcenter.IElevatorControl;
+import at.fhhagenberg.sqe.controlcenter.IFloor;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -24,6 +30,72 @@ public class BuildingModel extends AsyncModel {
 		
 		for(int i = 0; i < elevators; i++) {
 			mElevators.add(new ElevatorModel(mBuilding.getElevator(i)));
+		}
+		addExceptionProperty();
+	}
+	
+	public void updateBuilding(IBuilding building) throws ControlCenterException {
+		
+		var floors = mBuilding.getNumberOfFloors();
+		var elevators = mBuilding.getNumberOfElevators();
+		if(floors != mFloors.size()) {
+			throw new ControlCenterException("New building has a new amount of floors.");
+		}
+		if(elevators != mElevators.size()) {
+			throw new ControlCenterException("New building has a new amount of evelators.");
+		}
+		
+		// verify first if all floors and elevators are reachable
+		var newFloorList = new ArrayList<IFloor>();
+		var newElevatorList = new ArrayList<IElevatorControl>();
+		
+		for(int i = 0; i < floors; i++) {
+			newFloorList.add(building.getFloor(i));
+		}
+		
+		for(int i = 0; i < elevators; i++) {
+			newElevatorList.add(mBuilding.getElevator(i));
+		}
+		
+		for(int i = 0; i < floors; i++) {
+			mFloors.get(i).updateFloor(newFloorList.get(i));
+		}
+		
+		for(int i = 0; i < elevators; i++) {
+			mElevators.get(i).updateElevator(newElevatorList.get(i));
+		}
+		
+		mBuilding = building;
+	}
+	
+	private void addExceptionProperty() {
+		var me = this;
+		for(FloorModel model : mFloors) {
+			model.addListener(new PropertyChangeListener(){
+
+				@Override
+				public void propertyChange(PropertyChangeEvent evt) {
+					if(evt.getPropertyName() == "Exception") {
+						me.setProperty("Exception", evt.getNewValue());
+					}
+					
+				}
+				
+			});
+		}
+		
+		for(ElevatorModel model : mElevators) {
+			model.addListener(new PropertyChangeListener(){
+
+				@Override
+				public void propertyChange(PropertyChangeEvent evt) {
+					if(evt.getPropertyName() == "Exception") {
+						me.setProperty("Exception", evt.getNewValue());
+					}
+					
+				}
+				
+			});
 		}
 	}
 	

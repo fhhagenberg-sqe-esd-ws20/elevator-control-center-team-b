@@ -24,12 +24,14 @@ public class ElevatorControlGuiTest {
      * Will be called with {@code @Before} semantics, i. e. before each test method.
      *
      * @param stage - Will be injected by the test runner.
+     * @throws ControlCenterException 
      */
     @Start
-    public void start(Stage stage) {
+    public void start(Stage stage) throws ControlCenterException {
     	Locale locale = new Locale("en_GB");
     	Locale.setDefault(locale);
-        var app = new ElevatorControl();
+    	var buildingmock = new BuildingMock(5,2,2.0);
+        var app = new ElevatorControl(new BuildingModel(buildingmock),new ElevatorExceptionHandlerMock(buildingmock));
         app.start(stage);
         controller = app.GetController();
         try {
@@ -47,7 +49,7 @@ public class ElevatorControlGuiTest {
         FxAssert.verifyThat("#elevatorNumberLabel", LabeledMatchers.hasText("1"));
         FxAssert.verifyThat("#elevatorsListView", ListViewMatchers.hasItems(4));
         
-        FxAssert.verifyThat("#payloadLabel", LabeledMatchers.hasText("123.5 lbs"));
+        FxAssert.verifyThat("#payloadLabel", LabeledMatchers.hasText("0.0 lbs"));
         
         FxAssert.verifyThat("#velocityLabel", LabeledMatchers.hasText("0.0 ft/s"));
         

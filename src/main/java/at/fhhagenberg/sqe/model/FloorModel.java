@@ -18,6 +18,10 @@ public class FloorModel extends AsyncModel implements IFloor {
 		setProperty("ButtonUp", false);
 		setProperty("ButtonDown", false);
 	}
+	
+	public void updateFloor(IFloor floor) {
+		mFloor = floor;
+	}
 
 	@Override
 	public int getFloorId() {
@@ -47,7 +51,7 @@ public class FloorModel extends AsyncModel implements IFloor {
 			setProperty("ButtonDown", btnDown);
 			
 		} catch (ControlCenterException e) {
-			// TODO Auto-generated catch block
+			setProperty("Exception",e);
 			
 		}
 		
