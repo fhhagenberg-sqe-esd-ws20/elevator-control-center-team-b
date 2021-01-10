@@ -49,7 +49,7 @@ public class ElevatorControlGuiTest {
         FxAssert.verifyThat("#elevatorNumberLabel", LabeledMatchers.hasText("1"));
         FxAssert.verifyThat("#elevatorsListView", ListViewMatchers.hasItems(4));
         
-        FxAssert.verifyThat("#payloadLabel", LabeledMatchers.hasText("0.0 lbs"));
+        FxAssert.verifyThat("#payloadLabel", LabeledMatchers.hasText("123.5 lbs"));
         
         FxAssert.verifyThat("#velocityLabel", LabeledMatchers.hasText("0.0 ft/s"));
         

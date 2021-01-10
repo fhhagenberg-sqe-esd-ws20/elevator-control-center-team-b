@@ -38,7 +38,7 @@ public class ElevatorControl extends Application {
 	
 	public ElevatorControl(BuildingModel model, ElevatorExceptionHandler handler) throws ControlCenterException {
 		//mModel = model;
-		mModel = new BuildingModel(new BuildingMock(5,2,2.0));
+		mModel = model;
 		mHandler = handler;
 	}
 	
