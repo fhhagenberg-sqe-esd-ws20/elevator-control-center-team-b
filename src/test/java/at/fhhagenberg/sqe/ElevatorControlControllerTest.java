@@ -42,6 +42,7 @@ public class ElevatorControlControllerTest extends ElevatorControlController {
 		controller.elevatorsListView = new ListView<Pane>();
 		controller.messageTextArea = new TextArea();
 		controller.floorsListView = new ListView<Pane>();
+		controller.initialize();
 	}
 	
 	@Test

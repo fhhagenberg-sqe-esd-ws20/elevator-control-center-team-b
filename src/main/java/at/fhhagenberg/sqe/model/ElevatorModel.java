@@ -30,6 +30,10 @@ public class ElevatorModel extends AsyncModel implements IElevatorControl{
 		setProperty("Weight", 0.0);
 		setProperty("Target", 0);
 	}
+	
+	public void updateElevator(IElevatorControl elevator) {
+		mElevator = elevator;
+	}
 
 
 	@Override
@@ -175,7 +179,7 @@ public class ElevatorModel extends AsyncModel implements IElevatorControl{
 			setProperty("Target", target);
 		} catch (ControlCenterException e) {
 			
-			// todo add error trace/log
+			setProperty("Exception",e);
 		}
 		
 	}
