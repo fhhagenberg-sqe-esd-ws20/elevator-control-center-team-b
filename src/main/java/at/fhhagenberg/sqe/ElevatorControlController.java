@@ -85,6 +85,7 @@ public class ElevatorControlController {
     }
     
     public void updateModel(IBuilding building) throws ControlCenterException {
+    	// in a safe state again -> GUI can change into normal state again
     	if(mBuildingModel == null) {
     		var model = new BuildingModel(building);
     		mHandlerFuture.cancel(false);

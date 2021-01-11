@@ -13,15 +13,17 @@ public class RemoteElevatorExceptionHandler extends ElevatorExceptionHandler {
 
 	private String mRemote;
 	private BuildingAdapter mBuilding;
+	private IElevatorConnector mConnector;
 	
-	public RemoteElevatorExceptionHandler(String remoteUri) {
+	public RemoteElevatorExceptionHandler(String remoteUri, IElevatorConnector connector) {
+		mConnector = connector;
 		mRemote = remoteUri;
 	}
 	
 	@Override
 	protected boolean tryFix() {
 		try {
-			var remoteElevator = (IElevator)Naming.lookup("rmi://localhost/ElevatorSim");
+			var remoteElevator = mConnector.CreateConnection("rmi://localhost/ElevatorSim");
 			mBuilding = new BuildingAdapter(remoteElevator);
 			return true;
 		} catch (MalformedURLException e) {

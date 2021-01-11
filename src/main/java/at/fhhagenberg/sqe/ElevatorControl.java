@@ -33,7 +33,7 @@ public class ElevatorControl extends Application {
 	
 	public ElevatorControl() throws RemoteException, MalformedURLException, ControlCenterException, NotBoundException {
 		mModel = null;//new BuildingModel(new BuildingAdapter((IElevator) Naming.lookup("rmi://localhost/ElevatorSim")));
-		mHandler = new RemoteElevatorExceptionHandler("rmi://localhost/ElevatorSim");
+		mHandler = new RemoteElevatorExceptionHandler("rmi://localhost/ElevatorSim", new ElevatorConnector());
 	}
 	
 	public ElevatorControl(BuildingModel model, ElevatorExceptionHandler handler) throws ControlCenterException {
