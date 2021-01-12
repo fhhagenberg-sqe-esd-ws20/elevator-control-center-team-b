@@ -80,8 +80,7 @@ public class ElevatorControlController {
     }
     
     public void setError(String str) {
-    	// TODO: add error to gui
-    	System.out.println(str);
+    	SetMessage(str);
     }
     
     public void updateModel(IBuilding building) throws ControlCenterException {
