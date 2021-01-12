@@ -23,7 +23,7 @@ public class RemoteElevatorExceptionHandler extends ElevatorExceptionHandler {
 	@Override
 	protected boolean tryFix() {
 		try {
-			var remoteElevator = mConnector.CreateConnection("rmi://localhost/ElevatorSim");
+			var remoteElevator = mConnector.CreateConnection(mRemote);
 			mBuilding = new BuildingAdapter(remoteElevator);
 			return true;
 		} catch (MalformedURLException e) {

@@ -80,8 +80,7 @@ public class ElevatorControlController {
     }
     
     public void setError(String str) {
-    	// TODO: add error to gui
-    	System.out.println(str);
+    	SetMessage(str);
     }
     
     public void updateModel(IBuilding building) throws ControlCenterException {
@@ -137,6 +136,9 @@ public class ElevatorControlController {
 				if(evt.getPropertyName() == "Exception") {
 					if(evt.getNewValue().getClass() == ControlCenterException.class) {
 						if(!me.isInErrorMode()) {
+							var strError = ((Exception)evt.getNewValue()).getLocalizedMessage();
+							
+							me.setError(strError.substring(strError.indexOf(':')+2));
 							me.setErrorMode();
 						}
 					}
@@ -214,6 +216,7 @@ public class ElevatorControlController {
     
     public void SetMessage(String message) {
     	messageTextArea.setText(messageTextArea.getText() + message + "\n");
+    	messageTextArea.setScrollTop(Double.MAX_VALUE);
     }
     
     // floors from 0 to n
