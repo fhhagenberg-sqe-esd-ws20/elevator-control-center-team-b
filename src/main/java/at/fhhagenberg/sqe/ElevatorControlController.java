@@ -136,6 +136,9 @@ public class ElevatorControlController {
 				if(evt.getPropertyName() == "Exception") {
 					if(evt.getNewValue().getClass() == ControlCenterException.class) {
 						if(!me.isInErrorMode()) {
+							var strError = ((Exception)evt.getNewValue()).getLocalizedMessage();
+							
+							me.setError(strError.substring(strError.indexOf(':')+2));
 							me.setErrorMode();
 						}
 					}
