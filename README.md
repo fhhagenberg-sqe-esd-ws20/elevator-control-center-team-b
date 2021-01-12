@@ -17,7 +17,6 @@ Java version: 13, vendor: Oracle Corporation, runtime: C:\Program Files\Java\jdk
 Default locale: en_GB, platform encoding: Cp1252
 OS name: "windows 10", version: "10.0", arch: "amd64", family: "windows"
 ```
-
 ### Instructions
 
 This maven project is already set up for JavaFx based GUI applications. It also contains a small example application - `App.java`.
