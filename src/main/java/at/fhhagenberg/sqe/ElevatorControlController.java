@@ -213,6 +213,7 @@ public class ElevatorControlController {
     
     public void SetMessage(String message) {
     	messageTextArea.setText(messageTextArea.getText() + message + "\n");
+    	messageTextArea.setScrollTop(Double.MAX_VALUE);
     }
     
     // floors from 0 to n
