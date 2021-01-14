@@ -1,34 +1,30 @@
-package at.fhhagenberg.sqe;
+package at.fhhagenberg.sqe.controller;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+import at.fhhagenberg.sqe.*;
+import at.fhhagenberg.sqe.ElevatorScheduler;
 import at.fhhagenberg.sqe.controlcenter.ControlCenterException;
 import at.fhhagenberg.sqe.controlcenter.IBuilding;
 import at.fhhagenberg.sqe.controlcenter.IElevatorControl.Direction;
 import at.fhhagenberg.sqe.controlcenter.IElevatorControl.DoorStatus;
-import at.fhhagenberg.sqe.controlcenter.mocks.BuildingMock;
+import at.fhhagenberg.sqe.exceptionhandler.ElevatorExceptionHandler;
 import at.fhhagenberg.sqe.model.BuildingModel;
-import at.fhhagenberg.sqe.model.ElevatorModel;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.Pane;
 
 
@@ -107,6 +103,27 @@ public class ElevatorControlController {
     	return false;
     }
     
+    private void setReconnectionMode() {
+    	if(elevatorControllerList != null)
+    	{
+    		// reset all called floors and stops
+    		for(ElevatorController elevator : elevatorControllerList) {
+				elevator.SetPayload(0);
+				elevator.SetVelocity(0);
+				elevator.SetDoorStatus(DoorStatus.Closed);
+				elevator.SetDirection(Direction.Uncommited);
+    		}
+    	}
+
+    	if(floorControllerList != null)
+    	{
+    		for(FloorController floor : floorControllerList) {
+    			floor.SetDownArrowActive(false);
+    			floor.SetUpArrowActive(false);
+    		}
+    	}
+    }
+    
     private void setErrorMode() {
     	// TODO: set gui in error mode
     	System.out.println("Set into error Mode");
@@ -114,6 +131,7 @@ public class ElevatorControlController {
     		mSchedulerFuture.cancel(false);
     	}
     	mHandlerFuture = scheduledExecutorService.scheduleAtFixedRate(()->mHandler.run(),timerInterval_ms,timerInterval_ms,TimeUnit.MILLISECONDS);
+    	Platform.runLater(() ->  setReconnectionMode());
     }
     
     public void SetExceptionHandler(ElevatorExceptionHandler handler) {

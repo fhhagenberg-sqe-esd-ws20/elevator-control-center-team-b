@@ -1,13 +1,12 @@
-package at.fhhagenberg.sqe;
+package at.fhhagenberg.sqe.exceptionhandler;
 
 import java.net.MalformedURLException;
-import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
+import at.fhhagenberg.sqe.IElevatorConnector;
 import at.fhhagenberg.sqe.controlcenter.BuildingAdapter;
 import at.fhhagenberg.sqe.controlcenter.IBuilding;
-import sqelevator.IElevator;
 
 public class RemoteElevatorExceptionHandler extends ElevatorExceptionHandler {
 

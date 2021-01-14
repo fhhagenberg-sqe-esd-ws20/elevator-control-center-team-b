@@ -1,13 +1,11 @@
-package at.fhhagenberg.sqe;
+package at.fhhagenberg.sqe.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
@@ -40,7 +38,8 @@ public class ElevatorFloorController {
         assert stopImageView != null : "fx:id=\"stopImageView\" was not injected: check your FXML file 'ElevatorFloor.fxml'.";
     }
     
-    public void AddMouseClickEventHandler(EventHandler handler) {
+    @SuppressWarnings("unchecked")
+	public void AddMouseClickEventHandler(@SuppressWarnings("rawtypes") EventHandler handler) {
     	elevatorFloorHBox.setOnMouseClicked(handler);
     }
     

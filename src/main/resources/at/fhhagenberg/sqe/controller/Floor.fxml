@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="40.0" minWidth="125.0" prefHeight="40.0" prefWidth="125.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fhhagenberg.sqe.FloorController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="40.0" minWidth="125.0" prefHeight="40.0" prefWidth="125.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fhhagenberg.sqe.controller.FloorController">
    <children>
       <Label id="floorNumberLabel" fx:id="floorNumberLabel" prefHeight="17.0" prefWidth="26.0" text="000">
          <HBox.margin>

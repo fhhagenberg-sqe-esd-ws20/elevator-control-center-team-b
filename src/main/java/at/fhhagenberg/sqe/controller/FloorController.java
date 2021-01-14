@@ -1,4 +1,4 @@
-package at.fhhagenberg.sqe;
+package at.fhhagenberg.sqe.controller;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

@@ -3,7 +3,6 @@ package at.fhhagenberg.sqe.controlcenter.mocks;
 import java.util.ArrayList;
 import java.util.List;
 
-import at.fhhagenberg.sqe.controlcenter.ControlCenterException;
 import at.fhhagenberg.sqe.controlcenter.IBuilding;
 import at.fhhagenberg.sqe.controlcenter.IElevatorControl;
 import at.fhhagenberg.sqe.controlcenter.IFloor;
