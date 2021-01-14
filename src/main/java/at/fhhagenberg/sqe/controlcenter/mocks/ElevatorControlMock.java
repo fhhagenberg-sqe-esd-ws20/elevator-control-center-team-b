@@ -31,7 +31,7 @@ public class ElevatorControlMock implements IElevatorControl {
 	
 	@Override
 	public DoorStatus getCurrentDoorStatus() {
-		return DoorStatus.Closed;
+		return DoorStatus.Open;
 	}
 
 	@Override
