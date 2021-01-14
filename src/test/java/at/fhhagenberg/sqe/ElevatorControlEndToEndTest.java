@@ -58,12 +58,13 @@ public class ElevatorControlEndToEndTest {
     }
     
     @Test
-    public void setTargetTriggersIElevator(FxRobot robot) throws RemoteException {
+    public void setTargetTriggersIElevator(FxRobot robot) throws RemoteException, InterruptedException {
     	//set into manual mode
     	robot.clickOn("#automaticModeCheckBox");
+    	//sleep for doors to get open
+    	Thread.sleep(500);
     	//click on upper floor of first elevator
     	robot.clickOn("#elevatorFloorHBox");
-    	
     	// which will lead to setting the target of elevator 0 to floor 3
     	Mockito.verify(mElevatorMock).setTarget(0, 3);
     }
