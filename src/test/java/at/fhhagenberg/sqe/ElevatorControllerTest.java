@@ -63,7 +63,7 @@ public class ElevatorControllerTest extends ElevatorController {
 	
 	@Test
 	public void testSetElevatorModel() {
-		controller.SetElevatorModel(new ElevatorModel(new ElevatorControlMock(1)));
+		controller.SetElevatorModel(new ElevatorModel(new ElevatorControlMock(3)));
 		assertFalse(controller.floorButtonsListView.getItems().isEmpty());
 	}
 	

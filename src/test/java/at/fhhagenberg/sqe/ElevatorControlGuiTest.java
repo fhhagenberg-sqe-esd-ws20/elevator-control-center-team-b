@@ -25,9 +25,10 @@ public class ElevatorControlGuiTest {
      *
      * @param stage - Will be injected by the test runner.
      * @throws ControlCenterException 
+     * @throws InterruptedException 
      */
     @Start
-    public void start(Stage stage) throws ControlCenterException {
+    public void start(Stage stage) throws ControlCenterException, InterruptedException {
     	Locale locale = new Locale("en_GB");
     	Locale.setDefault(locale);
     	var buildingmock = new BuildingMock(5,2,2.0);
@@ -35,17 +36,20 @@ public class ElevatorControlGuiTest {
         app.start(stage);
         controller = app.GetController();
         try {
-			controller.SetBuildingModel(new BuildingModel(new BuildingMock(5, 4, 2.0)));
+			controller.SetBuildingModel(new BuildingModel(new BuildingMock(3, 4, 2.0)));
 		} catch (ControlCenterException e) {
 			e.printStackTrace();
-		}  
+		}
     }
     
     /**
      * @param robot - Will be injected by the test runner.
+     * @throws InterruptedException 
      */
     @Test
-    public void testDefaultValues(FxRobot robot) {
+    public void testDefaultValues(FxRobot robot) throws InterruptedException {
+    	Thread.sleep(500);
+    	
         FxAssert.verifyThat("#elevatorNumberLabel", LabeledMatchers.hasText("1"));
         FxAssert.verifyThat("#elevatorsListView", ListViewMatchers.hasItems(4));
         
@@ -53,36 +57,47 @@ public class ElevatorControlGuiTest {
         
         FxAssert.verifyThat("#velocityLabel", LabeledMatchers.hasText("0.0 ft/s"));
         
-        FxAssert.verifyThat("#doorStatusLabel", LabeledMatchers.hasText("closed"));
+        FxAssert.verifyThat("#doorStatusLabel", LabeledMatchers.hasText("open"));
         
-        FxAssert.verifyThat("#destinationLabel", LabeledMatchers.hasText("0"));
+        FxAssert.verifyThat("#destinationLabel", LabeledMatchers.hasText("1"));
         
-        FxAssert.verifyThat("#directionLabel", LabeledMatchers.hasText("--"));
+        FxAssert.verifyThat("#directionLabel", LabeledMatchers.hasText("up"));
         
-        FxAssert.verifyThat("#floorNumberLabel", LabeledMatchers.hasText("4"));
-        FxAssert.verifyThat("#floorsListView", ListViewMatchers.hasItems(5));
+        FxAssert.verifyThat("#floorNumberLabel", LabeledMatchers.hasText("2"));
+        FxAssert.verifyThat("#floorsListView", ListViewMatchers.hasItems(3));
         
-        FxAssert.verifyThat("#floorButtonsListView", ListViewMatchers.hasItems(5));
+        FxAssert.verifyThat("#floorButtonsListView", ListViewMatchers.hasItems(3));
     }
     
     /**
      * @param robot - Will be injected by the test runner.
+     * @throws InterruptedException 
      */
     @Test
-    public void testAutomaticMode(FxRobot robot) {
-        robot.clickOn("#elevatorFloorHBox");
+    public void testAutomaticMode(FxRobot robot) throws InterruptedException {
+    	Thread.sleep(500);
+        FxAssert.verifyThat("#destinationLabel", LabeledMatchers.hasText("1"));
+        FxAssert.verifyThat("#directionLabel", LabeledMatchers.hasText("up"));
+        Thread.sleep(1000);
+        FxAssert.verifyThat("#destinationLabel", LabeledMatchers.hasText("2"));
+        FxAssert.verifyThat("#directionLabel", LabeledMatchers.hasText("up"));
+        Thread.sleep(1000);
+        FxAssert.verifyThat("#destinationLabel", LabeledMatchers.hasText("1"));
+        FxAssert.verifyThat("#directionLabel", LabeledMatchers.hasText("down"));
+        Thread.sleep(1000);
         FxAssert.verifyThat("#destinationLabel", LabeledMatchers.hasText("0"));
-        FxAssert.verifyThat("#directionLabel", LabeledMatchers.hasText("--"));
+        FxAssert.verifyThat("#directionLabel", LabeledMatchers.hasText("down"));
     }
 
     /**
      * @param robot - Will be injected by the test runner.
+     * @throws InterruptedException 
      */
     @Test
-    public void testManualMode(FxRobot robot) {
+    public void testManualMode(FxRobot robot) throws InterruptedException {
         robot.clickOn("#automaticModeCheckBox");
         robot.clickOn("#elevatorFloorHBox");
-        FxAssert.verifyThat("#destinationLabel", LabeledMatchers.hasText("4"));
-        FxAssert.verifyThat("#directionLabel", LabeledMatchers.hasText("--"));
+        FxAssert.verifyThat("#destinationLabel", LabeledMatchers.hasText("2"));
+        FxAssert.verifyThat("#directionLabel", LabeledMatchers.hasText("up"));
     }
 }

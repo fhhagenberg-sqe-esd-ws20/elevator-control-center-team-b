@@ -28,9 +28,9 @@ public class ElevatorControlTests {
 	}
 	
 	@Test
-	public void DoorStatusIsClosed() {
+	public void DoorStatusIsOpen() {
 		var elevator = new ElevatorControlMock(2);
-		assertEquals(IElevatorControl.DoorStatus.Closed, elevator.getCurrentDoorStatus());
+		assertEquals(IElevatorControl.DoorStatus.Open, elevator.getCurrentDoorStatus());
 	}
 	
 	@Test
