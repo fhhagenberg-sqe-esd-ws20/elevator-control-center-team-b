@@ -47,13 +47,13 @@ public class FloorController {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				Platform.runLater(() -> {
-					if(evt.getPropertyName() == "Id") {
+					if(evt.getPropertyName().equals("Id")) {
 						SetFloorNumber((int)evt.getNewValue());
 					}
-					else if(evt.getPropertyName() == "ButtonUp") {
+					else if(evt.getPropertyName().equals("ButtonUp")) {
 						SetUpArrowActive((boolean)evt.getNewValue());
 					}
-					else if(evt.getPropertyName() == "ButtonDown") {
+					else if(evt.getPropertyName().equals("ButtonDown")) {
 						SetDownArrowActive((boolean)evt.getNewValue());
 					}
 				});

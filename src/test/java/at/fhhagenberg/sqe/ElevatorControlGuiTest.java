@@ -49,7 +49,7 @@ public class ElevatorControlGuiTest {
      */
     @Test
     public void testDefaultValues(FxRobot robot) throws InterruptedException {
-    	Thread.sleep(750);
+    	Thread.sleep(1000);
     	
         FxAssert.verifyThat("#elevatorNumberLabel", LabeledMatchers.hasText("1"));
         FxAssert.verifyThat("#elevatorsListView", ListViewMatchers.hasItems(4));

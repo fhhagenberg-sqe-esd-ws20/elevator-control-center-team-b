@@ -99,18 +99,18 @@ public class ElevatorController {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				Platform.runLater(() -> {
-					if(evt.getPropertyName() == "FloorNum") {
+					if(evt.getPropertyName().equals("FloorNum")) {
 						// maximum number of floors
 						SetNumberFloors((int)evt.getNewValue());
 					}
-					else if(evt.getPropertyName() == "Direction") {
+					else if(evt.getPropertyName().equals("Direction")) {
 						SetDirection((Direction)evt.getNewValue());
 					}
-					else if(evt.getPropertyName() == "DoorStatus") {
+					else if(evt.getPropertyName().equals("DoorStatus")) {
 						doorStatus = (DoorStatus)evt.getNewValue();
 						SetDoorStatus(doorStatus);
 					}
-					else if(evt.getPropertyName() == "PressedFloorButtons") {
+					else if(evt.getPropertyName().equals("PressedFloorButtons")) {
 						List<Integer> pressedButtons = mElevatorModel.getPressedFloorButtons();
 						// reset all floors previously
 						for(ElevatorFloorController floor : floorControllerList) {
@@ -121,7 +121,7 @@ public class ElevatorController {
 							floorControllerList.get(i).SetStopActive(true);
 						}
 					}
-					else if(evt.getPropertyName() == "ServicedFloors") {
+					else if(evt.getPropertyName().equals("ServicedFloors")) {
 						List<Integer> activeFloors = mElevatorModel.getServicedFloors();
 						// reset all floors previously
 						for(ElevatorFloorController floor : floorControllerList) {
@@ -132,7 +132,7 @@ public class ElevatorController {
 							floorControllerList.get(i).SetFloorActive(true);
 						}
 					}
-					else if(evt.getPropertyName() == "CurrentFloor") {
+					else if(evt.getPropertyName().equals("CurrentFloor")) {
 						currentFloor = mElevatorModel.getCurrentFloor();
 						// reset all floors
 						for(ElevatorFloorController floor : floorControllerList) {
@@ -141,16 +141,16 @@ public class ElevatorController {
 						// set only current floor
 						floorControllerList.get(currentFloor).SetElevatorActive(true);
 					}
-					else if(evt.getPropertyName() == "Speed") {
+					else if(evt.getPropertyName().equals("Speed")) {
 						SetVelocity((double)evt.getNewValue());
 					}
-					else if(evt.getPropertyName() == "Acceleration") {
+					else if(evt.getPropertyName().equals("Acceleration")) {
 						// not needed
 					}
-					else if(evt.getPropertyName() == "Weight") {
+					else if(evt.getPropertyName().equals("Weight")) {
 						SetPayload((double)evt.getNewValue());
 					}
-					else if(evt.getPropertyName() == "Target") {
+					else if(evt.getPropertyName().equals("Target")) {
 						SetDestination((int)evt.getNewValue());					
 					}
 				});
