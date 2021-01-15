@@ -8,16 +8,16 @@ import at.fhhagenberg.sqe.controlcenter.ControlCenterException;
 import at.fhhagenberg.sqe.controlcenter.IElevatorControl;
 
 public class ElevatorModel extends AsyncModel implements IElevatorControl{
-	private static final String DIRECTION = Messages.getString("ElevatorModel.0"); //$NON-NLS-1$
-	private static final String DOORSTATUS = Messages.getString("ElevatorModel.1"); //$NON-NLS-1$
-	private static final String PRESSEDFLOORBUTTONS = Messages.getString("ElevatorModel.2"); //$NON-NLS-1$
-	private static final String SERVICEDFLOORS = Messages.getString("ElevatorModel.3"); //$NON-NLS-1$
-	private static final String CURRENTFLOOR = Messages.getString("ElevatorModel.4"); //$NON-NLS-1$
-	private static final String SPEED = Messages.getString("ElevatorModel.5"); //$NON-NLS-1$
-	private static final String WEIGHT = Messages.getString("ElevatorModel.6"); //$NON-NLS-1$
-	private static final String ACCELERATION = Messages.getString("ElevatorModel.7"); //$NON-NLS-1$
-	private static final String TARGET = Messages.getString("ElevatorModel.8"); //$NON-NLS-1$
-	private static final String FLOORNUM = Messages.getString("ElevatorModel.9"); //$NON-NLS-1$
+	private static final String DIRECTION = "Direction";
+	private static final String DOORSTATUS = "DoorStatus";
+	private static final String PRESSEDFLOORBUTTONS = "PressedFloorButtons";
+	private static final String SERVICEDFLOORS = "ServicedFloors";
+	private static final String CURRENTFLOOR = "CurrentFloor";
+	private static final String SPEED = "Speed";
+	private static final String WEIGHT = "Weight";
+	private static final String ACCELERATION = "Acceleration";
+	private static final String TARGET = "Target";
+	private static final String FLOORNUM = "FloorNum";
 	private IElevatorControl mElevator;
 	
 	public ElevatorModel(IElevatorControl elevator) {
@@ -26,6 +26,7 @@ public class ElevatorModel extends AsyncModel implements IElevatorControl{
 		try {
 			setProperty(FLOORNUM, mElevator.getFloorNum());
 		} catch (ControlCenterException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		setProperty(DIRECTION, IElevatorControl.Direction.UNCOMMITTED);
@@ -109,7 +110,7 @@ public class ElevatorModel extends AsyncModel implements IElevatorControl{
 		var floorNums = getFloorNum();
 		var currentTarget = getTarget();
 		if(target >= floorNums) {
-			throw new ControlCenterException(new IllegalArgumentException(Messages.getString("ElevatorModel.10") + target)); //$NON-NLS-1$
+			throw new ControlCenterException(new IllegalArgumentException("Elevator does not serve floor " + target));
 		}
 		if(target != currentTarget) {
 			mElevator.setTarget(target);
@@ -135,7 +136,7 @@ public class ElevatorModel extends AsyncModel implements IElevatorControl{
 		var floorNums = getFloorNum();
 		var servicedFloors = new ArrayList<Integer>(getServicedFloors());
 		if(floor >= floorNums) {
-			throw new ControlCenterException(new IllegalArgumentException(Messages.getString("ElevatorModel.11") + floor)); //$NON-NLS-1$
+			throw new ControlCenterException(new IllegalArgumentException("Elevator cant reach floor " + floor));
 		}
 		if(service && !servicedFloors.contains(floor)) {
 			mElevator.setServiceFloor(floor, service);
@@ -186,7 +187,7 @@ public class ElevatorModel extends AsyncModel implements IElevatorControl{
 			setProperty(TARGET, target);
 		} catch (ControlCenterException e) {
 			
-			setProperty(Messages.getString("ElevatorModel.12"),e); //$NON-NLS-1$
+			setProperty("Exception",e);
 		}
 		
 	}
