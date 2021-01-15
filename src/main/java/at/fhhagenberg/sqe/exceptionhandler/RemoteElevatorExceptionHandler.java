@@ -27,13 +27,10 @@ public class RemoteElevatorExceptionHandler extends ElevatorExceptionHandler {
 			return true;
 		} catch (MalformedURLException e) {
 			mController.setError("Invalid Uri " + mRemote + " was set.");
-			//e.printStackTrace();
 		} catch (RemoteException e) {
 			mController.setError("Could not connect to: " + mRemote);
-			//e.printStackTrace();
 		} catch (NotBoundException e) {
 			mController.setError("Could not bind to: " + mRemote);
-			//e.printStackTrace();
 		}
 		return false;
 	}

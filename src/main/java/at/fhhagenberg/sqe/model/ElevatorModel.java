@@ -99,7 +99,6 @@ public class ElevatorModel extends AsyncModel implements IElevatorControl{
 	@Override
 	public void setTarget(int target) throws ControlCenterException {
 		var floorNums = getFloorNum();
-		//System.out.println("The number of the target is " + target);
 		var currentTarget = getTarget();
 		if(target >= floorNums) {
 			throw new ControlCenterException(new IllegalArgumentException("Elevator does not serve floor " + target));

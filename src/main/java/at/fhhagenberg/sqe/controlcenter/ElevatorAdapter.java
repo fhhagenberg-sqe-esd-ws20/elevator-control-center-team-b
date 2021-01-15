@@ -43,9 +43,11 @@ public class ElevatorAdapter implements IElevatorControl {
 			return DoorStatus.Open;
 		case IElevator.ELEVATOR_DOORS_OPENING:
 			return DoorStatus.Opening;
+		default:
+			throw new ControlCenterException("Received undefined door status");
 		}
 		
-		throw new ControlCenterException("Received undefined door status");
+		
 	}
 
 	@Override
@@ -64,8 +66,10 @@ public class ElevatorAdapter implements IElevatorControl {
 			return Direction.Uncommited;
 		case IElevator.ELEVATOR_DIRECTION_UP:
 			return Direction.Up;
+		default:
+			throw new ControlCenterException("Received undefined direction");
 		}
-		throw new ControlCenterException("Received undefined direction");
+		
 	}
 
 	@Override

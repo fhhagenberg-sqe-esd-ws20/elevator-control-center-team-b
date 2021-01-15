@@ -125,8 +125,6 @@ public class ElevatorControlController {
     }
     
     private void setErrorMode() {
-    	// TODO: set gui in error mode
-    	System.out.println("Set into error Mode");
     	if(mSchedulerFuture != null) {
     		mSchedulerFuture.cancel(false);
     	}
@@ -144,14 +142,13 @@ public class ElevatorControlController {
     		setErrorMode();
     		return;
     	}
-    	System.out.println("Set first buildingModel!");
-
+    	
         mBuildingModel = buildingModel;
         mBuildingModel.addListener(new PropertyChangeListener() {
 
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
-				if(evt.getPropertyName() == "Exception") {
+				if(evt.getPropertyName().equals("Exception")) {
 					if(evt.getNewValue().getClass() == ControlCenterException.class) {
 						if(!me.isInErrorMode()) {
 							var strError = ((Exception)evt.getNewValue()).getLocalizedMessage();

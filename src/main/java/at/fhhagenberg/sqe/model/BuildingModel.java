@@ -75,7 +75,7 @@ public class BuildingModel extends AsyncModel {
 
 				@Override
 				public void propertyChange(PropertyChangeEvent evt) {
-					if(evt.getPropertyName() == "Exception") {
+					if(evt.getPropertyName().equals("Exception")) {
 						me.setProperty("Exception", evt.getNewValue());
 					}
 					
@@ -89,7 +89,7 @@ public class BuildingModel extends AsyncModel {
 
 				@Override
 				public void propertyChange(PropertyChangeEvent evt) {
-					if(evt.getPropertyName() == "Exception") {
+					if(evt.getPropertyName().equals("Exception")) {
 						me.setProperty("Exception", evt.getNewValue());
 					}
 					
