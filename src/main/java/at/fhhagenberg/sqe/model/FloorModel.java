@@ -4,9 +4,9 @@ import at.fhhagenberg.sqe.controlcenter.ControlCenterException;
 import at.fhhagenberg.sqe.controlcenter.IFloor;
 
 public class FloorModel extends AsyncModel implements IFloor {
-	private static String BUTTONUP = "ButtonUp";
-	private static String BUTTONDOWN = "ButtonDown";
-	private static String ID = "Id";
+	private static final String BUTTONUP = "ButtonUp";
+	private static final String BUTTONDOWN = "ButtonDown";
+	private static final String ID = "Id";
 	private IFloor mFloor;
 	
 	public FloorModel(IFloor floor) {
@@ -14,7 +14,6 @@ public class FloorModel extends AsyncModel implements IFloor {
 		try {
 			setProperty(ID, mFloor.getFloorId());
 		} catch (ControlCenterException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		setProperty(BUTTONUP, false);

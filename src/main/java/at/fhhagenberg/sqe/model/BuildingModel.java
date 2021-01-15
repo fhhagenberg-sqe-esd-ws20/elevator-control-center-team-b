@@ -16,7 +16,7 @@ public class BuildingModel extends AsyncModel {
 	private IBuilding mBuilding;
 	private ObservableList<ElevatorModel> mElevators;
 	private ObservableList<FloorModel> mFloors;
-	private static String EXCEPTION = "Exception";
+	private static final String EXCEPTION = "Exception";
 	
 	
 	public BuildingModel(IBuilding building) throws ControlCenterException {

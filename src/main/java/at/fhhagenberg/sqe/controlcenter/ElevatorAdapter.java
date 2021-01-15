@@ -148,7 +148,6 @@ public class ElevatorAdapter implements IElevatorControl {
 
 	@Override
 	public List<Integer> getServicedFloors() throws ControlCenterException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
