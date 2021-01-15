@@ -13,11 +13,11 @@ import org.mockito.Mockito;
 import at.fhhagenberg.sqe.controlcenter.ControlCenterException;
 import at.fhhagenberg.sqe.controlcenter.IElevatorControl;
 
-public class ElevatorModelTest {
+class ElevatorModelTest {
 
 	
 	@Test
-	public void RunCallsAllGetters() throws ControlCenterException {
+	void RunCallsAllGetters() throws ControlCenterException {
 		var elevatorMock = Mockito.mock(IElevatorControl.class, Mockito.CALLS_REAL_METHODS);
 		
 		var cut = new ElevatorModel(elevatorMock);
@@ -38,7 +38,7 @@ public class ElevatorModelTest {
 	}
 	
 	@Test
-	public void SetTargetCallsImplementation() throws ControlCenterException {
+	void SetTargetCallsImplementation() throws ControlCenterException {
 		var elevatorMock = Mockito.mock(IElevatorControl.class, Mockito.CALLS_REAL_METHODS);
 		Mockito.when(elevatorMock.getFloorNum()).thenReturn(2);
 		
@@ -55,7 +55,7 @@ public class ElevatorModelTest {
 	}
 	
 	@Test
-	public void SetTargetDoesTriggerEvent() throws ControlCenterException {
+	void SetTargetDoesTriggerEvent() throws ControlCenterException {
 		var elevatorMock = Mockito.mock(IElevatorControl.class, Mockito.CALLS_REAL_METHODS);
 		Mockito.when(elevatorMock.getFloorNum()).thenReturn(2);
 		
@@ -76,7 +76,7 @@ public class ElevatorModelTest {
 	}
 	
 	@Test
-	public void SetTargetDoesNotUpdatePropertyIfExceptionOccurs() throws ControlCenterException {
+	void SetTargetDoesNotUpdatePropertyIfExceptionOccurs() throws ControlCenterException {
 		var elevatorMock = Mockito.mock(IElevatorControl.class, Mockito.CALLS_REAL_METHODS);
 		Mockito.when(elevatorMock.getFloorNum()).thenReturn(2);
 		
@@ -96,34 +96,34 @@ public class ElevatorModelTest {
 	}
 	
 	@Test
-	public void SetDirectionCallsImplementation() throws ControlCenterException {
+	void SetDirectionCallsImplementation() throws ControlCenterException {
 		var elevatorMock = Mockito.mock(IElevatorControl.class, Mockito.CALLS_REAL_METHODS);
 		
 		var cut = new ElevatorModel(elevatorMock);
 		
-		cut.setDirection(IElevatorControl.Direction.Up);
+		cut.setDirection(IElevatorControl.Direction.UP);
 		
-		Mockito.verify(elevatorMock).setDirection(IElevatorControl.Direction.Up);
+		Mockito.verify(elevatorMock).setDirection(IElevatorControl.Direction.UP);
 	}
 	
 	@Test
-	public void SetDirectionDoesTriggerEvent() throws ControlCenterException {
+	void SetDirectionDoesTriggerEvent() throws ControlCenterException {
 		var elevatorMock = Mockito.mock(IElevatorControl.class, Mockito.CALLS_REAL_METHODS);
 		var listenerMock = Mockito.mock(PropertyChangeListener.class);
 		
 		var cut = new ElevatorModel(elevatorMock);
 		cut.addListener(listenerMock);
 		
-		cut.setDirection(IElevatorControl.Direction.Up);
+		cut.setDirection(IElevatorControl.Direction.UP);
 		
 		Mockito.verify(listenerMock).propertyChange(Mockito.argThat((PropertyChangeEvent evt) -> {
 			
-			return evt.getSource() == cut && evt.getPropertyName().equals("Direction") && evt.getNewValue().equals(IElevatorControl.Direction.Up);
+			return evt.getSource() == cut && evt.getPropertyName().equals("Direction") && evt.getNewValue().equals(IElevatorControl.Direction.UP);
 		}));
 	}
 	
 	@Test
-	public void SetDirectionDoesNotUpdatePropertyIfExceptionOccurs() throws ControlCenterException {
+	void SetDirectionDoesNotUpdatePropertyIfExceptionOccurs() throws ControlCenterException {
 		var elevatorMock = Mockito.mock(IElevatorControl.class, Mockito.CALLS_REAL_METHODS);
 		Mockito.doThrow(ControlCenterException.class).when(elevatorMock).setDirection(Mockito.any());
 		
@@ -131,15 +131,15 @@ public class ElevatorModelTest {
 		
 		
 		assertThrows(ControlCenterException.class, () -> {
-			cut.setDirection(IElevatorControl.Direction.Up);
+			cut.setDirection(IElevatorControl.Direction.UP);
 		});
 		
-		Mockito.verify(elevatorMock, Mockito.times(1)).setDirection(IElevatorControl.Direction.Up);
-		assertEquals(IElevatorControl.Direction.Uncommited,cut.getCurrentDirection());
+		Mockito.verify(elevatorMock, Mockito.times(1)).setDirection(IElevatorControl.Direction.UP);
+		assertEquals(IElevatorControl.Direction.UNCOMMITTED,cut.getCurrentDirection());
 	}
 	
 	@Test
-	public void SetSerivceFloorRemovesFloorIfSetToFalse() throws ControlCenterException {
+	void SetSerivceFloorRemovesFloorIfSetToFalse() throws ControlCenterException {
 		var servicedList = new ArrayList<Integer>();
 		servicedList.add(0);
 		servicedList.add(1);
@@ -164,7 +164,7 @@ public class ElevatorModelTest {
 	}
 	
 	@Test
-	public void SetSerivceFloorAddsFloorIfSetToTrue() throws ControlCenterException {
+	void SetSerivceFloorAddsFloorIfSetToTrue() throws ControlCenterException {
 		var servicedList = new ArrayList<Integer>();
 		servicedList.add(1);
 		
@@ -189,7 +189,7 @@ public class ElevatorModelTest {
 	}
 	
 	@Test
-	public void SetServiceFloorTriggersEvent() throws ControlCenterException {
+	void SetServiceFloorTriggersEvent() throws ControlCenterException {
 		var elevatorMock = Mockito.mock(IElevatorControl.class, Mockito.CALLS_REAL_METHODS);
 		var listenerMock = Mockito.mock(PropertyChangeListener.class);
 		Mockito.when(elevatorMock.getFloorNum()).thenReturn(2);
@@ -217,7 +217,7 @@ public class ElevatorModelTest {
 	}
 	
 	@Test
-	public void SetServiceTriggersImplementation() throws ControlCenterException {
+	void SetServiceTriggersImplementation() throws ControlCenterException {
 		var elevatorMock = Mockito.mock(IElevatorControl.class, Mockito.CALLS_REAL_METHODS);
 		Mockito.when(elevatorMock.getFloorNum()).thenReturn(2);
 		
@@ -232,7 +232,7 @@ public class ElevatorModelTest {
 	}
 	
 	@Test
-	public void RunTriggersEventIfFloorNumChanges() throws ControlCenterException {
+	void RunTriggersEventIfFloorNumChanges() throws ControlCenterException {
 		var elevatorMock = Mockito.mock(IElevatorControl.class, Mockito.CALLS_REAL_METHODS);
 		Mockito.when(elevatorMock.getFloorNum()).thenReturn(2).thenReturn(3);
 		
@@ -253,9 +253,9 @@ public class ElevatorModelTest {
 	}
 	
 	@Test
-	public void RunTriggersEventIfDirectionChanges() throws ControlCenterException {
+	void RunTriggersEventIfDirectionChanges() throws ControlCenterException {
 		var elevatorMock = Mockito.mock(IElevatorControl.class, Mockito.CALLS_REAL_METHODS);
-		Mockito.when(elevatorMock.getCurrentDirection()).thenReturn(IElevatorControl.Direction.Up);
+		Mockito.when(elevatorMock.getCurrentDirection()).thenReturn(IElevatorControl.Direction.UP);
 		
 		var cut = new ElevatorModel(elevatorMock);
 		
@@ -268,15 +268,15 @@ public class ElevatorModelTest {
 		
 		Mockito.verify(listenerMock).propertyChange(Mockito.argThat((PropertyChangeEvent evt) -> {
 			
-			return evt.getSource() == cut && evt.getPropertyName().equals("Direction") && evt.getNewValue().equals(IElevatorControl.Direction.Up);
+			return evt.getSource() == cut && evt.getPropertyName().equals("Direction") && evt.getNewValue().equals(IElevatorControl.Direction.UP);
 		}));
 		
 	}
 	
 	@Test
-	public void RunTriggersEventIfDoorStatusChanges() throws ControlCenterException {
+	void RunTriggersEventIfDoorStatusChanges() throws ControlCenterException {
 		var elevatorMock = Mockito.mock(IElevatorControl.class, Mockito.CALLS_REAL_METHODS);
-		Mockito.when(elevatorMock.getCurrentDoorStatus()).thenReturn(IElevatorControl.DoorStatus.Open);
+		Mockito.when(elevatorMock.getCurrentDoorStatus()).thenReturn(IElevatorControl.DoorStatus.OPEN);
 		
 		var cut = new ElevatorModel(elevatorMock);
 		
@@ -289,13 +289,13 @@ public class ElevatorModelTest {
 		
 		Mockito.verify(listenerMock).propertyChange(Mockito.argThat((PropertyChangeEvent evt) -> {
 			
-			return evt.getSource() == cut && evt.getPropertyName().equals("DoorStatus") && evt.getNewValue().equals(IElevatorControl.DoorStatus.Open);
+			return evt.getSource() == cut && evt.getPropertyName().equals("DoorStatus") && evt.getNewValue().equals(IElevatorControl.DoorStatus.OPEN);
 		}));
 		
 	}
 	
 	@Test
-	public void RunTriggersEventIfPressedFloorStatusChanges() throws ControlCenterException {
+	void RunTriggersEventIfPressedFloorStatusChanges() throws ControlCenterException {
 		var pressedButtons = new ArrayList<Integer>();
 		pressedButtons.add(1);
 		
@@ -319,7 +319,7 @@ public class ElevatorModelTest {
 	}
 	
 	@Test
-	public void RunTriggersEventIfServicedFloorsChanges() throws ControlCenterException {
+	void RunTriggersEventIfServicedFloorsChanges() throws ControlCenterException {
 		var servicedFloors = new ArrayList<Integer>();
 		servicedFloors.add(1);
 		
@@ -343,7 +343,7 @@ public class ElevatorModelTest {
 	}
 	
 	@Test
-	public void RunTriggersEventIfCurrentFloorChanges() throws ControlCenterException {
+	void RunTriggersEventIfCurrentFloorChanges() throws ControlCenterException {
 		var elevatorMock = Mockito.mock(IElevatorControl.class, Mockito.CALLS_REAL_METHODS);
 		Mockito.when(elevatorMock.getCurrentFloor()).thenReturn(1);
 		
@@ -364,7 +364,7 @@ public class ElevatorModelTest {
 	}
 	
 	@Test
-	public void RunTriggersEventIfSpeedChanges() throws ControlCenterException {
+	void RunTriggersEventIfSpeedChanges() throws ControlCenterException {
 		var elevatorMock = Mockito.mock(IElevatorControl.class, Mockito.CALLS_REAL_METHODS);
 		Mockito.when(elevatorMock.getSpeed()).thenReturn(2.0);
 		
@@ -385,7 +385,7 @@ public class ElevatorModelTest {
 	}
 	
 	@Test
-	public void RunTriggersEventAccelerationChanges() throws ControlCenterException {
+	void RunTriggersEventAccelerationChanges() throws ControlCenterException {
 		var elevatorMock = Mockito.mock(IElevatorControl.class, Mockito.CALLS_REAL_METHODS);
 		Mockito.when(elevatorMock.getAcceleration()).thenReturn(2.0);
 		
@@ -406,7 +406,7 @@ public class ElevatorModelTest {
 	}
 	
 	@Test
-	public void RunTriggersEventWeightChanges() throws ControlCenterException {
+	void RunTriggersEventWeightChanges() throws ControlCenterException {
 		var elevatorMock = Mockito.mock(IElevatorControl.class, Mockito.CALLS_REAL_METHODS);
 		Mockito.when(elevatorMock.getWeight()).thenReturn(2.0);
 		
@@ -427,7 +427,7 @@ public class ElevatorModelTest {
 	}
 	
 	@Test
-	public void RunTriggersEventTargetChanges() throws ControlCenterException {
+	void RunTriggersEventTargetChanges() throws ControlCenterException {
 		var elevatorMock = Mockito.mock(IElevatorControl.class, Mockito.CALLS_REAL_METHODS);
 		Mockito.when(elevatorMock.getTarget()).thenReturn(1);
 		

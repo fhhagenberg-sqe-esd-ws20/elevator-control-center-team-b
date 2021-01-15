@@ -72,8 +72,8 @@ public class ElevatorController {
     
     private int currentTarget = 0;
     private int currentFloor = 0;
-    private Direction currentDirection = Direction.Uncommited;
-    private DoorStatus doorStatus = DoorStatus.Closed;
+    private Direction currentDirection = Direction.UNCOMMITTED;
+    private DoorStatus doorStatus = DoorStatus.CLOSED;
     
     ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
     private final int timerInterval_ms = 1000;
@@ -90,10 +90,10 @@ public class ElevatorController {
         assert elevatorNumberLabel != null : "fx:id=\"elevatorNumberLabel\" was not injected: check your FXML file 'Elevator.fxml'.";
     }
     
-    public void SetElevatorModel(ElevatorModel elevatorModel)
+    public void setElevatorModel(ElevatorModel elevatorModel)
     {
     	mElevatorModel = elevatorModel;
-    	SetNumberFloors(mElevatorModel.getFloorNum());
+    	setNumberFloors(mElevatorModel.getFloorNum());
     	mAutomaticMode = new AutomaticMode(mElevatorModel.getFloorNum());
     	mElevatorModel.addListener(new PropertyChangeListener() {
 			@Override
@@ -101,69 +101,69 @@ public class ElevatorController {
 				Platform.runLater(() -> {
 					if(evt.getPropertyName().equals("FloorNum")) {
 						// maximum number of floors
-						SetNumberFloors((int)evt.getNewValue());
+						setNumberFloors((int)evt.getNewValue());
 					}
 					else if(evt.getPropertyName().equals("Direction")) {
-						SetDirection((Direction)evt.getNewValue());
+						setDirection((Direction)evt.getNewValue());
 					}
 					else if(evt.getPropertyName().equals("DoorStatus")) {
 						doorStatus = (DoorStatus)evt.getNewValue();
-						SetDoorStatus(doorStatus);
+						setDoorStatus(doorStatus);
 					}
 					else if(evt.getPropertyName().equals("PressedFloorButtons")) {
 						List<Integer> pressedButtons = mElevatorModel.getPressedFloorButtons();
 						// reset all floors previously
 						for(ElevatorFloorController floor : floorControllerList) {
-							floor.SetStopActive(false);
+							floor.setStopActive(false);
 						}
 						// get new list + update
 						for(int i : pressedButtons) {
-							floorControllerList.get(i).SetStopActive(true);
+							floorControllerList.get(i).setStopActive(true);
 						}
 					}
 					else if(evt.getPropertyName().equals("ServicedFloors")) {
 						List<Integer> activeFloors = mElevatorModel.getServicedFloors();
 						// reset all floors previously
 						for(ElevatorFloorController floor : floorControllerList) {
-							floor.SetFloorActive(false);
+							floor.setFloorActive(false);
 						}
 						// get new list + update
 						for(int i : activeFloors) {
-							floorControllerList.get(i).SetFloorActive(true);
+							floorControllerList.get(i).setFloorActive(true);
 						}
 					}
 					else if(evt.getPropertyName().equals("CurrentFloor")) {
 						currentFloor = mElevatorModel.getCurrentFloor();
 						// reset all floors
 						for(ElevatorFloorController floor : floorControllerList) {
-							floor.SetElevatorActive(false);
+							floor.setElevatorActive(false);
 						}
 						// set only current floor
-						floorControllerList.get(currentFloor).SetElevatorActive(true);
+						floorControllerList.get(currentFloor).setElevatorActive(true);
 					}
 					else if(evt.getPropertyName().equals("Speed")) {
-						SetVelocity((double)evt.getNewValue());
+						setVelocity((double)evt.getNewValue());
 					}
 					else if(evt.getPropertyName().equals("Acceleration")) {
 						// not needed
 					}
 					else if(evt.getPropertyName().equals("Weight")) {
-						SetPayload((double)evt.getNewValue());
+						setPayload((double)evt.getNewValue());
 					}
 					else if(evt.getPropertyName().equals("Target")) {
-						SetDestination((int)evt.getNewValue());					
+						setDestination((int)evt.getNewValue());					
 					}
 				});
 			}
 		});
     	// Automatic mode
 		scheduledExecutorService.scheduleAtFixedRate(()-> {
-			if (GetAutomaticModeActive() && doorStatus == DoorStatus.Open) {
-				mAutomaticMode.SetCurrentDirection(currentDirection);
-				mAutomaticMode.SetCurrentFloor(currentFloor);
-				mAutomaticMode.CalculateNextTargetAndDirection();
-				currentTarget = mAutomaticMode.GetNextTarget();
-				currentDirection = mAutomaticMode.GetNextDirection();
+			if (getAutomaticModeActive() && doorStatus == DoorStatus.OPEN) {
+				mAutomaticMode.setCurrentDirection(currentDirection);
+				mAutomaticMode.setCurrentFloor(currentFloor);
+				mAutomaticMode.calculateNextTargetAndDirection();
+				currentTarget = mAutomaticMode.getNextTarget();
+				currentDirection = mAutomaticMode.getNextDirection();
 				try {
 					mElevatorModel.setTarget(currentTarget);
 					mElevatorModel.setDirection(currentDirection);
@@ -174,45 +174,45 @@ public class ElevatorController {
 		},timerInterval_ms,timerInterval_ms,TimeUnit.MILLISECONDS);
     }
     
-    public void SetElevatorNumber(int number) {
+    public void setElevatorNumber(int number) {
     	elevatorNumberLabel.setText(Integer.toString(number));
     }
     
-    public void SetPayload(double payload) {
+    public void setPayload(double payload) {
     	payloadLabel.setText(String.format("%.1f",  payload) + " lbs");
     }
     
-    public void SetVelocity(double velocity) {
+    public void setVelocity(double velocity) {
     	velocityLabel.setText(String.format("%.1f",  velocity) + " ft/s");
     }
     
-    public void SetDoorStatus(DoorStatus status) {
-    	if (status == DoorStatus.Open) {
+    public void setDoorStatus(DoorStatus status) {
+    	if (status == DoorStatus.OPEN) {
     		doorStatusLabel.setText("open");
-    	} else if(status == DoorStatus.Opening) {
+    	} else if(status == DoorStatus.OPENING) {
     		doorStatusLabel.setText("opening");
-    	} else if(status == DoorStatus.Closing) {
+    	} else if(status == DoorStatus.CLOSING) {
     		doorStatusLabel.setText("closing");
     	} else {
     		doorStatusLabel.setText("closed");
     	}
     }
     
-    public void SetDestination(int floor) {
+    public void setDestination(int floor) {
     	destinationLabel.setText(Integer.toString(floor));
     }
     
-    public void SetDirection(Direction dir) {
-    	if (dir == Direction.Up) {
+    public void setDirection(Direction dir) {
+    	if (dir == Direction.UP) {
     		directionLabel.setText("up");
-    	} else if (dir == Direction.Down) {
+    	} else if (dir == Direction.DOWN) {
     		directionLabel.setText("down");
     	} else {
     		directionLabel.setText("--");
     	}
     }
     
-    public void SetNumberFloors(int number) {
+    public void setNumberFloors(int number) {
     	if(number > 0 && numberFloors != number)
     	{
     		try {
@@ -222,23 +222,23 @@ public class ElevatorController {
     				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ElevatorFloor.fxml"));
     				Pane listItem = fxmlLoader.load();
     				ElevatorFloorController controller = fxmlLoader.getController();
-    				controller.AddMouseClickEventHandler(new EventHandler() {
+    				controller.addMouseClickEventHandler(new EventHandler() {
     					@Override
     					public void handle(Event event) {
     						Platform.runLater(() -> {
     							try {
-    								if(currentTarget != GetDestination() && !GetAutomaticModeActive() && doorStatus == DoorStatus.Open)
+    								if(currentTarget != getDestination() && !getAutomaticModeActive() && doorStatus == DoorStatus.OPEN)
     								{
-    									currentTarget = GetDestination();
+    									currentTarget = getDestination();
     									mElevatorModel.setTarget(currentTarget);
     									if (currentFloor < currentTarget) {
-    										currentDirection = Direction.Up;
+    										currentDirection = Direction.UP;
     									} 
     									else if (currentFloor > currentTarget) {
-    										currentDirection = Direction.Down;
+    										currentDirection = Direction.DOWN;
     									}
     									else {
-    										currentDirection = Direction.Uncommited;
+    										currentDirection = Direction.UNCOMMITTED;
     									}
     									mElevatorModel.setDirection(currentDirection);
     								}	
@@ -248,13 +248,13 @@ public class ElevatorController {
     						});
     					}
     				});
-    				controller.SetElevatorActive(false);
-    				controller.SetStopActive(false);
-    				controller.SetFloorActive(true);
+    				controller.setElevatorActive(false);
+    				controller.setStopActive(false);
+    				controller.setFloorActive(true);
     				floorControllerList.add(controller);
     				floorButtonsListView.getItems().add(0, listItem);
     			}
-    			floorControllerList.get(0).SetElevatorActive(true);
+    			floorControllerList.get(0).setElevatorActive(true);
     		} catch (IOException ex) {
     			ex.printStackTrace();
     		} 
@@ -262,11 +262,11 @@ public class ElevatorController {
     	}
     }
     
-    public boolean GetAutomaticModeActive() {
+    public boolean getAutomaticModeActive() {
     	return automaticModeCheckBox.isSelected();
     }
     
-    public int GetDestination() {
+    public int getDestination() {
     	// if no floor has been selected, the index will be -1
     	int ret = -1;
     	int selectedIndex = floorButtonsListView.getSelectionModel().getSelectedIndex();
@@ -278,7 +278,7 @@ public class ElevatorController {
     }
     
     // floors from 0 to n
-    public ElevatorFloorController GetFloor(int number) {
+    public ElevatorFloorController getFloor(int number) {
     	return floorControllerList.get(number);
     }
     

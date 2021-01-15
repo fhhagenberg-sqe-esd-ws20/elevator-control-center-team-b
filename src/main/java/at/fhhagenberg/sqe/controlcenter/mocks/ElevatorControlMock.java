@@ -16,10 +16,10 @@ public class ElevatorControlMock implements IElevatorControl {
 	private int mTarget;
 	
 	public ElevatorControlMock(int floors) {
-		mDirection = Direction.Uncommited;
+		mDirection = Direction.UNCOMMITTED;
 		mFloors = floors;
 		
-		mServicedFloors = new ArrayList<Integer>();
+		mServicedFloors = new ArrayList<>();
 		for(int i = 0; i < mFloors; i++) {
 			mServicedFloors.add(i);
 		}
@@ -29,7 +29,7 @@ public class ElevatorControlMock implements IElevatorControl {
 	
 	@Override
 	public DoorStatus getCurrentDoorStatus() {
-		return DoorStatus.Open;
+		return DoorStatus.OPEN;
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class ElevatorControlMock implements IElevatorControl {
 
 	@Override
 	public List<Integer> getPressedFloorButtons() {
-		return new ArrayList<Integer>();
+		return new ArrayList<>();
 	}
 
 	@Override

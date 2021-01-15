@@ -29,7 +29,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 
-public class ElevatorControllerTest extends ElevatorController {	
+class ElevatorControllerTest extends ElevatorController {	
 	private ElevatorController controller;
 	
 	/**
@@ -64,81 +64,81 @@ public class ElevatorControllerTest extends ElevatorController {
 	}
 	
 	@Test
-	public void testSetElevatorModel() {
-		controller.SetElevatorModel(new ElevatorModel(new ElevatorControlMock(3)));
+	void testSetElevatorModel() {
+		controller.setElevatorModel(new ElevatorModel(new ElevatorControlMock(3)));
 		assertFalse(controller.floorButtonsListView.getItems().isEmpty());
 	}
 	
 	@Test
-    public void testSetElevatorNumber() {
-		controller.SetElevatorNumber(1);
+    void testSetElevatorNumber() {
+		controller.setElevatorNumber(1);
 		assertEquals("1", controller.elevatorNumberLabel.getText());
     }
 	
 	@Test
-    public void testSetPayload() {
-		controller.SetPayload(1.1);
+    void testSetPayload() {
+		controller.setPayload(1.1);
 		assertEquals("1.1 lbs", controller.payloadLabel.getText());
     }
 	
 	@Test
-    public void testSetVelocity() {
-		controller.SetVelocity(1.1);
+    void testSetVelocity() {
+		controller.setVelocity(1.1);
 		assertEquals("1.1 ft/s", controller.velocityLabel.getText());
     }
 	
 	@Test
-    public void testSetDoorStatus() {
-		controller.SetDoorStatus(DoorStatus.Open);
+    void testSetDoorStatus() {
+		controller.setDoorStatus(DoorStatus.OPEN);
 		assertEquals("open", controller.doorStatusLabel.getText());
-		controller.SetDoorStatus(DoorStatus.Closed);
+		controller.setDoorStatus(DoorStatus.CLOSED);
 		assertEquals("closed", controller.doorStatusLabel.getText());
-		controller.SetDoorStatus(DoorStatus.Opening);
+		controller.setDoorStatus(DoorStatus.OPENING);
 		assertEquals("opening", controller.doorStatusLabel.getText());
-		controller.SetDoorStatus(DoorStatus.Closing);
+		controller.setDoorStatus(DoorStatus.CLOSING);
 		assertEquals("closing", controller.doorStatusLabel.getText());
     }
 	
 	@Test
-    public void testSetDirection() {
-		controller.SetDirection(Direction.Uncommited);
+    void testSetDirection() {
+		controller.setDirection(Direction.UNCOMMITTED);
 		assertEquals("--", controller.directionLabel.getText());
-		controller.SetDirection(Direction.Up);
+		controller.setDirection(Direction.UP);
 		assertEquals("up", controller.directionLabel.getText());
-		controller.SetDirection(Direction.Down);
+		controller.setDirection(Direction.DOWN);
 		assertEquals("down", controller.directionLabel.getText());
     }
 	
 	@Test
-    public void testGetAutomaticModeActive() {
+    void testGetAutomaticModeActive() {
 		controller.automaticModeCheckBox.setSelected(true);
-		assertTrue(controller.GetAutomaticModeActive());
+		assertTrue(controller.getAutomaticModeActive());
     }
 	
 	@Test
-    public void testGetDestination() throws ControlCenterException, InterruptedException {
-		controller.SetElevatorModel(new ElevatorModel(new ElevatorControlMock(3)));
+    void testGetDestination() throws ControlCenterException, InterruptedException {
+		controller.setElevatorModel(new ElevatorModel(new ElevatorControlMock(3)));
 		controller.floorButtonsListView.getSelectionModel().select(1);
-		assertEquals(1, controller.GetDestination());
+		assertEquals(1, controller.getDestination());
     }
 	
 	@Test
-	public void testGetDestinationUnselected() throws ControlCenterException {
-		controller.SetElevatorModel(new ElevatorModel(new ElevatorControlMock(3))); 
-		assertEquals(-1, controller.GetDestination());
+	void testGetDestinationUnselected() throws ControlCenterException {
+		controller.setElevatorModel(new ElevatorModel(new ElevatorControlMock(3))); 
+		assertEquals(-1, controller.getDestination());
 	}
 	
 	@Test
-    public void testGetFloor() throws ControlCenterException {
-		controller.SetElevatorModel(new ElevatorModel(new ElevatorControlMock(3)));   
-		assertEquals(0.25, controller.GetFloor(0).stopImageView.getOpacity());
-		assertEquals(0.25, controller.GetFloor(1).stopImageView.getOpacity());
-		assertEquals(0.25, controller.GetFloor(2).stopImageView.getOpacity());
+    void testGetFloor() throws ControlCenterException {
+		controller.setElevatorModel(new ElevatorModel(new ElevatorControlMock(3)));   
+		assertEquals(0.25, controller.getFloor(0).stopImageView.getOpacity());
+		assertEquals(0.25, controller.getFloor(1).stopImageView.getOpacity());
+		assertEquals(0.25, controller.getFloor(2).stopImageView.getOpacity());
     }
 	
 	@Test
-	public void testGetFloorException() throws ControlCenterException {
-		controller.SetElevatorModel(new ElevatorModel(new ElevatorControlMock(3)));   
-		assertThrows(IndexOutOfBoundsException.class, () -> controller.GetFloor(-1));
+	void testGetFloorException() throws ControlCenterException {
+		controller.setElevatorModel(new ElevatorModel(new ElevatorControlMock(3)));   
+		assertThrows(IndexOutOfBoundsException.class, () -> controller.getFloor(-1));
 	}
 }

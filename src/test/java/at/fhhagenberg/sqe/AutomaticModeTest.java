@@ -11,51 +11,51 @@ import org.junit.jupiter.api.Test;
 import at.fhhagenberg.sqe.controlcenter.ControlCenterException;
 import at.fhhagenberg.sqe.controlcenter.IElevatorControl.Direction;
 
-public class AutomaticModeTest {
+class AutomaticModeTest {
 
 	@Test
 	void testUpwards() {
 		var automaticMode = new AutomaticMode(3);
-		automaticMode.SetCurrentDirection(Direction.Up);
-		automaticMode.SetCurrentFloor(0);
-		automaticMode.CalculateNextTargetAndDirection();
-		assertEquals(1, automaticMode.GetNextTarget());
-		assertEquals(Direction.Up, automaticMode.GetNextDirection());
+		automaticMode.setCurrentDirection(Direction.UP);
+		automaticMode.setCurrentFloor(0);
+		automaticMode.calculateNextTargetAndDirection();
+		assertEquals(1, automaticMode.getNextTarget());
+		assertEquals(Direction.UP, automaticMode.getNextDirection());
 	}
 	
 	@Test
 	void testDownwards() {
 		var automaticMode = new AutomaticMode(3);
-		automaticMode.SetCurrentDirection(Direction.Down);
-		automaticMode.SetCurrentFloor(2);
-		automaticMode.CalculateNextTargetAndDirection();
-		assertEquals(1, automaticMode.GetNextTarget());
-		assertEquals(Direction.Down, automaticMode.GetNextDirection());
+		automaticMode.setCurrentDirection(Direction.DOWN);
+		automaticMode.setCurrentFloor(2);
+		automaticMode.calculateNextTargetAndDirection();
+		assertEquals(1, automaticMode.getNextTarget());
+		assertEquals(Direction.DOWN, automaticMode.getNextDirection());
 	}
 	
 	@Test
 	void testUpDown() {
 		var automaticMode = new AutomaticMode(3);
-		automaticMode.SetCurrentDirection(Direction.Up);
-		automaticMode.SetCurrentFloor(0);
-		automaticMode.CalculateNextTargetAndDirection();
-		assertEquals(1, automaticMode.GetNextTarget());
-		assertEquals(Direction.Up, automaticMode.GetNextDirection());
+		automaticMode.setCurrentDirection(Direction.UP);
+		automaticMode.setCurrentFloor(0);
+		automaticMode.calculateNextTargetAndDirection();
+		assertEquals(1, automaticMode.getNextTarget());
+		assertEquals(Direction.UP, automaticMode.getNextDirection());
 		
-		automaticMode.SetCurrentFloor(1);
-		automaticMode.CalculateNextTargetAndDirection();
-		assertEquals(2, automaticMode.GetNextTarget());
-		assertEquals(Direction.Up, automaticMode.GetNextDirection());
+		automaticMode.setCurrentFloor(1);
+		automaticMode.calculateNextTargetAndDirection();
+		assertEquals(2, automaticMode.getNextTarget());
+		assertEquals(Direction.UP, automaticMode.getNextDirection());
 		
-		automaticMode.SetCurrentFloor(2);
-		automaticMode.CalculateNextTargetAndDirection();
-		assertEquals(1, automaticMode.GetNextTarget());
-		assertEquals(Direction.Down, automaticMode.GetNextDirection());
+		automaticMode.setCurrentFloor(2);
+		automaticMode.calculateNextTargetAndDirection();
+		assertEquals(1, automaticMode.getNextTarget());
+		assertEquals(Direction.DOWN, automaticMode.getNextDirection());
 		
-		automaticMode.SetCurrentFloor(1);
-		automaticMode.CalculateNextTargetAndDirection();
-		assertEquals(0, automaticMode.GetNextTarget());
-		assertEquals(Direction.Down, automaticMode.GetNextDirection());
+		automaticMode.setCurrentFloor(1);
+		automaticMode.calculateNextTargetAndDirection();
+		assertEquals(0, automaticMode.getNextTarget());
+		assertEquals(Direction.DOWN, automaticMode.getNextDirection());
 	}
 	
 	@Test
@@ -66,12 +66,12 @@ public class AutomaticModeTest {
 	@Test
 	void testSetCurrentFloorNegativeException() {
 		var automaticMode = new AutomaticMode(2);
-		assertThrows(IllegalArgumentException.class, () -> { automaticMode.SetCurrentFloor(-1); });
+		assertThrows(IllegalArgumentException.class, () -> { automaticMode.setCurrentFloor(-1); });
 	}
 	
 	@Test
 	void testSetCurrentFloorGreaterFloorNumException() {
 		var automaticMode = new AutomaticMode(2);
-		assertThrows(IllegalArgumentException.class, () -> { automaticMode.SetCurrentFloor(10); });
+		assertThrows(IllegalArgumentException.class, () -> { automaticMode.setCurrentFloor(10); });
 	}
 }

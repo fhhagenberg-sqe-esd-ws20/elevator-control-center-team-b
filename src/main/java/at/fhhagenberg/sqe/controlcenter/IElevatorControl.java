@@ -7,19 +7,19 @@ public interface IElevatorControl {
 	 * Type for status of door
 	 */
 	public enum DoorStatus {
-		Open,
-		Closed,
-		Opening,
-		Closing
+		OPEN,
+		CLOSED,
+		OPENING,
+		CLOSING
 	}
 	
 	/*
 	 * Type of elevator direction
 	 */
 	public enum Direction {
-		Uncommited,
-		Up,
-		Down
+		UNCOMMITTED,
+		UP,
+		DOWN
 	}
 	
 	/*

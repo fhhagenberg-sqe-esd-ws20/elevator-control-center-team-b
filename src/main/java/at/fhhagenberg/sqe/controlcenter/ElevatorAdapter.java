@@ -36,13 +36,13 @@ public class ElevatorAdapter implements IElevatorControl {
 		
 		switch(status) {
 		case IElevator.ELEVATOR_DOORS_CLOSED:
-			return DoorStatus.Closed;
+			return DoorStatus.CLOSED;
 		case IElevator.ELEVATOR_DOORS_CLOSING:
-			return DoorStatus.Closing;
+			return DoorStatus.CLOSING;
 		case IElevator.ELEVATOR_DOORS_OPEN:
-			return DoorStatus.Open;
+			return DoorStatus.OPEN;
 		case IElevator.ELEVATOR_DOORS_OPENING:
-			return DoorStatus.Opening;
+			return DoorStatus.OPENING;
 		default:
 			throw new ControlCenterException("Received undefined door status");
 		}
@@ -61,11 +61,11 @@ public class ElevatorAdapter implements IElevatorControl {
 		
 		switch(direction) {
 		case IElevator.ELEVATOR_DIRECTION_DOWN:
-			return Direction.Down;
+			return Direction.DOWN;
 		case IElevator.ELEVATOR_DIRECTION_UNCOMMITTED:
-			return Direction.Uncommited;
+			return Direction.UNCOMMITTED;
 		case IElevator.ELEVATOR_DIRECTION_UP:
-			return Direction.Up;
+			return Direction.UP;
 		default:
 			throw new ControlCenterException("Received undefined direction");
 		}
@@ -174,13 +174,13 @@ public class ElevatorAdapter implements IElevatorControl {
 	public void setDirection(Direction dir) throws ControlCenterException {
 		int direction = 0;
 		switch(dir) {
-		case Uncommited:
+		case UNCOMMITTED:
 			direction = IElevator.ELEVATOR_DIRECTION_UNCOMMITTED;
 			break;
-		case Up:
+		case UP:
 			direction = IElevator.ELEVATOR_DIRECTION_UP;
 			break;
-		case Down:
+		case DOWN:
 			direction = IElevator.ELEVATOR_DIRECTION_DOWN;
 			break;
 		}

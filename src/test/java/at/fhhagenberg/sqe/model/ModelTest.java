@@ -7,12 +7,12 @@ import java.beans.PropertyChangeListener;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-public class ModelTest {
+class ModelTest {
 
 	
 	
 	@Test
-	public void SetPropertyChangesProperty() {
+	void SetPropertyChangesProperty() {
 		var cut = new Model() {
 			
 			void setX() {
@@ -31,7 +31,7 @@ public class ModelTest {
 	}
 	
 	@Test
-	public void SetPropertyCallEventListener() {
+	void SetPropertyCallEventListener() {
 		var cut = new Model() {
 			
 			void setX() {
@@ -52,7 +52,7 @@ public class ModelTest {
 	}
 	
 	@Test
-	public void DoesNotCallEventListenerIfSameValueWasSet() {
+	void DoesNotCallEventListenerIfSameValueWasSet() {
 		var cut = new Model() {
 			
 			void setX() {

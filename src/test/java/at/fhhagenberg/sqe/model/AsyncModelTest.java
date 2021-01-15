@@ -9,11 +9,11 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class AsyncModelTest {
+class AsyncModelTest {
 
 	
 	@Test
-	public void DoesFirePropertyChange() {
+	void DoesFirePropertyChange() {
 		var cut = new AsyncModel() {
 
 			@Override

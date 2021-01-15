@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import at.fhhagenberg.sqe.controlcenter.ControlCenterException;
 
-public class BuildingTests {
+class BuildingTests {
 
 	@Test
 	void GetHeightOfFloorReturnsCorrectHeight() {
@@ -25,14 +25,14 @@ public class BuildingTests {
 	}
 	
 	@Test
-	public void GetFloorReturnsNotNullWithId()
+	void GetFloorReturnsNotNullWithId()
 	{
 		var building = new BuildingMock(2,2,2.2);
 		assertNotNull(building.getFloor(0));
 	}
 	
 	@Test
-	public void GetFloorThrowsIfIfOutOfRange() {
+	void GetFloorThrowsIfIfOutOfRange() {
 		var building = new BuildingMock(2,2,2.2);
 		assertThrows(IllegalArgumentException.class, () -> {
 			building.getFloor(2);
@@ -40,14 +40,14 @@ public class BuildingTests {
 	}
 	
 	@Test
-	public void GetElevatorReturnsNotNullWithId()
+	void GetElevatorReturnsNotNullWithId()
 	{
 		var building = new BuildingMock(2,2,2.2);
 		assertNotNull(building.getElevator(0));
 	}
 	
 	@Test
-	public void GetElevatorThrowsIfIfOutOfRange() {
+	void GetElevatorThrowsIfIfOutOfRange() {
 		var building = new BuildingMock(2,2,2.2);
 		assertThrows(IllegalArgumentException.class, () -> {
 			building.getElevator(2);

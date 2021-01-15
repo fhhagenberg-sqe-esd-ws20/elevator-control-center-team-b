@@ -11,13 +11,9 @@ import at.fhhagenberg.sqe.controlcenter.IBuilding;
 import at.fhhagenberg.sqe.controlcenter.IElevatorControl;
 import at.fhhagenberg.sqe.controlcenter.IFloor;
 
-public class BuildingModelTest {
-
-	
-	
-	
+class BuildingModelTest {
 	@Test
-	public void CreatesCorrectAmountOfElevatorModels() throws ControlCenterException {
+	void CreatesCorrectAmountOfElevatorModels() throws ControlCenterException {
 		var floorMock = Mockito.mock(IFloor.class);
 		var elevatorMock = Mockito.mock(IElevatorControl.class);
 		
@@ -34,7 +30,7 @@ public class BuildingModelTest {
 	}
 	
 	@Test
-	public void RunCallsEveryModel() throws ControlCenterException {
+	void RunCallsEveryModel() throws ControlCenterException {
 		var floorMock = Mockito.mock(IFloor.class);
 		var elevatorMock = Mockito.mock(IElevatorControl.class);
 		
@@ -53,7 +49,7 @@ public class BuildingModelTest {
 	}
 	
 	@Test
-	public void GetElevatorThrowsExceptionIfOutOfRange() throws ControlCenterException {
+	void GetElevatorThrowsExceptionIfOutOfRange() throws ControlCenterException {
 		var floorMock = Mockito.mock(IFloor.class);
 		var elevatorMock = Mockito.mock(IElevatorControl.class);
 		
@@ -71,7 +67,7 @@ public class BuildingModelTest {
 	}
 	
 	@Test
-	public void GetFloorThrowsExceptionIfOutOfRange() throws ControlCenterException {
+	void GetFloorThrowsExceptionIfOutOfRange() throws ControlCenterException {
 		var floorMock = Mockito.mock(IFloor.class);
 		var elevatorMock = Mockito.mock(IElevatorControl.class);
 		
@@ -89,7 +85,7 @@ public class BuildingModelTest {
 	}
 	
 	@Test
-	public void GetElevatorThrowsExceptionIfNegative() throws ControlCenterException {
+	void GetElevatorThrowsExceptionIfNegative() throws ControlCenterException {
 		var floorMock = Mockito.mock(IFloor.class);
 		var elevatorMock = Mockito.mock(IElevatorControl.class);
 		
@@ -107,7 +103,7 @@ public class BuildingModelTest {
 	}
 	
 	@Test
-	public void GetFloorThrowsExceptionIfNegative() throws ControlCenterException {
+	void GetFloorThrowsExceptionIfNegative() throws ControlCenterException {
 		var floorMock = Mockito.mock(IFloor.class);
 		var elevatorMock = Mockito.mock(IElevatorControl.class);
 		

@@ -22,7 +22,7 @@ public class RemoteElevatorExceptionHandler extends ElevatorExceptionHandler {
 	@Override
 	protected boolean tryFix() {
 		try {
-			var remoteElevator = mConnector.CreateConnection(mRemote);
+			var remoteElevator = mConnector.createConnection(mRemote);
 			mBuilding = new BuildingAdapter(remoteElevator);
 			return true;
 		} catch (MalformedURLException e) {

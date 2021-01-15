@@ -15,38 +15,38 @@ public class AutomaticMode {
 		this.floorNum = floorNum;
 	}
 	
-	public void SetCurrentDirection(Direction currentDirection) {
+	public void setCurrentDirection(Direction currentDirection) {
 		this.currentDirection = currentDirection;
 	}
 	
-	public void SetCurrentFloor(int currentFloor) {
+	public void setCurrentFloor(int currentFloor) {
 		if (currentFloor < 0 || currentFloor >= floorNum) {
 			throw new IllegalArgumentException("currentFloor is out of range");
 		}
 		this.currentFloor = currentFloor;
 	}
 	
-	public void CalculateNextTargetAndDirection() {
-		if (currentDirection == Direction.Down && currentFloor > 0) {
+	public void calculateNextTargetAndDirection() {
+		if (currentDirection == Direction.DOWN && currentFloor > 0) {
 			currentTarget = currentFloor - 1;
-		} else if (currentDirection == Direction.Up && currentFloor < (floorNum - 1)){
+		} else if (currentDirection == Direction.UP && currentFloor < (floorNum - 1)){
 			currentTarget = currentFloor + 1;
 		} else {
 			if (currentFloor == 0) {
-				currentDirection = Direction.Up;
+				currentDirection = Direction.UP;
 				currentTarget = currentFloor + 1;
 			} else {
-				currentDirection = Direction.Down;
+				currentDirection = Direction.DOWN;
 				currentTarget = currentFloor - 1;
 			}
 		}
 	}
 	
-	public int GetNextTarget() {
+	public int getNextTarget() {
 		return currentTarget;
 	}
 	
-	public Direction GetNextDirection() {
+	public Direction getNextDirection() {
 		return currentDirection;
 	}
 }

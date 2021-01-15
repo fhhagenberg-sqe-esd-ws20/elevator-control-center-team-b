@@ -41,8 +41,8 @@ public class ElevatorControl extends Application {
         	Parent root = fxmlLoader.load();
         	controller = fxmlLoader.getController();
         	mHandler.setController(controller);
-        	controller.SetExceptionHandler(mHandler);
-        	controller.SetBuildingModel(mModel);
+        	controller.setExceptionHandler(mHandler);
+        	controller.setBuildingModel(mModel);
 			var scene = new Scene(root);
 			stage.setTitle("Elevator Control");
 			stage.setScene(scene);
@@ -57,7 +57,7 @@ public class ElevatorControl extends Application {
         controller.stop();
     }
     
-    public ElevatorControlController GetController() {
+    public ElevatorControlController getController() {
     	return controller;
     }
     

@@ -18,7 +18,7 @@ import at.fhhagenberg.sqe.model.BuildingModel;
 import javafx.stage.Stage;
 
 @ExtendWith(ApplicationExtension.class)
-public class ElevatorControlGuiTest {
+class ElevatorControlGuiTest {
     private ElevatorControlController controller;
     
     /**
@@ -35,9 +35,9 @@ public class ElevatorControlGuiTest {
     	var buildingmock = new BuildingMock(5,2,2.0);
         var app = new ElevatorControl(new BuildingModel(buildingmock),new ElevatorExceptionHandlerMock(buildingmock));
         app.start(stage);
-        controller = app.GetController();
+        controller = app.getController();
         try {
-			controller.SetBuildingModel(new BuildingModel(new BuildingMock(3, 4, 2.0)));
+			controller.setBuildingModel(new BuildingModel(new BuildingMock(3, 4, 2.0)));
 		} catch (ControlCenterException e) {
 			e.printStackTrace();
 		}
@@ -48,7 +48,7 @@ public class ElevatorControlGuiTest {
      * @throws InterruptedException 
      */
     @Test
-    public void testDefaultValues(FxRobot robot) throws InterruptedException {
+    void testDefaultValues(FxRobot robot) throws InterruptedException {
     	Thread.sleep(1000);
     	
         FxAssert.verifyThat("#elevatorNumberLabel", LabeledMatchers.hasText("1"));
@@ -75,7 +75,7 @@ public class ElevatorControlGuiTest {
      * @throws InterruptedException 
      */
     @Test
-    public void testAutomaticMode(FxRobot robot) throws InterruptedException {
+    void testAutomaticMode(FxRobot robot) throws InterruptedException {
     	Thread.sleep(750);
         FxAssert.verifyThat("#destinationLabel", LabeledMatchers.hasText("1"));
         FxAssert.verifyThat("#directionLabel", LabeledMatchers.hasText("up"));
@@ -95,7 +95,7 @@ public class ElevatorControlGuiTest {
      * @throws InterruptedException 
      */
     @Test
-    public void testManualMode(FxRobot robot) throws InterruptedException {
+    void testManualMode(FxRobot robot) throws InterruptedException {
         robot.clickOn("#automaticModeCheckBox");
         robot.clickOn("#elevatorFloorHBox");
         Thread.sleep(1000);

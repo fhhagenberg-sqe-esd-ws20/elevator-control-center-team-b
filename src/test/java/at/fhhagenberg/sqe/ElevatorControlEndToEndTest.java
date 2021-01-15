@@ -29,7 +29,7 @@ import javafx.stage.Stage;
 import sqelevator.IElevator;
 
 @ExtendWith(ApplicationExtension.class)
-public class ElevatorControlEndToEndTest {
+class ElevatorControlEndToEndTest {
     private ElevatorControlController controller;
     private IElevator mElevatorMock;
     private IElevatorConnector mConnectorMock;
@@ -54,16 +54,16 @@ public class ElevatorControlEndToEndTest {
     	Mockito.when(mElevatorMock.getElevatorDoorStatus(Mockito.anyInt())).thenReturn(IElevator.ELEVATOR_DOORS_OPEN);
     	
     	mConnectorMock = Mockito.mock(IElevatorConnector.class, Mockito.CALLS_REAL_METHODS);
-    	Mockito.when(mConnectorMock.CreateConnection(Mockito.anyString())).thenReturn(mElevatorMock);
+    	Mockito.when(mConnectorMock.createConnection(Mockito.anyString())).thenReturn(mElevatorMock);
     	
     	var buildingmock = new BuildingAdapter(mElevatorMock);
         var app = new ElevatorControl(new BuildingModel(buildingmock), new RemoteElevatorExceptionHandler("localhost",mConnectorMock));
         app.start(stage);
-        controller = app.GetController();
+        controller = app.getController();
     }
     
     @Test
-    public void setTargetTriggersIElevator(FxRobot robot) throws RemoteException, InterruptedException {
+    void setTargetTriggersIElevator(FxRobot robot) throws RemoteException, InterruptedException {
     	//set into manual mode
     	robot.clickOn("#automaticModeCheckBox");
     	//sleep for doors to get open
@@ -75,7 +75,7 @@ public class ElevatorControlEndToEndTest {
     }
     
     @Test
-    public void testSetFloorButtons(FxRobot robot) throws RemoteException, InterruptedException {
+    void testSetFloorButtons(FxRobot robot) throws RemoteException, InterruptedException {
     	Mockito.when(mElevatorMock.getFloorButtonDown(3)).thenReturn(true);
     	Mockito.when(mElevatorMock.getFloorButtonUp(3)).thenReturn(true);
     	//sleep for buttons to get pressed
@@ -88,7 +88,7 @@ public class ElevatorControlEndToEndTest {
     }
     
     @Test
-    public void testSetStopButton(FxRobot robot) throws RemoteException, InterruptedException {
+    void testSetStopButton(FxRobot robot) throws RemoteException, InterruptedException {
     	Mockito.when(mElevatorMock.getElevatorButton(0, 3)).thenReturn(true);
     	//sleep for button to get pressed
     	Thread.sleep(1000);
@@ -98,17 +98,17 @@ public class ElevatorControlEndToEndTest {
     }
     
     @Test
-    public void remoteExceptionLeadsToReconnect(FxRobot robot) throws RemoteException, MalformedURLException, NotBoundException, InterruptedException {
+    void remoteExceptionLeadsToReconnect(FxRobot robot) throws RemoteException, MalformedURLException, NotBoundException, InterruptedException {
     	Mockito.doThrow(RemoteException.class).when(mElevatorMock).getFloorButtonUp(Mockito.anyInt());
     	
     	// wait for scheduler
     	Thread.sleep(2000);
     	
-    	Mockito.verify(mConnectorMock).CreateConnection("localhost");
+    	Mockito.verify(mConnectorMock).createConnection("localhost");
     }
     
     @Test
-    public void remoteExceptionLeadsToErrorState(FxRobot robot) throws RemoteException, MalformedURLException, NotBoundException, InterruptedException {
+    void remoteExceptionLeadsToErrorState(FxRobot robot) throws RemoteException, MalformedURLException, NotBoundException, InterruptedException {
     	Mockito.doThrow(new RemoteException("localhost not available")).when(mElevatorMock).getFloorButtonUp(Mockito.anyInt());
     	
     	// wait for scheduler

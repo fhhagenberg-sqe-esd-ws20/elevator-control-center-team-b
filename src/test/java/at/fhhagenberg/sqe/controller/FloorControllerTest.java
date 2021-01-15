@@ -15,7 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.application.Platform;
 import javafx.scene.control.Label;
 
-public class FloorControllerTest extends FloorController {	
+class FloorControllerTest extends FloorController {	
 	private FloorController controller;
 	
 	/**
@@ -43,26 +43,26 @@ public class FloorControllerTest extends FloorController {
 	}
 	
 	@Test
-	public void testSetFloorNumber() {
-		controller.SetFloorNumber(1);
+	void testSetFloorNumber() {
+		controller.setFloorNumber(1);
 		assertEquals("1", controller.floorNumberLabel.getText());
 	}
 	
 	@Test
-	public void testSetUpArrowActive() {
-		controller.SetUpArrowActive(true);
+	void testSetUpArrowActive() {
+		controller.setUpArrowActive(true);
 		assertEquals(1.0, controller.upArrowImageView.getOpacity());
 		
-		controller.SetUpArrowActive(false);
+		controller.setUpArrowActive(false);
 		assertEquals(0.25, controller.upArrowImageView.getOpacity());
 	}
 
 	@Test
-	public void testSetDownArrowActive() {
-		controller.SetDownArrowActive(true);
+	void testSetDownArrowActive() {
+		controller.setDownArrowActive(true);
 		assertEquals(1.0, controller.downArrowImageView.getOpacity());
 		
-		controller.SetDownArrowActive(false);
+		controller.setDownArrowActive(false);
 		assertEquals(0.25, controller.downArrowImageView.getOpacity());
 	}
 }

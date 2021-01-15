@@ -14,11 +14,11 @@ public class BuildingMock implements IBuilding {
 	private final double mFloorHeight;
 	
 	public BuildingMock(int floors, int elevators, double floorHeight) {
-		mFloors = new ArrayList<IFloor>();
+		mFloors = new ArrayList<>();
 		for(int i = 0; i < floors; i++) {
 			mFloors.add(new FloorMock(i));
 		}
-		mElevators = new ArrayList<IElevatorControl>();
+		mElevators = new ArrayList<>();
 		for(int i = 0; i < elevators; i++) {
 			mElevators.add(new ElevatorControlMock(floors));
 		}

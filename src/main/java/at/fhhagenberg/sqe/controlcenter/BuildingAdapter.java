@@ -16,8 +16,8 @@ public class BuildingAdapter implements IBuilding {
 	public BuildingAdapter(IElevator elevator) throws RemoteException {
 		mElevator = elevator;
 		
-		mFloors = new ArrayList<FloorAdapter>();
-		mElevators = new ArrayList<ElevatorAdapter>();
+		mFloors = new ArrayList<>();
+		mElevators = new ArrayList<>();
 		
 		int floorNum = mElevator.getFloorNum();
 		for(int i = 0; i < floorNum; i++) {

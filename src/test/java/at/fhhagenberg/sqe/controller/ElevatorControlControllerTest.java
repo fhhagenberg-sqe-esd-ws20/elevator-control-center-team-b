@@ -19,7 +19,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 
-public class ElevatorControlControllerTest extends ElevatorControlController {	
+class ElevatorControlControllerTest extends ElevatorControlController {	
 	private ElevatorControlController controller;
 	
 	/**
@@ -47,50 +47,50 @@ public class ElevatorControlControllerTest extends ElevatorControlController {
 	}
 	
 	@Test
-	public void testSetBuildingModel() throws ControlCenterException {
-		controller.SetBuildingModel(new BuildingModel(new BuildingMock(3, 1, 1.0)));
+	void testSetBuildingModel() throws ControlCenterException {
+		controller.setBuildingModel(new BuildingModel(new BuildingMock(3, 1, 1.0)));
 		assertFalse(controller.floorsListView.getItems().isEmpty());
 		assertFalse(controller.elevatorsListView.getItems().isEmpty());
 	}
 	
 	@Test
-    public void testSetMessage() {
-		controller.SetMessage("abc");
+    void testSetMessage() {
+		controller.setMessage("abc");
 		assertEquals("abc\n", controller.messageTextArea.getText());
     }
 	
 	@Test
-    public void testSetMessages() {
-		controller.SetMessage("abc");
-		controller.SetMessage("def");
+    void testSetMessages() {
+		controller.setMessage("abc");
+		controller.setMessage("def");
 		assertEquals("abc\ndef\n", controller.messageTextArea.getText());
     }
 	
 	@Test
-    public void testGetFloor() throws ControlCenterException {
-		controller.SetBuildingModel(new BuildingModel(new BuildingMock(3, 1, 1.0)));   
-		assertEquals("0", controller.GetFloor(0).floorNumberLabel.getText());
-		assertEquals("1", controller.GetFloor(1).floorNumberLabel.getText());
-		assertEquals("2", controller.GetFloor(2).floorNumberLabel.getText());
+    void testGetFloor() throws ControlCenterException {
+		controller.setBuildingModel(new BuildingModel(new BuildingMock(3, 1, 1.0)));   
+		assertEquals("0", controller.getFloor(0).floorNumberLabel.getText());
+		assertEquals("1", controller.getFloor(1).floorNumberLabel.getText());
+		assertEquals("2", controller.getFloor(2).floorNumberLabel.getText());
     }
     
 	@Test
-    public void testSetNumberElevators() throws ControlCenterException {
-		controller.SetBuildingModel(new BuildingModel(new BuildingMock(3, 3, 1.0)));   
-		assertEquals("1", controller.GetElevator(0).elevatorNumberLabel.getText());
-		assertEquals("2", controller.GetElevator(1).elevatorNumberLabel.getText());
-		assertEquals("3", controller.GetElevator(2).elevatorNumberLabel.getText());
+    void testSetNumberElevators() throws ControlCenterException {
+		controller.setBuildingModel(new BuildingModel(new BuildingMock(3, 3, 1.0)));   
+		assertEquals("1", controller.getElevator(0).elevatorNumberLabel.getText());
+		assertEquals("2", controller.getElevator(1).elevatorNumberLabel.getText());
+		assertEquals("3", controller.getElevator(2).elevatorNumberLabel.getText());
     }
 	
 	@Test
-	public void testGetFloorException() throws ControlCenterException {
-		controller.SetBuildingModel(new BuildingModel(new BuildingMock(3, 1, 1.0)));  
-		assertThrows(IndexOutOfBoundsException.class, () -> controller.GetFloor(-1));
+	void testGetFloorException() throws ControlCenterException {
+		controller.setBuildingModel(new BuildingModel(new BuildingMock(3, 1, 1.0)));  
+		assertThrows(IndexOutOfBoundsException.class, () -> controller.getFloor(-1));
 	}
 	
 	@Test
-	public void testGetElevatorException() throws ControlCenterException {
-		controller.SetBuildingModel(new BuildingModel(new BuildingMock(3, 3, 1.0)));  
-		assertThrows(IndexOutOfBoundsException.class, () -> controller.GetElevator(-1));
+	void testGetElevatorException() throws ControlCenterException {
+		controller.setBuildingModel(new BuildingModel(new BuildingMock(3, 3, 1.0)));  
+		assertThrows(IndexOutOfBoundsException.class, () -> controller.getElevator(-1));
 	}
 }

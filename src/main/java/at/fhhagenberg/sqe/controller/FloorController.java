@@ -40,32 +40,32 @@ public class FloorController {
         assert downArrowImageView != null : "fx:id=\"downArrowImageView\" was not injected: check your FXML file 'Floor.fxml'.";
     }
     
-    public void SetFloorModel(FloorModel floorModel) {
+    public void setFloorModel(FloorModel floorModel) {
     	mFloorModel = floorModel;
-    	SetFloorNumber(mFloorModel.getFloorId());
+    	setFloorNumber(mFloorModel.getFloorId());
     	mFloorModel.addListener(new PropertyChangeListener() {	
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				Platform.runLater(() -> {
 					if(evt.getPropertyName().equals("Id")) {
-						SetFloorNumber((int)evt.getNewValue());
+						setFloorNumber((int)evt.getNewValue());
 					}
 					else if(evt.getPropertyName().equals("ButtonUp")) {
-						SetUpArrowActive((boolean)evt.getNewValue());
+						setUpArrowActive((boolean)evt.getNewValue());
 					}
 					else if(evt.getPropertyName().equals("ButtonDown")) {
-						SetDownArrowActive((boolean)evt.getNewValue());
+						setDownArrowActive((boolean)evt.getNewValue());
 					}
 				});
 			}
     	});
     }
     
-    public void SetFloorNumber(int number) {
+    public void setFloorNumber(int number) {
     	floorNumberLabel.setText(Integer.toString(number));
     }
     
-    public void SetUpArrowActive(boolean active) {
+    public void setUpArrowActive(boolean active) {
     	if (active) {
     		upArrowImageView.setOpacity(1);
     	} else {
@@ -73,7 +73,7 @@ public class FloorController {
     	}
     }
     
-    public void SetDownArrowActive(boolean active) {
+    public void setDownArrowActive(boolean active) {
     	if (active) {
     		downArrowImageView.setOpacity(1);
     	} else {

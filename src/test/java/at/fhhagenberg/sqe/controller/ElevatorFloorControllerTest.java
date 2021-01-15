@@ -14,7 +14,7 @@ import javafx.application.Platform;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
-public class ElevatorFloorControllerTest extends ElevatorFloorController {	
+class ElevatorFloorControllerTest extends ElevatorFloorController {	
 	private ElevatorFloorController controller;
 	
 	/**
@@ -42,29 +42,29 @@ public class ElevatorFloorControllerTest extends ElevatorFloorController {
 	}
 	
 	@Test
-    public void testSetElevatorActive() {
-		controller.SetElevatorActive(true);
+    void testSetElevatorActive() {
+		controller.setElevatorActive(true);
 		assertEquals(1.0, controller.elevatorImageView.getOpacity());
 		
-		controller.SetElevatorActive(false);
+		controller.setElevatorActive(false);
 		assertEquals(0.0, controller.elevatorImageView.getOpacity());
     }
     
 	@Test
-    public void testSetStopActive() {
-		controller.SetStopActive(true);
+    void testSetStopActive() {
+		controller.setStopActive(true);
 		assertEquals(1.0, controller.stopImageView.getOpacity());
 		
-		controller.SetStopActive(false);
+		controller.setStopActive(false);
 		assertEquals(0.25, controller.stopImageView.getOpacity());
     }
     
 	@Test
-    public void testSetFloorActive() {
-		controller.SetFloorActive(true);
+    void testSetFloorActive() {
+		controller.setFloorActive(true);
 		assertEquals(1.0, controller.elevatorFloorHBox.getOpacity());
 		
-		controller.SetFloorActive(false);
+		controller.setFloorActive(false);
 		assertEquals(0.25, controller.elevatorFloorHBox.getOpacity());
     }
 }

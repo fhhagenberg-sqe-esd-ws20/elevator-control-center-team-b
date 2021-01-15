@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
 /**
@@ -36,11 +35,11 @@ public class ElevatorFloorController {
     }
     
     @SuppressWarnings("unchecked")
-	public void AddMouseClickEventHandler(@SuppressWarnings("rawtypes") EventHandler handler) {
+	public void addMouseClickEventHandler(@SuppressWarnings("rawtypes") EventHandler handler) {
     	elevatorFloorHBox.setOnMouseClicked(handler);
     }
     
-    public void SetElevatorActive(boolean active) {
+    public void setElevatorActive(boolean active) {
     	if (active) {
     		elevatorImageView.setOpacity(1);
     	} else {
@@ -48,7 +47,7 @@ public class ElevatorFloorController {
     	}
     }
     
-    public void SetStopActive(boolean active) {
+    public void setStopActive(boolean active) {
     	if (active) {
     		stopImageView.setOpacity(1);
     	} else {
@@ -56,7 +55,7 @@ public class ElevatorFloorController {
     	}
     }
     
-    public void SetFloorActive(boolean active) {
+    public void setFloorActive(boolean active) {
     	if (active) {
     		elevatorFloorHBox.setOpacity(1);
     	} else {

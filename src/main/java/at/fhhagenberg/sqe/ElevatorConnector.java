@@ -10,7 +10,7 @@ import sqelevator.IElevator;
 public class ElevatorConnector implements IElevatorConnector {
 
 	@Override
-	public IElevator CreateConnection(String uri) throws MalformedURLException, RemoteException, NotBoundException {
+	public IElevator createConnection(String uri) throws MalformedURLException, RemoteException, NotBoundException {
 		 return (IElevator)Naming.lookup(uri);
 	}
 

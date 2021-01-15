@@ -13,7 +13,7 @@ public class ElevatorScheduler extends TimerTask {
 	 * CTOR for allocating a new list
 	 */
 	public ElevatorScheduler() {
-		models = new ArrayList<AsyncModel>();
+		models = new ArrayList<>();
 	}
 	
 	/*

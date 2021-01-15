@@ -12,11 +12,11 @@ import org.mockito.Mockito;
 import at.fhhagenberg.sqe.controlcenter.ControlCenterException;
 import at.fhhagenberg.sqe.controlcenter.IFloor;
 
-public class FloorModelTests {
+class FloorModelTests {
 
 	
 	@Test
-	public void RunCallsAllGetters() throws ControlCenterException {
+	void RunCallsAllGetters() throws ControlCenterException {
 		var floorMock = Mockito.mock(IFloor.class);
 		
 		var cut = new FloorModel(floorMock);
@@ -29,7 +29,7 @@ public class FloorModelTests {
 	}
 	
 	@Test
-	public void EventIsTriggeredIfIdChanges() throws ControlCenterException
+	void EventIsTriggeredIfIdChanges() throws ControlCenterException
 	{
 		var listenerMock = Mockito.mock(PropertyChangeListener.class);
 		
@@ -46,7 +46,7 @@ public class FloorModelTests {
 	}
 	
 	@Test
-	public void EventIsTriggeredIfButtonUpChanges() throws ControlCenterException {
+	void EventIsTriggeredIfButtonUpChanges() throws ControlCenterException {
 		var listenerMock = Mockito.mock(PropertyChangeListener.class);
 		
 		var floorMock = Mockito.mock(IFloor.class);
@@ -62,7 +62,7 @@ public class FloorModelTests {
 	}
 	
 	@Test
-	public void EventIsTriggeredIfButtonDownChanges() throws ControlCenterException {
+	void EventIsTriggeredIfButtonDownChanges() throws ControlCenterException {
 		var listenerMock = Mockito.mock(PropertyChangeListener.class);
 		
 		var floorMock = Mockito.mock(IFloor.class);
@@ -78,7 +78,7 @@ public class FloorModelTests {
 	}
 	
 	@Test
-	public void GetFloorIdReturnsCorrectIdAfterRun() throws ControlCenterException {
+	void GetFloorIdReturnsCorrectIdAfterRun() throws ControlCenterException {
 		var floorMock = Mockito.mock(IFloor.class);
 		Mockito.when(floorMock.getFloorId()).thenReturn(1);
 		
@@ -90,7 +90,7 @@ public class FloorModelTests {
 	}
 	
 	@Test
-	public void IsButtonUpPressedReturnsCorrectAfterRun() throws ControlCenterException {
+	void IsButtonUpPressedReturnsCorrectAfterRun() throws ControlCenterException {
 		var floorMock = Mockito.mock(IFloor.class);
 		Mockito.when(floorMock.isButtonUpPressed()).thenReturn(true);
 		
@@ -102,7 +102,7 @@ public class FloorModelTests {
 	}
 	
 	@Test
-	public void IsButtonDownPressedReturnsCorrectAfterRun() throws ControlCenterException {
+	void IsButtonDownPressedReturnsCorrectAfterRun() throws ControlCenterException {
 		var floorMock = Mockito.mock(IFloor.class);
 		Mockito.when(floorMock.isButtonDownPressed()).thenReturn(true);
 		

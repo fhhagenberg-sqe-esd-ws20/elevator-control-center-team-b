@@ -6,30 +6,30 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-public class FloorTests {
+class FloorTests {
 
 	
 	@Test
-	public void GetFloorIdReturnsCorrectId() {
+	void GetFloorIdReturnsCorrectId() {
 		var floor = new FloorMock(1);
 		
 		assertEquals(1,floor.getFloorId());
 	}
 	
 	@Test
-	public void ButtonUpReturnsFalseInitial() {
+	void ButtonUpReturnsFalseInitial() {
 		var floor = new FloorMock(1);
 		assertFalse(floor.isButtonUpPressed());
 	}
 	
 	@Test
-	public void ButtonDownReturnsFalseInitial() {
+	void ButtonDownReturnsFalseInitial() {
 		var floor = new FloorMock(1);
 		assertFalse(floor.isButtonDownPressed());
 	}
 	
 	@Test
-	public void SetButtonUpPressedChangesState() 
+	void SetButtonUpPressedChangesState() 
 	{
 		var floor = new FloorMock(1);
 		floor.setButtonUpPressed(true);
@@ -37,7 +37,7 @@ public class FloorTests {
 	}
 	
 	@Test
-	public void SetButtonDownPressedChangesState() 
+	void SetButtonDownPressedChangesState() 
 	{
 		var floor = new FloorMock(1);
 		floor.setButtonDownPressed(true);

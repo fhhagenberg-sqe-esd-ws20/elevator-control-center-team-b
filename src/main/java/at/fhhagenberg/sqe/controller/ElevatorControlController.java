@@ -76,7 +76,7 @@ public class ElevatorControlController {
     }
     
     public void setError(String str) {
-    	SetMessage(str);
+    	setMessage(str);
     }
     
     public void updateModel(IBuilding building) throws ControlCenterException {
@@ -84,7 +84,7 @@ public class ElevatorControlController {
     	if(mBuildingModel == null) {
     		var model = new BuildingModel(building);
     		mHandlerFuture.cancel(false);
-    		Platform.runLater(() -> SetBuildingModel(model));
+    		Platform.runLater(() -> setBuildingModel(model));
     	}
     	else {
     		mBuildingModel.updateBuilding(building);
@@ -108,18 +108,18 @@ public class ElevatorControlController {
     	{
     		// reset all called floors and stops
     		for(ElevatorController elevator : elevatorControllerList) {
-				elevator.SetPayload(0);
-				elevator.SetVelocity(0);
-				elevator.SetDoorStatus(DoorStatus.Closed);
-				elevator.SetDirection(Direction.Uncommited);
+				elevator.setPayload(0);
+				elevator.setVelocity(0);
+				elevator.setDoorStatus(DoorStatus.CLOSED);
+				elevator.setDirection(Direction.UNCOMMITTED);
     		}
     	}
 
     	if(floorControllerList != null)
     	{
     		for(FloorController floor : floorControllerList) {
-    			floor.SetDownArrowActive(false);
-    			floor.SetUpArrowActive(false);
+    			floor.setDownArrowActive(false);
+    			floor.setUpArrowActive(false);
     		}
     	}
     }
@@ -132,11 +132,11 @@ public class ElevatorControlController {
     	Platform.runLater(() ->  setReconnectionMode());
     }
     
-    public void SetExceptionHandler(ElevatorExceptionHandler handler) {
+    public void setExceptionHandler(ElevatorExceptionHandler handler) {
     	mHandler = handler;
     }
     
-    public void SetBuildingModel(BuildingModel buildingModel) {
+    public void setBuildingModel(BuildingModel buildingModel) {
     	var me = this;
     	if(buildingModel == null) {
     		setErrorMode();
@@ -169,13 +169,13 @@ public class ElevatorControlController {
         elevatorScheduler.addAsyncModel(mBuildingModel);
 
         // get floor models + elevator models
-        SetNumberFloors(mBuildingModel.getFloorNum());
-        SetNumberElevators(mBuildingModel.getElevatorNum());
+        setNumberFloors(mBuildingModel.getFloorNum());
+        setNumberElevators(mBuildingModel.getElevatorNum());
 
         mSchedulerFuture = scheduledExecutorService.scheduleAtFixedRate(()->elevatorScheduler.run(),timerInterval_ms,timerInterval_ms,TimeUnit.MILLISECONDS);
     }
     
-    public void SetNumberFloors(int number) {
+    public void setNumberFloors(int number) {
     	if(number > 0 && numberFloors != number) {
     		try {
     			floorControllerList = FXCollections.observableArrayList();
@@ -185,11 +185,11 @@ public class ElevatorControlController {
     				Pane listItem = fxmlLoader.load();
     				FloorController controller = fxmlLoader.getController();
     				// initial settings
-    				controller.SetUpArrowActive(false);
-    				controller.SetDownArrowActive(false);
-    				controller.SetFloorNumber(i);
+    				controller.setUpArrowActive(false);
+    				controller.setDownArrowActive(false);
+    				controller.setFloorNumber(i);
     				// attach model
-    				controller.SetFloorModel(mBuildingModel.getFloor(i));
+    				controller.setFloorModel(mBuildingModel.getFloor(i));
     				floorControllerList.add(controller);
     				floorsListView.getItems().add(0, listItem);
     			}
@@ -200,7 +200,7 @@ public class ElevatorControlController {
     	}
     }
     
-    public void SetNumberElevators(int number) {
+    public void setNumberElevators(int number) {
     	if(number > 0 && numberElevators != number) {
     		try {
     			elevatorControllerList = FXCollections.observableArrayList();
@@ -210,15 +210,15 @@ public class ElevatorControlController {
     				Pane listItem = fxmlLoader.load();
     				ElevatorController controller = fxmlLoader.getController();
     				// initial settings
-    				controller.SetElevatorNumber(i);
-    				controller.SetPayload(0);
-    				controller.SetVelocity(0);
-    				controller.SetDoorStatus(DoorStatus.Closed);
-    				controller.SetDestination(0);
-    				controller.SetDirection(Direction.Uncommited);
-    				controller.SetNumberFloors(numberFloors);
+    				controller.setElevatorNumber(i);
+    				controller.setPayload(0);
+    				controller.setVelocity(0);
+    				controller.setDoorStatus(DoorStatus.CLOSED);
+    				controller.setDestination(0);
+    				controller.setDirection(Direction.UNCOMMITTED);
+    				controller.setNumberFloors(numberFloors);
     				// attach model
-    				controller.SetElevatorModel(mBuildingModel.getElevator(i-1));
+    				controller.setElevatorModel(mBuildingModel.getElevator(i-1));
     				elevatorControllerList.add(controller);
     				elevatorsListView.getItems().add(listItem);
     			}
@@ -229,18 +229,18 @@ public class ElevatorControlController {
     	}
     }
     
-    public void SetMessage(String message) {
+    public void setMessage(String message) {
     	messageTextArea.setText(messageTextArea.getText() + message + "\n");
     	messageTextArea.setScrollTop(Double.MAX_VALUE);
     }
     
     // floors from 0 to n
-    public FloorController GetFloor(int number) {
+    public FloorController getFloor(int number) {
     	return floorControllerList.get(number);
     }
     
     // elevators from 0 to n
-    public ElevatorController GetElevator(int number) {
+    public ElevatorController getElevator(int number) {
     	return elevatorControllerList.get(number);
     }
     

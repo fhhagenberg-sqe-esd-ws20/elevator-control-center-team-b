@@ -13,7 +13,7 @@ public class ElevatorConnectorMock implements IElevatorConnector{
 	IElevator elevatorMock;
 
 	@Override
-	public IElevator CreateConnection(String uri) throws MalformedURLException, RemoteException, NotBoundException {
+	public IElevator createConnection(String uri) throws MalformedURLException, RemoteException, NotBoundException {
 		elevatorMock = Mockito.mock(IElevator.class);
 		
 		Mockito.when(elevatorMock.getClockTick()).thenThrow(new RemoteException());

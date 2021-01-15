@@ -20,8 +20,8 @@ public class ElevatorModel extends AsyncModel implements IElevatorControl{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		setProperty("Direction", IElevatorControl.Direction.Uncommited);
-		setProperty("DoorStatus", IElevatorControl.DoorStatus.Closed);
+		setProperty("Direction", IElevatorControl.Direction.UNCOMMITTED);
+		setProperty("DoorStatus", IElevatorControl.DoorStatus.CLOSED);
 		setProperty("PressedFloorButtons", new ArrayList<Integer>());
 		setProperty("ServicedFloors", new ArrayList<Integer>());
 		setProperty("CurrentFloor", 0);
