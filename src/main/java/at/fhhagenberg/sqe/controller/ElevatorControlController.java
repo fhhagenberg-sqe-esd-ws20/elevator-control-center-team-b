@@ -249,6 +249,11 @@ public class ElevatorControlController {
     
     // cancel the timer so all created threads will stop at termination
     public void stop() {
+    	if (elevatorControllerList != null) {
+    		for(ElevatorController elevator : elevatorControllerList) {
+    			elevator.stop();
+    		}
+    	}
     	if(mSchedulerFuture != null) {
     		mSchedulerFuture.cancel(false);
     	}

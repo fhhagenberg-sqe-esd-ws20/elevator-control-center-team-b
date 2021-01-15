@@ -281,4 +281,9 @@ public class ElevatorController {
     public ElevatorFloorController GetFloor(int number) {
     	return floorControllerList.get(number);
     }
+    
+    // cancel the timer so all created threads will stop at termination
+    public void stop() {
+    	scheduledExecutorService.shutdown();
+    }
 }
