@@ -8,27 +8,35 @@ import at.fhhagenberg.sqe.controlcenter.ControlCenterException;
 import at.fhhagenberg.sqe.controlcenter.IElevatorControl;
 
 public class ElevatorModel extends AsyncModel implements IElevatorControl{
-	
+	private static final String DIRECTION = Messages.getString("ElevatorModel.0"); //$NON-NLS-1$
+	private static final String DOORSTATUS = Messages.getString("ElevatorModel.1"); //$NON-NLS-1$
+	private static final String PRESSEDFLOORBUTTONS = Messages.getString("ElevatorModel.2"); //$NON-NLS-1$
+	private static final String SERVICEDFLOORS = Messages.getString("ElevatorModel.3"); //$NON-NLS-1$
+	private static final String CURRENTFLOOR = Messages.getString("ElevatorModel.4"); //$NON-NLS-1$
+	private static final String SPEED = Messages.getString("ElevatorModel.5"); //$NON-NLS-1$
+	private static final String WEIGHT = Messages.getString("ElevatorModel.6"); //$NON-NLS-1$
+	private static final String ACCELERATION = Messages.getString("ElevatorModel.7"); //$NON-NLS-1$
+	private static final String TARGET = Messages.getString("ElevatorModel.8"); //$NON-NLS-1$
+	private static final String FLOORNUM = Messages.getString("ElevatorModel.9"); //$NON-NLS-1$
 	private IElevatorControl mElevator;
 	
 	public ElevatorModel(IElevatorControl elevator) {
 		mElevator = elevator;
 		// set initial values of properties
 		try {
-			setProperty("FloorNum", mElevator.getFloorNum());
+			setProperty(FLOORNUM, mElevator.getFloorNum());
 		} catch (ControlCenterException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		setProperty("Direction", IElevatorControl.Direction.UNCOMMITTED);
-		setProperty("DoorStatus", IElevatorControl.DoorStatus.CLOSED);
-		setProperty("PressedFloorButtons", new ArrayList<Integer>());
-		setProperty("ServicedFloors", new ArrayList<Integer>());
-		setProperty("CurrentFloor", 0);
-		setProperty("Speed", 0.0);
-		setProperty("Acceleration", 0.0);
-		setProperty("Weight", 0.0);
-		setProperty("Target", 0);
+		setProperty(DIRECTION, IElevatorControl.Direction.UNCOMMITTED);
+		setProperty(DOORSTATUS, IElevatorControl.DoorStatus.CLOSED);
+		setProperty(PRESSEDFLOORBUTTONS, new ArrayList<Integer>());
+		setProperty(SERVICEDFLOORS, new ArrayList<Integer>());
+		setProperty(CURRENTFLOOR, 0);
+		setProperty(SPEED, 0.0);
+		setProperty(ACCELERATION, 0.0);
+		setProperty(WEIGHT, 0.0);
+		setProperty(TARGET, 0);
 	}
 	
 	public void updateElevator(IElevatorControl elevator) {
@@ -38,31 +46,31 @@ public class ElevatorModel extends AsyncModel implements IElevatorControl{
 
 	@Override
 	public int getFloorNum(){
-		return (int)getProperty("FloorNum");
+		return (int)getProperty(FLOORNUM);
 	}
 
 
 	@Override
 	public DoorStatus getCurrentDoorStatus() {
-		return (DoorStatus)getProperty("DoorStatus");
+		return (DoorStatus)getProperty(DOORSTATUS);
 	}
 
 
 	@Override
 	public Direction getCurrentDirection() {
-		return (Direction)getProperty("Direction");
+		return (Direction)getProperty(DIRECTION);
 	}
 
 
 	@Override
 	public double getAcceleration() {
-		return (double) getProperty("Acceleration");
+		return (double) getProperty(ACCELERATION);
 	}
 
 
 	@Override
 	public List<Integer> getPressedFloorButtons() {
-		return (List<Integer>) getProperty("PressedFloorButtons");
+		return (List<Integer>) getProperty(PRESSEDFLOORBUTTONS);
 	}
 
 
@@ -74,25 +82,25 @@ public class ElevatorModel extends AsyncModel implements IElevatorControl{
 
 	@Override
 	public int getCurrentFloor() {
-		return (int) getProperty("CurrentFloor");
+		return (int) getProperty(CURRENTFLOOR);
 	}
 
 
 	@Override
 	public double getSpeed() {
-		return (double)getProperty("Speed");
+		return (double)getProperty(SPEED);
 	}
 
 
 	@Override
 	public double getWeight() {
-		return (double)getProperty("Weight");
+		return (double)getProperty(WEIGHT);
 	}
 
 
 	@Override
 	public int getTarget() {
-		return (int)getProperty("Target");
+		return (int)getProperty(TARGET);
 	}
 
 
@@ -101,18 +109,18 @@ public class ElevatorModel extends AsyncModel implements IElevatorControl{
 		var floorNums = getFloorNum();
 		var currentTarget = getTarget();
 		if(target >= floorNums) {
-			throw new ControlCenterException(new IllegalArgumentException("Elevator does not serve floor " + target));
+			throw new ControlCenterException(new IllegalArgumentException(Messages.getString("ElevatorModel.10") + target)); //$NON-NLS-1$
 		}
 		if(target != currentTarget) {
 			mElevator.setTarget(target);
-			setProperty("Target", target);
+			setProperty(TARGET, target);
 		}
 	}
 
 
 	@Override
 	public List<Integer> getServicedFloors() {
-		return (List<Integer>) getProperty("ServicedFloors");
+		return (List<Integer>) getProperty(SERVICEDFLOORS);
 	}
 
 
@@ -127,18 +135,18 @@ public class ElevatorModel extends AsyncModel implements IElevatorControl{
 		var floorNums = getFloorNum();
 		var servicedFloors = new ArrayList<Integer>(getServicedFloors());
 		if(floor >= floorNums) {
-			throw new ControlCenterException(new IllegalArgumentException("Elevator cant reach floor " + floor));
+			throw new ControlCenterException(new IllegalArgumentException(Messages.getString("ElevatorModel.11") + floor)); //$NON-NLS-1$
 		}
 		if(service && !servicedFloors.contains(floor)) {
 			mElevator.setServiceFloor(floor, service);
 			servicedFloors.add(floor);
 			Collections.sort(servicedFloors);
-			setProperty("ServicedFloors", servicedFloors);
+			setProperty(SERVICEDFLOORS, servicedFloors);
 		}
 		if(!service && servicedFloors.contains(floor)) {
 			mElevator.setServiceFloor(floor, service);
 			servicedFloors.remove((Object)floor);
-			setProperty("ServicedFloors", servicedFloors);
+			setProperty(SERVICEDFLOORS, servicedFloors);
 		}
 	}
 
@@ -148,7 +156,7 @@ public class ElevatorModel extends AsyncModel implements IElevatorControl{
 		var currentDirection = getCurrentDirection();
 		if(currentDirection != dir) {
 			mElevator.setDirection(dir);
-			setProperty("Direction", dir);
+			setProperty(DIRECTION, dir);
 		}
 	}
 	
@@ -166,19 +174,19 @@ public class ElevatorModel extends AsyncModel implements IElevatorControl{
 			var weight = mElevator.getWeight();
 			var target = mElevator.getTarget();
 			
-			setProperty("FloorNum", floornums);
-			setProperty("Direction", direction);
-			setProperty("DoorStatus", doorstatus);
-			setProperty("PressedFloorButtons", pressedFloorButtons);
-			setProperty("ServicedFloors", servicedFloors);
-			setProperty("CurrentFloor", currentFloor);
-			setProperty("Speed", speed);
-			setProperty("Acceleration", acceleration);
-			setProperty("Weight", weight);
-			setProperty("Target", target);
+			setProperty(FLOORNUM, floornums);
+			setProperty(DIRECTION, direction);
+			setProperty(DOORSTATUS, doorstatus);
+			setProperty(PRESSEDFLOORBUTTONS, pressedFloorButtons);
+			setProperty(SERVICEDFLOORS, servicedFloors);
+			setProperty(CURRENTFLOOR, currentFloor);
+			setProperty(SPEED, speed);
+			setProperty(ACCELERATION, acceleration);
+			setProperty(WEIGHT, weight);
+			setProperty(TARGET, target);
 		} catch (ControlCenterException e) {
 			
-			setProperty("Exception",e);
+			setProperty(Messages.getString("ElevatorModel.12"),e); //$NON-NLS-1$
 		}
 		
 	}

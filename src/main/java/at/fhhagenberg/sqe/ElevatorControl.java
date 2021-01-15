@@ -29,7 +29,7 @@ public class ElevatorControl extends Application {
 		mHandler = new RemoteElevatorExceptionHandler("rmi://localhost/ElevatorSim", new ElevatorConnector());
 	}
 	
-	public ElevatorControl(BuildingModel model, ElevatorExceptionHandler handler) throws ControlCenterException {
+	public ElevatorControl(BuildingModel model, ElevatorExceptionHandler handler) {
 		mModel = model;
 		mHandler = handler;
 	}

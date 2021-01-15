@@ -4,19 +4,21 @@ import at.fhhagenberg.sqe.controlcenter.ControlCenterException;
 import at.fhhagenberg.sqe.controlcenter.IFloor;
 
 public class FloorModel extends AsyncModel implements IFloor {
-
+	private static String BUTTONUP = "ButtonUp";
+	private static String BUTTONDOWN = "ButtonDown";
+	private static String ID = "Id";
 	private IFloor mFloor;
 	
 	public FloorModel(IFloor floor) {
 		mFloor = floor;
 		try {
-			setProperty("Id", mFloor.getFloorId());
+			setProperty(ID, mFloor.getFloorId());
 		} catch (ControlCenterException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		setProperty("ButtonUp", false);
-		setProperty("ButtonDown", false);
+		setProperty(BUTTONUP, false);
+		setProperty(BUTTONDOWN, false);
 	}
 	
 	public void updateFloor(IFloor floor) {
@@ -25,17 +27,17 @@ public class FloorModel extends AsyncModel implements IFloor {
 
 	@Override
 	public int getFloorId() {
-		return (int) getProperty("Id");
+		return (int) getProperty(ID);
 	}
 
 	@Override
 	public boolean isButtonUpPressed() {
-		return (boolean)getProperty("ButtonUp");
+		return (boolean)getProperty(BUTTONUP);
 	}
 
 	@Override
 	public boolean isButtonDownPressed() {
-		return (boolean)getProperty("ButtonDown");
+		return (boolean)getProperty(BUTTONDOWN);
 	}
 	
 	@Override
@@ -46,9 +48,9 @@ public class FloorModel extends AsyncModel implements IFloor {
 			var btnUp = mFloor.isButtonUpPressed();
 			var btnDown = mFloor.isButtonDownPressed();
 			
-			setProperty("Id", id);
-			setProperty("ButtonUp", btnUp);
-			setProperty("ButtonDown", btnDown);
+			setProperty(ID, id);
+			setProperty(BUTTONUP, btnUp);
+			setProperty(BUTTONDOWN, btnDown);
 			
 		} catch (ControlCenterException e) {
 			setProperty("Exception",e);

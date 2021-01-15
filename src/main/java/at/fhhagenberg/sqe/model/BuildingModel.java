@@ -16,6 +16,7 @@ public class BuildingModel extends AsyncModel {
 	private IBuilding mBuilding;
 	private ObservableList<ElevatorModel> mElevators;
 	private ObservableList<FloorModel> mFloors;
+	private static String EXCEPTION = Messages.getString("BuildingModel.0"); //$NON-NLS-1$
 	
 	
 	public BuildingModel(IBuilding building) throws ControlCenterException {
@@ -39,10 +40,10 @@ public class BuildingModel extends AsyncModel {
 		var floors = mBuilding.getNumberOfFloors();
 		var elevators = mBuilding.getNumberOfElevators();
 		if(floors != mFloors.size()) {
-			throw new ControlCenterException("New building has a new amount of floors.");
+			throw new ControlCenterException(Messages.getString("BuildingModel.1")); //$NON-NLS-1$
 		}
 		if(elevators != mElevators.size()) {
-			throw new ControlCenterException("New building has a new amount of evelators.");
+			throw new ControlCenterException(Messages.getString("BuildingModel.2")); //$NON-NLS-1$
 		}
 		
 		// verify first if all floors and elevators are reachable
@@ -75,8 +76,8 @@ public class BuildingModel extends AsyncModel {
 
 				@Override
 				public void propertyChange(PropertyChangeEvent evt) {
-					if(evt.getPropertyName().equals("Exception")) {
-						me.setProperty("Exception", evt.getNewValue());
+					if(evt.getPropertyName().equals(EXCEPTION)) {
+						me.setProperty(EXCEPTION, evt.getNewValue());
 					}
 					
 				}
@@ -89,8 +90,8 @@ public class BuildingModel extends AsyncModel {
 
 				@Override
 				public void propertyChange(PropertyChangeEvent evt) {
-					if(evt.getPropertyName().equals("Exception")) {
-						me.setProperty("Exception", evt.getNewValue());
+					if(evt.getPropertyName().equals(EXCEPTION)) {
+						me.setProperty(EXCEPTION, evt.getNewValue());
 					}
 					
 				}
@@ -110,7 +111,7 @@ public class BuildingModel extends AsyncModel {
 	 * Returns the specified elevator model
 	 */
 	public ElevatorModel getElevator(int id) {
-		if(id >= mElevators.size() || id < 0) throw new IllegalArgumentException("Elevator " + id + " is not available");
+		if(id >= mElevators.size() || id < 0) throw new IllegalArgumentException(Messages.getString("BuildingModel.3") + id + Messages.getString("BuildingModel.4")); //$NON-NLS-1$ //$NON-NLS-2$
 		return mElevators.get(id);
 	}
 	
@@ -125,7 +126,7 @@ public class BuildingModel extends AsyncModel {
 	 * returns the specified floor model
 	 */
 	public FloorModel getFloor(int id) {
-		if(id >= mFloors.size() || id < 0) throw new IllegalArgumentException("Floor " + id + " is not available");
+		if(id >= mFloors.size() || id < 0) throw new IllegalArgumentException(Messages.getString("BuildingModel.5") + id + Messages.getString("BuildingModel.6")); //$NON-NLS-1$ //$NON-NLS-2$
 		return mFloors.get(id);
 	}
 	
