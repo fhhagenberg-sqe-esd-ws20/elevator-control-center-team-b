@@ -1,4 +1,4 @@
-package at.fhhagenberg.sqe;
+package at.fhhagenberg.sqe.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import at.fhhagenberg.sqe.controlcenter.mocks.FloorMock;
+import at.fhhagenberg.sqe.controller.FloorController;
 import at.fhhagenberg.sqe.model.FloorModel;
 
 import org.junit.jupiter.api.BeforeEach;

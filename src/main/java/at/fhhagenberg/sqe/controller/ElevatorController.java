@@ -1,4 +1,4 @@
-package at.fhhagenberg.sqe;
+package at.fhhagenberg.sqe.controller;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -10,8 +10,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import at.fhhagenberg.sqe.*;
+import at.fhhagenberg.sqe.AutomaticMode;
 import at.fhhagenberg.sqe.controlcenter.ControlCenterException;
-import at.fhhagenberg.sqe.controlcenter.IElevatorControl;
 import at.fhhagenberg.sqe.controlcenter.IElevatorControl.Direction;
 import at.fhhagenberg.sqe.controlcenter.IElevatorControl.DoorStatus;
 import at.fhhagenberg.sqe.model.ElevatorModel;

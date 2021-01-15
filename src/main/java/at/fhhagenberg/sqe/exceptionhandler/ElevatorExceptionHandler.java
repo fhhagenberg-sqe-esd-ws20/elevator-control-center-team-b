@@ -1,9 +1,10 @@
-package at.fhhagenberg.sqe;
+package at.fhhagenberg.sqe.exceptionhandler;
 
 import java.util.TimerTask;
 
 import at.fhhagenberg.sqe.controlcenter.ControlCenterException;
 import at.fhhagenberg.sqe.controlcenter.IBuilding;
+import at.fhhagenberg.sqe.controller.ElevatorControlController;
 
 public abstract class ElevatorExceptionHandler extends TimerTask{
 	

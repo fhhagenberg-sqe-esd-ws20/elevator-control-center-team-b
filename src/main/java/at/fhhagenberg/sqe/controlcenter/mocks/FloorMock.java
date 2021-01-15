@@ -1,6 +1,5 @@
 package at.fhhagenberg.sqe.controlcenter.mocks;
 
-import at.fhhagenberg.sqe.controlcenter.ControlCenterException;
 import at.fhhagenberg.sqe.controlcenter.IFloor;
 
 public class FloorMock implements IFloor{

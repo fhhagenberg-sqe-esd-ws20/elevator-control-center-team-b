@@ -1,4 +1,4 @@
-package at.fhhagenberg.sqe;
+package at.fhhagenberg.sqe.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import at.fhhagenberg.sqe.controlcenter.ControlCenterException;
 import at.fhhagenberg.sqe.controlcenter.mocks.BuildingMock;
+import at.fhhagenberg.sqe.controller.ElevatorControlController;
 import at.fhhagenberg.sqe.model.BuildingModel;
 
 import org.junit.jupiter.api.BeforeEach;

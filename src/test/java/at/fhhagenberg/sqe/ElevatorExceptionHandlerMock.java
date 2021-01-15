@@ -1,6 +1,7 @@
 package at.fhhagenberg.sqe;
 
 import at.fhhagenberg.sqe.controlcenter.IBuilding;
+import at.fhhagenberg.sqe.exceptionhandler.ElevatorExceptionHandler;
 
 public class ElevatorExceptionHandlerMock extends ElevatorExceptionHandler {
 

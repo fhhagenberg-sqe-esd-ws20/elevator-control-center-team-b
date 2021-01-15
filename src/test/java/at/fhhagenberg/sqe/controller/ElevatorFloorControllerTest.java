@@ -1,9 +1,12 @@
-package at.fhhagenberg.sqe;
+package at.fhhagenberg.sqe.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import at.fhhagenberg.sqe.controller.ElevatorFloorController;
+
 import org.junit.jupiter.api.BeforeEach;
 
 import javafx.application.Platform;
