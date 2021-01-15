@@ -25,9 +25,6 @@ public class ElevatorFloorController {
     
     @FXML // fx:id="elevatorFloorHBox"
     protected HBox elevatorFloorHBox; // Value injected by FXMLLoader
-    
-    @FXML // fx:id="elevatorFloorAnchorPane"
-    protected AnchorPane elevatorFloorAnchorPane; // Value injected by FXMLLoader
 
     @FXML // fx:id="stopImageView"
     protected ImageView stopImageView; // Value injected by FXMLLoader

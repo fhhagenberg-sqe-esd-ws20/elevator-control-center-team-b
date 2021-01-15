@@ -60,6 +60,7 @@ public class ElevatorControllerTest extends ElevatorController {
 		controller.automaticModeCheckBox = new CheckBox();
 		controller.velocityLabel = new Label();
 		controller.elevatorNumberLabel = new Label();
+		controller.initialize();
 	}
 	
 	@Test
@@ -90,12 +91,22 @@ public class ElevatorControllerTest extends ElevatorController {
     public void testSetDoorStatus() {
 		controller.SetDoorStatus(DoorStatus.Open);
 		assertEquals("open", controller.doorStatusLabel.getText());
+		controller.SetDoorStatus(DoorStatus.Closed);
+		assertEquals("closed", controller.doorStatusLabel.getText());
+		controller.SetDoorStatus(DoorStatus.Opening);
+		assertEquals("opening", controller.doorStatusLabel.getText());
+		controller.SetDoorStatus(DoorStatus.Closing);
+		assertEquals("closing", controller.doorStatusLabel.getText());
     }
 	
 	@Test
     public void testSetDirection() {
+		controller.SetDirection(Direction.Uncommited);
+		assertEquals("--", controller.directionLabel.getText());
 		controller.SetDirection(Direction.Up);
 		assertEquals("up", controller.directionLabel.getText());
+		controller.SetDirection(Direction.Down);
+		assertEquals("down", controller.directionLabel.getText());
     }
 	
 	@Test

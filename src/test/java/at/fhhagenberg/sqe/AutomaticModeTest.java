@@ -64,8 +64,14 @@ public class AutomaticModeTest {
 	}
 	
 	@Test
-	void testSetCurrentFloorException() {
+	void testSetCurrentFloorNegativeException() {
 		var automaticMode = new AutomaticMode(2);
 		assertThrows(IllegalArgumentException.class, () -> { automaticMode.SetCurrentFloor(-1); });
+	}
+	
+	@Test
+	void testSetCurrentFloorGreaterFloorNumException() {
+		var automaticMode = new AutomaticMode(2);
+		assertThrows(IllegalArgumentException.class, () -> { automaticMode.SetCurrentFloor(10); });
 	}
 }

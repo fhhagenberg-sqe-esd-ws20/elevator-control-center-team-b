@@ -1,5 +1,7 @@
 package at.fhhagenberg.sqe;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -22,6 +24,7 @@ import at.fhhagenberg.sqe.controlcenter.mocks.BuildingMock;
 import at.fhhagenberg.sqe.controller.ElevatorControlController;
 import at.fhhagenberg.sqe.exceptionhandler.RemoteElevatorExceptionHandler;
 import at.fhhagenberg.sqe.model.BuildingModel;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import sqelevator.IElevator;
 
@@ -69,6 +72,29 @@ public class ElevatorControlEndToEndTest {
     	robot.clickOn("#elevatorFloorHBox");
     	// which will lead to setting the target of elevator 0 to floor 3
     	Mockito.verify(mElevatorMock).setTarget(0, 3);
+    }
+    
+    @Test
+    public void testSetFloorButtons(FxRobot robot) throws RemoteException, InterruptedException {
+    	Mockito.when(mElevatorMock.getFloorButtonDown(3)).thenReturn(true);
+    	Mockito.when(mElevatorMock.getFloorButtonUp(3)).thenReturn(true);
+    	//sleep for buttons to get pressed
+    	Thread.sleep(1000);
+    	//check floor buttons
+    	ImageView floorButtonDown = robot.lookup("#downArrowImageView").query();
+    	ImageView floorButtonUp = robot.lookup("#upArrowImageView").query();
+    	assertEquals(1.0, floorButtonDown.getOpacity());
+    	assertEquals(1.0, floorButtonUp.getOpacity());
+    }
+    
+    @Test
+    public void testSetStopButton(FxRobot robot) throws RemoteException, InterruptedException {
+    	Mockito.when(mElevatorMock.getElevatorButton(0, 3)).thenReturn(true);
+    	//sleep for button to get pressed
+    	Thread.sleep(1000);
+    	//check floor buttons
+    	ImageView stopButton = robot.lookup("#stopImageView").query();
+    	assertEquals(1.0, stopButton.getOpacity());
     }
     
     @Test

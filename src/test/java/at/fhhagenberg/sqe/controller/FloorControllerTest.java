@@ -39,12 +39,7 @@ public class FloorControllerTest extends FloorController {
 		controller.floorNumberLabel = new Label();
 		controller.upArrowImageView = new ImageView();
 		controller.downArrowImageView = new ImageView();
-	}
-	
-	@Test
-	public void testSetFloorModel() {
-		controller.SetFloorModel(new FloorModel(new FloorMock(1)));
-		assertEquals("1", controller.floorNumberLabel.getText());
+		controller.initialize();
 	}
 	
 	@Test

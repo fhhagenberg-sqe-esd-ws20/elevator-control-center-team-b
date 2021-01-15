@@ -30,7 +30,6 @@ public class ElevatorControl extends Application {
 	}
 	
 	public ElevatorControl(BuildingModel model, ElevatorExceptionHandler handler) throws ControlCenterException {
-		//mModel = model;
 		mModel = model;
 		mHandler = handler;
 	}

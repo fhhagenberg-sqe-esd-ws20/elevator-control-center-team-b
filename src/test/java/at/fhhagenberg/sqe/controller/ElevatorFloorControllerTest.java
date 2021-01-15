@@ -1,6 +1,7 @@
 package at.fhhagenberg.sqe.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -37,6 +38,7 @@ public class ElevatorFloorControllerTest extends ElevatorFloorController {
 		controller.elevatorImageView = new ImageView();
 		controller.stopImageView = new ImageView();
 		controller.elevatorFloorHBox = new HBox();
+		controller.initialize();
 	}
 	
 	@Test
