@@ -98,6 +98,7 @@ public class ElevatorControlGuiTest {
     public void testManualMode(FxRobot robot) throws InterruptedException {
         robot.clickOn("#automaticModeCheckBox");
         robot.clickOn("#elevatorFloorHBox");
+        Thread.sleep(1000);
         FxAssert.verifyThat("#destinationLabel", LabeledMatchers.hasText("2"));
         FxAssert.verifyThat("#directionLabel", LabeledMatchers.hasText("up"));
     }

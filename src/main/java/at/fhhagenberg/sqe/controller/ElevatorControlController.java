@@ -108,8 +108,6 @@ public class ElevatorControlController {
     	{
     		// reset all called floors and stops
     		for(ElevatorController elevator : elevatorControllerList) {
-				elevator.SetPayload(0);
-				elevator.SetVelocity(0);
 				elevator.SetDoorStatus(DoorStatus.Closed);
 				elevator.SetDirection(Direction.Uncommited);
     		}
