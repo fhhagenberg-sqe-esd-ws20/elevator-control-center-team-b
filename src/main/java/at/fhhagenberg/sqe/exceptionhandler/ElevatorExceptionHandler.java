@@ -23,7 +23,7 @@ public abstract class ElevatorExceptionHandler extends TimerTask{
 			try {
 				mController.updateModel(getBuilding());
 			} catch (ControlCenterException e) {
-				// we havent finished retry again next loop
+				// we havent finished reconnect. retry again next loop
 			}
 		}
 	}

@@ -148,7 +148,7 @@ public class ElevatorAdapter implements IElevatorControl {
 
 	@Override
 	public List<Integer> getServicedFloors() throws ControlCenterException {
-		return new ArrayList<Integer>();
+		return new ArrayList<>();
 	}
 
 	@Override

@@ -168,7 +168,7 @@ public class ElevatorController {
 					mElevatorModel.setTarget(currentTarget);
 					mElevatorModel.setDirection(currentDirection);
 				} catch (ControlCenterException e) {
-					//e.printStackTrace();
+					// reconnect is handled by another controller
 				}
 			}
 		},timerInterval_ms,timerInterval_ms,TimeUnit.MILLISECONDS);
@@ -243,7 +243,7 @@ public class ElevatorController {
     									mElevatorModel.setDirection(currentDirection);
     								}	
     							} catch (ControlCenterException e) {
-    								//e.printStackTrace();
+    								// reconnect is handled by another controller
     							}
     						});
     					}
@@ -256,7 +256,7 @@ public class ElevatorController {
     			}
     			floorControllerList.get(0).setElevatorActive(true);
     		} catch (IOException ex) {
-    			//ex.printStackTrace();
+    			// what should be done here?
     		} 
     		numberFloors = number;
     	}
