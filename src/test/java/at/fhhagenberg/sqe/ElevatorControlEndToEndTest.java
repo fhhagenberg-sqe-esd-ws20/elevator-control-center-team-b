@@ -6,6 +6,9 @@ import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.Locale;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,6 +20,7 @@ import org.testfx.framework.junit5.Start;
 import org.testfx.matcher.control.LabeledMatchers;
 import org.testfx.matcher.control.ListViewMatchers;
 import org.testfx.matcher.control.TextInputControlMatchers;
+import org.testfx.util.WaitForAsyncUtils;
 
 import at.fhhagenberg.sqe.controlcenter.BuildingAdapter;
 import at.fhhagenberg.sqe.controlcenter.ControlCenterException;
@@ -24,6 +28,8 @@ import at.fhhagenberg.sqe.controlcenter.mocks.BuildingMock;
 import at.fhhagenberg.sqe.controller.ElevatorControlController;
 import at.fhhagenberg.sqe.exceptionhandler.RemoteElevatorExceptionHandler;
 import at.fhhagenberg.sqe.model.BuildingModel;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import sqelevator.IElevator;
@@ -63,11 +69,16 @@ class ElevatorControlEndToEndTest {
     }
     
     @Test
-    void setTargetTriggersIElevator(FxRobot robot) throws RemoteException, InterruptedException {
+    void setTargetTriggersIElevator(FxRobot robot) throws RemoteException, InterruptedException, TimeoutException {
     	//set into manual mode
     	robot.clickOn("#automaticModeCheckBox");
-    	//sleep for doors to get open
-    	Thread.sleep(500);
+    	//wait for doors to get open
+    	WaitForAsyncUtils.waitFor(3, TimeUnit.SECONDS, new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return robot.lookup("#doorStatusLabel").queryAs(Label.class).getText().equals("open");
+            }
+        });
     	//click on upper floor of first elevator
     	robot.clickOn("#elevatorFloorHBox");
     	// which will lead to setting the target of elevator 0 to floor 3
@@ -75,11 +86,16 @@ class ElevatorControlEndToEndTest {
     }
     
     @Test
-    void testSetFloorButtons(FxRobot robot) throws RemoteException, InterruptedException {
+    void testSetFloorButtons(FxRobot robot) throws RemoteException, InterruptedException, TimeoutException {
     	Mockito.when(mElevatorMock.getFloorButtonDown(3)).thenReturn(true);
     	Mockito.when(mElevatorMock.getFloorButtonUp(3)).thenReturn(true);
     	//sleep for buttons to get pressed
-    	Thread.sleep(1000);
+    	WaitForAsyncUtils.waitFor(3, TimeUnit.SECONDS, new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return robot.lookup("#downArrowImageView").queryAs(ImageView.class).getOpacity() == 1.0;
+            }
+        });
     	//check floor buttons
     	ImageView floorButtonDown = robot.lookup("#downArrowImageView").query();
     	ImageView floorButtonUp = robot.lookup("#upArrowImageView").query();
@@ -88,17 +104,22 @@ class ElevatorControlEndToEndTest {
     }
     
     @Test
-    void testSetStopButton(FxRobot robot) throws RemoteException, InterruptedException {
+    void testSetStopButton(FxRobot robot) throws RemoteException, InterruptedException, TimeoutException {
     	Mockito.when(mElevatorMock.getElevatorButton(0, 3)).thenReturn(true);
     	//sleep for button to get pressed
-    	Thread.sleep(1000);
+    	WaitForAsyncUtils.waitFor(3, TimeUnit.SECONDS, new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return robot.lookup("#stopImageView").queryAs(ImageView.class).getOpacity() == 1.0;
+            }
+        });
     	//check floor buttons
     	ImageView stopButton = robot.lookup("#stopImageView").query();
     	assertEquals(1.0, stopButton.getOpacity());
     }
     
     @Test
-    void remoteExceptionLeadsToReconnect(FxRobot robot) throws RemoteException, MalformedURLException, NotBoundException, InterruptedException {
+    void remoteExceptionLeadsToReconnect(FxRobot robot) throws RemoteException, MalformedURLException, NotBoundException, InterruptedException, TimeoutException {
     	Mockito.doThrow(RemoteException.class).when(mElevatorMock).getFloorButtonUp(Mockito.anyInt());
     	
     	// wait for scheduler
@@ -108,11 +129,16 @@ class ElevatorControlEndToEndTest {
     }
     
     @Test
-    void remoteExceptionLeadsToErrorState(FxRobot robot) throws RemoteException, MalformedURLException, NotBoundException, InterruptedException {
+    void remoteExceptionLeadsToErrorState(FxRobot robot) throws RemoteException, MalformedURLException, NotBoundException, InterruptedException, TimeoutException {
     	Mockito.doThrow(new RemoteException("localhost not available")).when(mElevatorMock).getFloorButtonUp(Mockito.anyInt());
     	
     	// wait for scheduler
-    	Thread.sleep(2000);
+    	WaitForAsyncUtils.waitFor(3, TimeUnit.SECONDS, new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return robot.lookup("#messageTextArea").queryAs(TextArea.class).getText().length() > 0;
+            }
+        });
     	
     	FxAssert.verifyThat("#messageTextArea", TextInputControlMatchers.hasText("localhost not available\n"));
     }
