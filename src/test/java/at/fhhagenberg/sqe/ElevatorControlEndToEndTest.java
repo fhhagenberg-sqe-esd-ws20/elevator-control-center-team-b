@@ -23,7 +23,6 @@ import at.fhhagenberg.sqe.controlcenter.ControlCenterException;
 import at.fhhagenberg.sqe.controlcenter.mocks.BuildingMock;
 import at.fhhagenberg.sqe.controller.ElevatorControlController;
 import at.fhhagenberg.sqe.exceptionhandler.RemoteElevatorExceptionHandler;
-import at.fhhagenberg.sqe.exceptionhandler.RemoteElevatorExceptionHandlerTest;
 import at.fhhagenberg.sqe.model.BuildingModel;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
