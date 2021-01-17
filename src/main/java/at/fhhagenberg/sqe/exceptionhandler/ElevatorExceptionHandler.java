@@ -10,7 +10,7 @@ public abstract class ElevatorExceptionHandler extends TimerTask{
 	
 	protected ElevatorControlController mController;
 
-	public ElevatorExceptionHandler() {
+	protected ElevatorExceptionHandler() {
 	}
 	
 	public void setController(ElevatorControlController controller) {

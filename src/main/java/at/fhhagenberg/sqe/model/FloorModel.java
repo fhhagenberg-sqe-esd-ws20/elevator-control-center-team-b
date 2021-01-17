@@ -14,7 +14,7 @@ public class FloorModel extends AsyncModel implements IFloor {
 		try {
 			setProperty(ID, mFloor.getFloorId());
 		} catch (ControlCenterException e) {
-			e.printStackTrace();
+			setProperty("Exception",e);
 		}
 		setProperty(BUTTONUP, false);
 		setProperty(BUTTONDOWN, false);

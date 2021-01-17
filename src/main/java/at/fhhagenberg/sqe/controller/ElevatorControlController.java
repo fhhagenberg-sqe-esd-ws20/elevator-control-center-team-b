@@ -65,7 +65,7 @@ public class ElevatorControlController {
     private ElevatorScheduler elevatorScheduler;
     private ScheduledFuture<?> mSchedulerFuture;
     
-    private final int timerInterval_ms = 1000;
+    static private final int mTimerIntervalMs = 1000;
     
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -89,7 +89,7 @@ public class ElevatorControlController {
     	else {
     		mBuildingModel.updateBuilding(building);
     		mHandlerFuture.cancel(false);
-    		mSchedulerFuture = scheduledExecutorService.scheduleAtFixedRate(()->elevatorScheduler.run(),timerInterval_ms,timerInterval_ms,TimeUnit.MILLISECONDS);
+    		mSchedulerFuture = scheduledExecutorService.scheduleAtFixedRate(()->elevatorScheduler.run(),mTimerIntervalMs,mTimerIntervalMs,TimeUnit.MILLISECONDS);
     	}
     	
     	
@@ -97,10 +97,7 @@ public class ElevatorControlController {
     }
     
     private boolean isInErrorMode() {
-    	if(mSchedulerFuture == null || mSchedulerFuture.isCancelled()) {
-    		return true;
-    	}
-    	return false;
+    	return mSchedulerFuture == null || mSchedulerFuture.isCancelled();
     }
     
     private void setReconnectionMode() {
@@ -128,7 +125,7 @@ public class ElevatorControlController {
     	if(mSchedulerFuture != null) {
     		mSchedulerFuture.cancel(false);
     	}
-    	mHandlerFuture = scheduledExecutorService.scheduleAtFixedRate(()->mHandler.run(),timerInterval_ms,timerInterval_ms,TimeUnit.MILLISECONDS);
+    	mHandlerFuture = scheduledExecutorService.scheduleAtFixedRate(()->mHandler.run(),mTimerIntervalMs,mTimerIntervalMs,TimeUnit.MILLISECONDS);
     	Platform.runLater(() ->  setReconnectionMode());
     }
     
@@ -172,7 +169,7 @@ public class ElevatorControlController {
         setNumberFloors(mBuildingModel.getFloorNum());
         setNumberElevators(mBuildingModel.getElevatorNum());
 
-        mSchedulerFuture = scheduledExecutorService.scheduleAtFixedRate(()->elevatorScheduler.run(),timerInterval_ms,timerInterval_ms,TimeUnit.MILLISECONDS);
+        mSchedulerFuture = scheduledExecutorService.scheduleAtFixedRate(()->elevatorScheduler.run(),mTimerIntervalMs,mTimerIntervalMs,TimeUnit.MILLISECONDS);
     }
     
     public void setNumberFloors(int number) {
@@ -194,7 +191,7 @@ public class ElevatorControlController {
     				floorsListView.getItems().add(0, listItem);
     			}
     		} catch (IOException ex) {
-    			ex.printStackTrace();
+    			//ex.printStackTrace();
     		}
     		numberFloors = number;
     	}
@@ -223,7 +220,7 @@ public class ElevatorControlController {
     				elevatorsListView.getItems().add(listItem);
     			}
     		} catch (IOException ex) {
-    			ex.printStackTrace();
+    			//ex.printStackTrace();
     		}
     		numberElevators = number;
     	}
