@@ -54,7 +54,7 @@ class ElevatorControlGuiTest {
     	WaitForAsyncUtils.waitFor(3, TimeUnit.SECONDS, new Callable<Boolean>() {
             @Override
             public Boolean call() throws Exception {
-                return robot.lookup("#elevatorNumberLabel").queryAs(Label.class).getText().equals("1");
+                return robot.lookup("#destinationLabel").queryAs(Label.class).getText().equals("1");
             }
         });
     	
