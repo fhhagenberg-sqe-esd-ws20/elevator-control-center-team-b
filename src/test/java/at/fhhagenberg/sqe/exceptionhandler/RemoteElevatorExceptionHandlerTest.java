@@ -13,7 +13,7 @@ import at.fhhagenberg.sqe.controlcenter.IBuilding;
 import at.fhhagenberg.sqe.controller.ElevatorControlController;
 import sqelevator.IElevator;
 
-public class RemoteElevatorExceptionHandlerTest {
+class RemoteElevatorExceptionHandlerTest {
 
 	
 	@Test
