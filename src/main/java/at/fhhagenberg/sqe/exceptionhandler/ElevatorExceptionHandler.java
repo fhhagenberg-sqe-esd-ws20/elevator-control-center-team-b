@@ -10,7 +10,7 @@ public abstract class ElevatorExceptionHandler extends TimerTask{
 	
 	protected ElevatorControlController mController;
 
-	public ElevatorExceptionHandler() {
+	protected ElevatorExceptionHandler() {
 	}
 	
 	public void setController(ElevatorControlController controller) {
@@ -19,16 +19,13 @@ public abstract class ElevatorExceptionHandler extends TimerTask{
 
 	@Override
 	public void run() {
-		if(mController != null) {
-			if(tryFix()) {
-				try {
-					mController.updateModel(getBuilding());
-				} catch (ControlCenterException e) {
-					// we havent finished reconnect. retry again next loop
-				}
+		if(tryFix()) {
+			try {
+				mController.updateModel(getBuilding());
+			} catch (ControlCenterException e) {
+				// we havent finished reconnect. retry again next loop
 			}
 		}
-		
 	}
 	
 	protected abstract boolean tryFix();

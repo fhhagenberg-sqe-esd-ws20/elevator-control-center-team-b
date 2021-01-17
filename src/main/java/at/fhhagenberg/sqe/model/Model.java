@@ -8,9 +8,9 @@ public abstract class Model {
 	private HashMap<String, Object> mPropertyValues;
 	protected PropertyChangeSupport mPropertyChangeSupport = null;
 	
-	public Model() {
+	protected Model() {
 		mPropertyChangeSupport = new PropertyChangeSupport(this);
-		mPropertyValues = new HashMap<String, Object>();
+		mPropertyValues = new HashMap<>();
 	}
 	
 	public void addListener(PropertyChangeListener listener) {

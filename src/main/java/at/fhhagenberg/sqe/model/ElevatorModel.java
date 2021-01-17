@@ -26,7 +26,7 @@ public class ElevatorModel extends AsyncModel implements IElevatorControl{
 		try {
 			setProperty(FLOORNUM, mElevator.getFloorNum());
 		} catch (ControlCenterException e) {
-			e.printStackTrace();
+			setProperty("Exception",e);
 		}
 		setProperty(DIRECTION, IElevatorControl.Direction.UNCOMMITTED);
 		setProperty(DOORSTATUS, IElevatorControl.DoorStatus.CLOSED);
