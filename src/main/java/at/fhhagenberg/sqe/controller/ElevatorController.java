@@ -76,7 +76,7 @@ public class ElevatorController {
     private DoorStatus doorStatus = DoorStatus.CLOSED;
     
     ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
-    private final int timerInterval_ms = 1000;
+    private static final int TIMERINTERVALMS = 1000;
     
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -171,7 +171,7 @@ public class ElevatorController {
 					e.printStackTrace();
 				}
 			}
-		},timerInterval_ms,timerInterval_ms,TimeUnit.MILLISECONDS);
+		},TIMERINTERVALMS,TIMERINTERVALMS,TimeUnit.MILLISECONDS);
     }
     
     public void setElevatorNumber(int number) {

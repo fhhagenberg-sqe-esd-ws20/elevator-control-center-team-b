@@ -65,7 +65,7 @@ public class ElevatorControlController {
     private ElevatorScheduler elevatorScheduler;
     private ScheduledFuture<?> mSchedulerFuture;
     
-    private final int timerInterval_ms = 1000;
+    private static final int TIMERINTERVALMS = 1000;
     
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -223,7 +223,7 @@ public class ElevatorControlController {
     				elevatorsListView.getItems().add(listItem);
     			}
     		} catch (IOException ex) {
-    			ex.printStackTrace();
+    			// what should be done here?
     		}
     		numberElevators = number;
     	}

@@ -19,13 +19,16 @@ public abstract class ElevatorExceptionHandler extends TimerTask{
 
 	@Override
 	public void run() {
-		if(tryFix()) {
-			try {
-				mController.updateModel(getBuilding());
-			} catch (ControlCenterException e) {
-				// we havent finished retry again next loop
+		if(mController != null) {
+			if(tryFix()) {
+				try {
+					mController.updateModel(getBuilding());
+				} catch (ControlCenterException e) {
+					// we havent finished reconnect. retry again next loop
+				}
 			}
 		}
+		
 	}
 	
 	protected abstract boolean tryFix();
