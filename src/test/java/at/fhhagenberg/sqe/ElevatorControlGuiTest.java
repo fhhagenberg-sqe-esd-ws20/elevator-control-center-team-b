@@ -121,9 +121,9 @@ class ElevatorControlGuiTest {
      */
     @Test
     void testManualMode(FxRobot robot) throws InterruptedException, TimeoutException, ControlCenterException {
-    	IBuilding buildingmock = new BuildingMock(3,4,2.0);
         robot.clickOn("#automaticModeCheckBox");
         robot.clickOn("#elevatorFloorHBox");
+        Mockito.when(mElevatorMock.getTarget()).thenReturn(2);
         
         WaitForAsyncUtils.waitFor(3, TimeUnit.SECONDS, new Callable<Boolean>() {
             @Override
