@@ -7,6 +7,7 @@ import java.util.concurrent.TimeoutException;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
 import org.testfx.api.FxAssert;
 import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationExtension;
@@ -16,15 +17,25 @@ import org.testfx.matcher.control.ListViewMatchers;
 import org.testfx.util.WaitForAsyncUtils;
 
 import at.fhhagenberg.sqe.controlcenter.ControlCenterException;
+import at.fhhagenberg.sqe.controlcenter.IBuilding;
+import at.fhhagenberg.sqe.controlcenter.IElevatorControl;
+import at.fhhagenberg.sqe.controlcenter.IFloor;
+import at.fhhagenberg.sqe.controlcenter.IElevatorControl.Direction;
+import at.fhhagenberg.sqe.controlcenter.IElevatorControl.DoorStatus;
 import at.fhhagenberg.sqe.controlcenter.mocks.BuildingMock;
 import at.fhhagenberg.sqe.controller.ElevatorControlController;
 import at.fhhagenberg.sqe.model.BuildingModel;
+import javafx.application.Platform;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 @ExtendWith(ApplicationExtension.class)
 class ElevatorControlGuiTest {
     private ElevatorControlController controller;
+    private IBuilding mBuildingMock;
+    private IElevatorControl mElevatorMock;
+    private IFloor mFloorMock;
     
     /**
      * Will be called with {@code @Before} semantics, i. e. before each test method.
@@ -37,24 +48,48 @@ class ElevatorControlGuiTest {
     public void start(Stage stage) throws ControlCenterException, InterruptedException, ControlCenterException {
     	Locale locale = new Locale("en_GB");
     	Locale.setDefault(locale);
-    	var buildingmock = new BuildingMock(5,2,2.0);
-        var app = new ElevatorControl(new BuildingModel(buildingmock),new ElevatorExceptionHandlerMock(buildingmock));
+    	
+    	
+    	mBuildingMock = Mockito.mock(IBuilding.class);
+    	
+    	
+    	mElevatorMock = Mockito.mock(IElevatorControl.class);
+    	mFloorMock = Mockito.mock(IFloor.class);
+    	Mockito.when(mFloorMock.getFloorId()).thenReturn(0).thenReturn(1).thenReturn(2);
+    	
+    	Mockito.when(mElevatorMock.getFloorNum()).thenReturn(3);
+    	Mockito.when(mElevatorMock.getCurrentDoorStatus()).thenReturn(DoorStatus.OPEN);
+    	Mockito.when(mElevatorMock.getWeight()).thenReturn(123.5);
+    	
+    	Mockito.when(mBuildingMock.getElevator(Mockito.anyInt())).thenReturn(mElevatorMock);
+    	Mockito.when(mBuildingMock.getFloor(Mockito.anyInt())).thenReturn(mFloorMock);
+    	
+    	Mockito.when(mBuildingMock.getNumberOfElevators()).thenReturn(4);
+    	Mockito.when(mBuildingMock.getNumberOfFloors()).thenReturn(3);
+    	Mockito.when(mBuildingMock.getHeightOfFloor()).thenReturn(2.0);
+    	
+        var app = new ElevatorControl(null,new ElevatorExceptionHandlerMock(mBuildingMock));
         app.start(stage);
         controller = app.getController();
-		controller.setBuildingModel(new BuildingModel(new BuildingMock(3, 4, 2.0)));
+        controller.setTimerInterval(1000);
+        //controller.setBuildingModel(new BuildingModel(mBuildingMock));
     }
     
     /**
      * @param robot - Will be injected by the test runner.
      * @throws InterruptedException 
      * @throws TimeoutException 
+     * @throws ControlCenterException 
      */
     @Test
-    void testDefaultValues(FxRobot robot) throws InterruptedException, TimeoutException {
+    void testDefaultValues(FxRobot robot) throws InterruptedException, TimeoutException, ControlCenterException {
+    	Mockito.when(mElevatorMock.getTarget()).thenReturn(1);
+    	Mockito.when(mElevatorMock.getCurrentDirection()).thenReturn(Direction.UP);
+    	
     	WaitForAsyncUtils.waitFor(3, TimeUnit.SECONDS, new Callable<Boolean>() {
             @Override
             public Boolean call() throws Exception {
-                return robot.lookup("#destinationLabel").queryAs(Label.class).getText().equals("1");
+                return robot.lookup("#directionLabel").queryAs(Label.class).getText().equals("up");
             }
         });
     	
@@ -77,54 +112,16 @@ class ElevatorControlGuiTest {
         FxAssert.verifyThat("#floorButtonsListView", ListViewMatchers.hasItems(3));
     }
     
-    /**
-     * @param robot - Will be injected by the test runner.
-     * @throws InterruptedException 
-     * @throws TimeoutException 
-     */
-    @Test
-    void testAutomaticMode(FxRobot robot) throws InterruptedException, TimeoutException {
-    	WaitForAsyncUtils.waitFor(3, TimeUnit.SECONDS, new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                return robot.lookup("#destinationLabel").queryAs(Label.class).getText().equals("1");
-            }
-        });
-        FxAssert.verifyThat("#destinationLabel", LabeledMatchers.hasText("1"));
-        FxAssert.verifyThat("#directionLabel", LabeledMatchers.hasText("up"));
-        WaitForAsyncUtils.waitFor(3, TimeUnit.SECONDS, new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                return robot.lookup("#destinationLabel").queryAs(Label.class).getText().equals("2");
-            }
-        });
-        FxAssert.verifyThat("#destinationLabel", LabeledMatchers.hasText("2"));
-        FxAssert.verifyThat("#directionLabel", LabeledMatchers.hasText("up"));
-        WaitForAsyncUtils.waitFor(3, TimeUnit.SECONDS, new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                return robot.lookup("#destinationLabel").queryAs(Label.class).getText().equals("1");
-            }
-        });
-        FxAssert.verifyThat("#destinationLabel", LabeledMatchers.hasText("1"));
-        FxAssert.verifyThat("#directionLabel", LabeledMatchers.hasText("down"));
-        WaitForAsyncUtils.waitFor(3, TimeUnit.SECONDS, new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                return robot.lookup("#destinationLabel").queryAs(Label.class).getText().equals("0");
-            }
-        });
-        FxAssert.verifyThat("#destinationLabel", LabeledMatchers.hasText("0"));
-        FxAssert.verifyThat("#directionLabel", LabeledMatchers.hasText("down"));
-    }
 
     /**
      * @param robot - Will be injected by the test runner.
      * @throws InterruptedException 
      * @throws TimeoutException 
+     * @throws ControlCenterException 
      */
     @Test
-    void testManualMode(FxRobot robot) throws InterruptedException, TimeoutException {
+    void testManualMode(FxRobot robot) throws InterruptedException, TimeoutException, ControlCenterException {
+    	IBuilding buildingmock = new BuildingMock(3,4,2.0);
         robot.clickOn("#automaticModeCheckBox");
         robot.clickOn("#elevatorFloorHBox");
         
@@ -136,5 +133,7 @@ class ElevatorControlGuiTest {
         });
         FxAssert.verifyThat("#destinationLabel", LabeledMatchers.hasText("2"));
         FxAssert.verifyThat("#directionLabel", LabeledMatchers.hasText("up"));
+        
+        Mockito.verify(mElevatorMock).setTarget(2);
     }
 }

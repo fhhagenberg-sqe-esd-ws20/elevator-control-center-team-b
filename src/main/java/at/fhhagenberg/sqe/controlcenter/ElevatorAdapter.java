@@ -13,11 +13,18 @@ public class ElevatorAdapter implements IElevatorControl {
 	private IElevator mElevator;
 	private int mId;
 	private int mFloors;
+	private SyncVerifier mVerifier;
 	
-	public ElevatorAdapter(IElevator elevator, int id, int floors) {
+	public ElevatorAdapter(IElevator elevator, int id, int floors) throws ControlCenterException {
 		mElevator = elevator;
 		mId = id;
 		mFloors = floors;
+		try {
+			mVerifier = new SyncVerifier(elevator);
+		}
+		catch(RemoteException e) {
+			throw new ControlCenterException(e);
+		}
 	}
 	
 	@Override
@@ -29,6 +36,7 @@ public class ElevatorAdapter implements IElevatorControl {
 	public DoorStatus getCurrentDoorStatus() throws ControlCenterException {
 		int status = -1;
 		try {
+			mVerifier.checkSync();
 			status = mElevator.getElevatorDoorStatus(mId);
 		} catch (RemoteException e) {
 			throw new ControlCenterException(e);
@@ -54,6 +62,7 @@ public class ElevatorAdapter implements IElevatorControl {
 	public Direction getCurrentDirection() throws ControlCenterException {
 		int direction = -1;
 		try {
+			mVerifier.checkSync();
 			direction = mElevator.getCommittedDirection(mId);
 		} catch (RemoteException e) {
 			throw new ControlCenterException(e);
@@ -75,6 +84,7 @@ public class ElevatorAdapter implements IElevatorControl {
 	@Override
 	public double getAcceleration() throws ControlCenterException {
 		try {
+			mVerifier.checkSync();
 			return mElevator.getElevatorAccel(mId);
 		} catch (RemoteException e) {
 			throw new ControlCenterException(e);
@@ -95,6 +105,7 @@ public class ElevatorAdapter implements IElevatorControl {
 	@Override
 	public boolean isFloorButtonPressed(int floor) throws ControlCenterException {
 		try {
+			mVerifier.checkSync();
 			return mElevator.getElevatorButton(mId, floor);
 		} catch (RemoteException e) {
 			throw new ControlCenterException(e);
@@ -104,6 +115,7 @@ public class ElevatorAdapter implements IElevatorControl {
 	@Override
 	public int getCurrentFloor() throws ControlCenterException {
 		try {
+			mVerifier.checkSync();
 			return mElevator.getElevatorFloor(mId);
 		} catch (RemoteException e) {
 			throw new ControlCenterException(e);
@@ -113,6 +125,7 @@ public class ElevatorAdapter implements IElevatorControl {
 	@Override
 	public double getSpeed() throws ControlCenterException {
 		try {
+			mVerifier.checkSync();
 			return mElevator.getElevatorSpeed(mId);
 		} catch (RemoteException e) {
 			throw new ControlCenterException(e);
@@ -122,6 +135,7 @@ public class ElevatorAdapter implements IElevatorControl {
 	@Override
 	public double getWeight() throws ControlCenterException {
 		try {
+			mVerifier.checkSync();
 			return mElevator.getElevatorWeight(mId);
 		} catch (RemoteException e) {
 			throw new ControlCenterException(e);
@@ -131,6 +145,7 @@ public class ElevatorAdapter implements IElevatorControl {
 	@Override
 	public int getTarget() throws ControlCenterException {
 		try {
+			mVerifier.checkSync();
 			return mElevator.getTarget(mId);
 		} catch (RemoteException e) {
 			throw new ControlCenterException(e);
@@ -140,6 +155,7 @@ public class ElevatorAdapter implements IElevatorControl {
 	@Override
 	public void setTarget(int floor) throws ControlCenterException {
 		try {
+			mVerifier.checkSync();
 			mElevator.setTarget(mId, floor);
 		} catch (RemoteException e) {
 			throw new ControlCenterException(e);
@@ -154,6 +170,7 @@ public class ElevatorAdapter implements IElevatorControl {
 	@Override
 	public boolean isServiced(int floor) throws ControlCenterException {
 		try {
+			mVerifier.checkSync();
 			return mElevator.getServicesFloors(mId, floor);
 		} catch (RemoteException e) {
 			throw new ControlCenterException(e);
@@ -163,6 +180,7 @@ public class ElevatorAdapter implements IElevatorControl {
 	@Override
 	public void setServiceFloor(int floor, boolean service) throws ControlCenterException {
 		try {
+			mVerifier.checkSync();
 			mElevator.setServicesFloors(mId, floor, service);
 		} catch (RemoteException e) {
 			throw new ControlCenterException(e);
@@ -185,6 +203,7 @@ public class ElevatorAdapter implements IElevatorControl {
 		}
 		
 		try {
+			mVerifier.checkSync();
 			mElevator.setCommittedDirection(mId, direction);
 		} catch (RemoteException e) {
 			throw new ControlCenterException(e);
