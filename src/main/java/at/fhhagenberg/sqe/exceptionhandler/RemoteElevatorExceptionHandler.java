@@ -6,6 +6,7 @@ import java.rmi.RemoteException;
 
 import at.fhhagenberg.sqe.IElevatorConnector;
 import at.fhhagenberg.sqe.controlcenter.BuildingAdapter;
+import at.fhhagenberg.sqe.controlcenter.ControlCenterException;
 import at.fhhagenberg.sqe.controlcenter.IBuilding;
 
 public class RemoteElevatorExceptionHandler extends ElevatorExceptionHandler {
@@ -31,6 +32,8 @@ public class RemoteElevatorExceptionHandler extends ElevatorExceptionHandler {
 			mController.setError("Could not connect to: " + mRemote);
 		} catch (NotBoundException e) {
 			mController.setError("Could not bind to: " + mRemote);
+		} catch (ControlCenterException e) {
+			mController.setError("Could not sync.");
 		}
 		return false;
 	}

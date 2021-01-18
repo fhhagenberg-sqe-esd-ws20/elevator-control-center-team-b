@@ -76,7 +76,7 @@ public class ElevatorController {
     private DoorStatus doorStatus = DoorStatus.CLOSED;
     
     ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
-    private static final int TIMERINTERVALMS = 1000;
+    private int mTimerIntervalMs = 10;
     
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -90,11 +90,16 @@ public class ElevatorController {
         assert elevatorNumberLabel != null : "fx:id=\"elevatorNumberLabel\" was not injected: check your FXML file 'Elevator.fxml'.";
     }
     
+    public void setTimerInterval(int ms) {
+    	mTimerIntervalMs = ms;
+    }
+    
     public void setElevatorModel(ElevatorModel elevatorModel)
     {
     	mElevatorModel = elevatorModel;
     	setNumberFloors(mElevatorModel.getFloorNum());
     	mAutomaticMode = new AutomaticMode(mElevatorModel.getFloorNum());
+    	doorStatus = elevatorModel.getCurrentDoorStatus();
     	mElevatorModel.addListener(new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
@@ -171,7 +176,7 @@ public class ElevatorController {
 					// reconnect is handled by another controller
 				}
 			}
-		},TIMERINTERVALMS,TIMERINTERVALMS,TimeUnit.MILLISECONDS);
+		},mTimerIntervalMs,mTimerIntervalMs,TimeUnit.MILLISECONDS);
     }
     
     public void setElevatorNumber(int number) {
@@ -229,6 +234,7 @@ public class ElevatorController {
     							try {
     								if(currentTarget != getDestination() && !getAutomaticModeActive() && doorStatus == DoorStatus.OPEN)
     								{
+    									
     									currentTarget = getDestination();
     									mElevatorModel.setTarget(currentTarget);
     									if (currentFloor < currentTarget) {

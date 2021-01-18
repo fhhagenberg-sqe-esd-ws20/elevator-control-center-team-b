@@ -63,9 +63,10 @@ class ElevatorControlEndToEndTest {
     	Mockito.when(mConnectorMock.createConnection(Mockito.anyString())).thenReturn(mElevatorMock);
     	
     	var buildingmock = new BuildingAdapter(mElevatorMock);
-        var app = new ElevatorControl(new BuildingModel(buildingmock), new RemoteElevatorExceptionHandler("localhost",mConnectorMock));
+        var app = new ElevatorControl(null, new RemoteElevatorExceptionHandler("localhost",mConnectorMock));
         app.start(stage);
         controller = app.getController();
+        controller.setTimerInterval(200);
     }
     
     @Test
@@ -122,10 +123,8 @@ class ElevatorControlEndToEndTest {
     void remoteExceptionLeadsToReconnect(FxRobot robot) throws RemoteException, MalformedURLException, NotBoundException, InterruptedException, TimeoutException {
     	Mockito.doThrow(RemoteException.class).when(mElevatorMock).getFloorButtonUp(Mockito.anyInt());
     	
-    	// wait for scheduler
-    	Thread.sleep(2000);
     	
-    	Mockito.verify(mConnectorMock).createConnection("localhost");
+    	Mockito.verify(mConnectorMock,Mockito.timeout(100)).createConnection("localhost");
     }
     
     @Test
@@ -143,3 +142,5 @@ class ElevatorControlEndToEndTest {
     	FxAssert.verifyThat("#messageTextArea", TextInputControlMatchers.hasText("localhost not available\n"));
     }
 }
+
+

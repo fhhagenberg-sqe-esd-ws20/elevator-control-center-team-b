@@ -13,11 +13,20 @@ public class BuildingAdapter implements IBuilding {
 	private List<FloorAdapter> mFloors;
 	private List<ElevatorAdapter> mElevators;
 	
-	public BuildingAdapter(IElevator elevator) throws RemoteException {
+	private SyncVerifier mVerifier;
+	
+	public BuildingAdapter(IElevator elevator) throws RemoteException, ControlCenterException {
 		mElevator = elevator;
 		
 		mFloors = new ArrayList<>();
 		mElevators = new ArrayList<>();
+		
+		try {
+			mVerifier = new SyncVerifier(elevator);
+		}
+		catch(RemoteException e) {
+			throw new ControlCenterException(e);
+		}
 		
 		int floorNum = mElevator.getFloorNum();
 		for(int i = 0; i < floorNum; i++) {
@@ -46,6 +55,7 @@ public class BuildingAdapter implements IBuilding {
 	@Override
 	public double getHeightOfFloor() throws ControlCenterException {
 		try {
+			mVerifier.checkSync();
 			return mElevator.getFloorHeight();
 		} catch (RemoteException e) {
 			throw new ControlCenterException(e);
