@@ -28,7 +28,7 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 @ExtendWith(ApplicationExtension.class)
-public class ElevatorControlAutomaticModeGuiTest {
+class ElevatorControlAutomaticModeGuiTest {
 	private ElevatorControlController controller;
 	
 	@Start

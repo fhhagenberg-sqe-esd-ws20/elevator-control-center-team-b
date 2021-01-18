@@ -19,7 +19,6 @@ import at.fhhagenberg.sqe.controlcenter.ControlCenterException;
 import at.fhhagenberg.sqe.controlcenter.IBuilding;
 import at.fhhagenberg.sqe.controlcenter.IElevatorControl.Direction;
 import at.fhhagenberg.sqe.controlcenter.IElevatorControl.DoorStatus;
-import at.fhhagenberg.sqe.controlcenter.SyncVerifier;
 import at.fhhagenberg.sqe.exceptionhandler.ElevatorExceptionHandler;
 import at.fhhagenberg.sqe.model.BuildingModel;
 import javafx.fxml.FXML;
