@@ -10,7 +10,7 @@
 A GUI for communicating with the backend of a remote elevator control. The GUI is adaptive to the numbers of floors and elevators set in the backend. Apart from that the operating mode can be switched from automatic mode to manual mode. In automatic mode the elevator works paternoster style.
 
 ### Usage Instructions
-In order to run the software, go to the release section of github and download the ***ecc-team-b-...jar*** file (in most cases you need to open the drop down menu Assets). Please use the file that comes with the most recent release for best experience.
+In order to run the software, go to the release section of github and download the ***ecc-team-b-...jar*** file (in most cases you need to open the drop down menu Assets). Please use the file that comes with the most recent release for best experience. The file is also available by [directly clicking this link](https://github.com/fhhagenberg-sqe-esd-ws20/elevator-control-center-team-b/releases/download/v1.0/ecc-team-b-0.0.1-SNAPSHOT.jar).
 
 Open a command shell and navigate to the directory where you've stored the downloaded file. To run the file, you need to execute the command ***java -jar ecc-team-b ... .jar*** (**NOTE** that the version number in the file name can change). Please also note that at least Java Version 11 is **required**.
 
